@@ -1,0 +1,14 @@
+
+			<ul class="list-inline box">
+				<li class="fullscreen"><a href="javascript:void(0)" id="btnFullscreen"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a></li>
+				{% for settings in setting_dashboards %}
+				<li class="rbox active" style="background:{{ settings.bg_color }}">
+					
+					<p>{{ settings.totalamount }}</p>
+					<div style="color:{{ settings.text_color }}">
+						<i class="fa {{ settings.icon }}" aria-hidden="true"></i> {{ settings.name }}
+					</div>	 				
+				</li>
+				{% endfor %} 			
+				
+			</ul>

@@ -1,0 +1,163 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %} 
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div> 
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="module_posapp_status" id="input-status" class="form-control">
+                {% if module_posapp_status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+                <label class="col-sm-2 control-label" for="input_apikey">{{ entry_apikey }}<br>{{ help_apikey }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="module_posapp_apikey" value="{{ module_posapp_apikey }}" id="input_apikey" class="form-control" />
+                </div>
+          </div>
+          <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
+                <div class="col-sm-10">
+                  <select name="module_posapp_tax_class_id" id="input-tax-class" class="form-control">
+                    <option value="0">{{ text_none }}</option>
+
+
+                    {% for tax_class in tax_classes %}
+                      {% if tax_class.tax_class_id == module_posapp_tax_class_id %}
+
+
+                        <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+
+
+                      {% else %}
+
+
+                        <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+
+
+                      {% endif %}
+                    {% endfor %}
+
+
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-payment-method">{{ entry_payment_method }}</label>
+                <div class="col-sm-10">
+                  <select name="module_posapp_payment_method_code" id="input-payment-method" class="form-control">
+                    <option value="0">{{ text_none }}</option>
+
+
+                   
+                      {% for paymentmethod in paymentmethods %}
+                      {% if paymentmethod.code == module_posapp_payment_method_code %}
+
+
+                        <option value="{{ paymentmethod.code }}" selected="selected">{{ paymentmethod.code }}</option>
+
+
+                      {% else %}
+
+
+                        <option value="{{ paymentmethod.code }}">{{ paymentmethod.code }}</option>
+
+
+                      {% endif %}
+                    {% endfor %}
+                    
+
+
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input_payment_limit">{{ entry_payment_limit }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="module_posapp_payment_limit" value="{{ module_posapp_payment_limit }}" id="input_payment_limit" class="form-control" />
+                </div>
+          </div>
+
+          <div class="form-group">
+                <label class="col-sm-2 control-label" for="input_payment_trail_allowed_day">{{ entry_payment_trail_allowed_day }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="module_posapp_payment_trail_allowed_day" value="{{ module_posapp_payment_trail_allowed_day }}" id="input_payment_trail_allowed_day" class="form-control" />
+                </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-customer_group">{{ entry_category }}</label>
+            <div class="col-sm-10">
+              <select name="module_posapp_customer_group" id="input-customer_group" class="form-control">               
+                
+                {% if module_posapp_customer_group %}
+                <h4><option value="{{ defined_customer_group_id }}" selected="selected" >{{ defined_customer_group_name }}</option> </h4>
+
+                {% for customer_group in customer_groups %}
+                <option value="{{ customer_group.customer_group_id }}" >{{ customer_group.name }}</option> 
+                {% endfor %}  
+                {% else %}
+                {% for customer_group in customer_groups %}
+                <option value="{{ customer_group.customer_group_id }}" >{{ customer_group.name }}</option> 
+                {% endfor %} 
+                {% endif %}                
+                
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+                <label class="col-sm-2 control-label" for="input_commission_value">{{ entry_commission_value }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="module_posapp_commission_value" value="{{ module_posapp_commission_value }}" id="input_commission_value" class="form-control" />
+                </div>
+          </div>
+          <div class="form-group">
+                <label class="col-sm-2 control-label" for="input_agent_commission">{{ entry_agent_commission }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="module_posapp_agent_commission" value="{{ module_posapp_agent_commission }}" id="input_agent_commission" class="form-control" />
+                </div>
+          </div>
+          <div class="form-group">
+                <label class="col-sm-2 control-label" for="input_target_product_to_pay">{{ entry_target_product_to_pay }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="module_posapp_target_product_to_pay" value="{{ module_posapp_target_product_to_pay }}" id="input_target_product_to_pay" class="form-control" />
+                </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }} 

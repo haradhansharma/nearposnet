@@ -1,0 +1,156 @@
+{% if not tmdurl %} 
+<div class="modal-content customerlist-body">
+  <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+  <div class="modal-body">
+    <div class="text-right">
+      <a rel="{{ add }}" class="btn-add btn btn-primary customerform"><i class="fa fa-plus"></i></a>
+    </div>
+    {% if error_warning %}
+    <div class="alert alert-danger">{{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="table-responsive">
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="control-label" for="input-filter_name">{{ column_name }} </label>
+              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ column_name }}" id="input-filter_name" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="control-label" for="input-filter_email">{{ column_email }} </label>
+              <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ column_email }}" id="input-filter_email" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="control-label" for="input-filter_telephone">{{ column_telephone }} </label>
+              <input type="text" name="filter_telephone" value="{{ filter_telephone }}" placeholder="{{ column_telephone }}" id="input-filter_telephone" class="form-control" />
+            </div>
+            <div class="pull-right">
+              <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}  
+      <table class="table table-bordered table-hover">
+        <thead class="sortorder">
+          <tr>
+            <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+            <td class="text-left">{% if sort == 'name' %}
+              <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+              {% else %}
+              <a href="{{ sort_name }}">{{ column_name }}</a>
+            {% endif %}</td>
+            <td class="text-left">{% if sort == 'c.email' %}
+              <a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>
+              {% else %}
+              <a href="{{ sort_email }}">{{ column_email }}</a>
+            {% endif %}</td>
+
+            <td class="text-left">{% if sort == 'address' %}
+              <a href="{{ sort_address }}" class="{{ order|lower }}">{{ column_address }}</a>
+              {% else %}
+              <a href="{{ sort_address }}">{{ column_address }}</a>
+            {% endif %}</td>
+            <td class="text-left">{% if sort == 'telephone' %}
+              <a href="{{ sort_telephone }}" class="{{ order|lower }}">{{ column_telephone }}</a>
+              {% else %}
+              <a href="{{ sort_telephone }}">{{ column_telephone }}</a>
+            {% endif %}</td>
+
+            <td class="text-left">{% if sort == 'c.status' %}
+              <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+              {% else %}
+              <a href="{{ sort_status }}">{{ column_status }}</a>
+            {% endif %}</td>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if customers %}
+          {% for customer in customers %}
+          <tr>
+            <td class="text-center">{% if customer.customer_id in selected %}
+              <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
+              {% else %}
+              <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
+            {% endif %}</td>
+            <td class="text-left">{{ customer.name }}</td>
+            <td class="text-left">{{ customer.email }}</td>
+            <td class="text-left">{{ customer.addressname }},{{ customer.address }}</td>
+            <td class="text-left">{{ customer.telephone }}</td>
+            <td class="text-left">{{ customer.status }}</td>
+          </tr>
+
+          {% endfor %}
+          <tr>
+            <td colspan="9">
+
+             <div class="col-sm-6 text-left">{{ pagination }}</div>
+             <div class="col-sm-6 text-right">{{ results }}</div>
+
+           </td>
+         </tr>
+         {% else %}
+         <tr>
+          <td class="text-center" colspan="9">{{ text_no_results }}</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+    {% if not tmdurl %}
+  </div>
+
+</div>
+</div>
+<script>
+$(document).on('click', '.customerlist-body .pagination li a',function(e){
+  e.preventDefault();
+  $val = $(this).attr('href');
+  $url = $val+'&filter_data=true';
+  $('.customerlist-body table').html('');
+  $('.customerlist-body table').html('<div class="loadingpoup"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div>');
+  $('.customerlist-body table').load($url);
+  return false;
+});
+</script>
+
+<script type="text/javascript">
+$(document).on('click', '#button-filter',function(){
+
+  var url = 'index.php?route=pos/customerlist&user_token={{ user_token }}&filter_data=true';
+
+  var filter_name = $('.customerlist-body input[name=\'filter_name\']').val();
+
+  if (filter_name) {
+    url += '&filter_name=' + encodeURIComponent(filter_name);
+  }
+
+  var filter_email = $('.customerlist-body input[name=\'filter_email\']').val();
+
+  if (filter_email) {
+    url += '&filter_email=' + encodeURIComponent(filter_email);
+  }
+
+  var filter_telephone = $('.customerlist-body input[name=\'filter_telephone\']').val();
+
+  if (filter_telephone) {
+    url += '&filter_telephone=' + encodeURIComponent(filter_telephone);
+  }
+  $('.customerlist-body table').html('');
+  $('.customerlist-body table').html('<div class="loadingpoup"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div>');
+  $('.customerlist-body table').load(url);
+  return false;
+});
+</script>
+{% endif %}

@@ -1,0 +1,1632 @@
+<modification>
+	<name>TMD Pos</name>
+	<version>3.0.2.0</version>
+	<author>TMD(opencartextensions.in)</author>
+	<code>#TCF-2.3.x,2.2.0.0</code>
+	<link>http://opencartextensions.in/</link>
+	
+	<file path="admin/controller/common/login.php">		
+		<operation error="log">
+			<search><![CDATA[$this->load->language('common/login');]]></search>
+			<add position="after"><![CDATA[
+			/* xml */
+			$this->load->language('pos/login');
+			/* xml */]]></add>
+		</operation>
+
+		
+		<operation error="log">
+			<search><![CDATA[$this->session->data['user_token'] = token(32);]]></search>
+			<add position="after"><![CDATA[
+			/* xml */
+			////sharma for pos
+			$this->load->model('pos/posapp');
+			$posapp_id = $this->model_pos_posapp->getPosappidByUserId($this->session->data['user_id']);
+			if($posapp_id){
+			unset($this->session->data['posapp_id']);
+			$this->session->data['posapp_id']= $posapp_id;
+			}else{
+			$this->session->data['posapp_id']= 0;
+
+			}
+			////sharma for pos
+			/* xml */]]></add> 
+		</operation> 
+
+		
+		
+		<operation error="log">
+			<search><![CDATA[$this->response->redirect($this->request->post['redirect'] . '&user_token=' . $this->session->data['user_token']);]]></search>
+			<add position="replace" offset="2"><![CDATA[
+				$this->response->redirect($this->request->post['redirect'] . '&user_token=' . $this->session->data['user_token']);
+				} else {
+				/* xml */
+				$route = $this->request->get['route']; 
+				
+				if(isset($route) && $route=='pos/login'){
+					$this->response->redirect($this->url->link('pos/pos', 'user_token=' . $this->session->data['user_token'], true));	
+				} else {
+					$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
+				
+				}
+				/* xml */]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[$data['action'] = $this->url->link('common/login', '', true);]]></search>
+			<add position="after"><![CDATA[
+			/* xml */
+			$data['posaction'] = $this->url->link('pos/login', '', true);
+			/* xml */]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search><![CDATA[$data['footer'] = $this->load->controller('common/footer');]]></search>
+			<add position="after"><![CDATA[
+				/* xml */
+		if (isset($this->request->get['route'])) {
+			$route = $this->request->get['route'];
+		} 
+		
+		if(isset($route) && $route=='pos/login') {
+		$store_url = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+			if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
+				 $data['storelogo'] = $store_url .'image/'.$this->config->get('config_logo');			
+			} else {
+				$data['storelogo'] = '';
+			}
+
+			$storelogo = $this->config->get('setting_image');
+			$logowidth = $this->config->get('setting_logowidth');
+			$logoheight = $this->config->get('setting_logoheight');
+			$this->load->model('tool/image');
+			if (!empty($storelogo)) {
+				$data['storelogo'] = $this->model_tool_image->resize($this->config->get('setting_image'), $logoheight, $logowidth);
+			}		
+			$data['redirect'] ='';
+			////sharma for pos
+			$data['pos_log'] =  $this->url->link('pos/login');
+			$this->response->setOutput($this->load->view('pos/login', $data));
+			
+		} else {
+		/* xml */]]></add> 
+		</operation>
+		<operation error="log">
+			<search><![CDATA[protected function validate() {]]></search>
+			<add position="after"><![CDATA[
+			/* xml */
+			
+			if(!empty($this->request->post['poslogin']))
+			{
+			$this->session->data['posuser']=true;			
+			}else{
+				if(isset($this->session->data['posuser'])){
+					unset($this->session->data['posuser']);
+				}
+			}
+		/* xml */]]></add>
+		</operation>
+		
+		<operation error="log">
+			<search><![CDATA[$this->response->setOutput($this->load->view('common/login', $data));]]></search>
+			<add position="after"><![CDATA[
+			}
+			]]></add>
+		</operation>		
+	</file>
+	<file path="admin/controller/common/header.php">
+		<operation error="log">
+			<search><![CDATA[$data['stores'] = array();]]></search>
+			<add position="before"><![CDATA[
+				if(isset($this->session->data['posuser'])){
+					$user_info2 = $this->db->query("SELECT * FROM " . DB_PREFIX . "pos_user WHERE user_id = '" . (int)$this->session->data['user_id'] . "' AND status = '1'")->row;
+					if (!empty($user_info2)) {
+						$data['firstname'] = $user_info2['firstname'];
+						$data['lastname'] = $user_info2['lastname'];
+						$data['username']  = $user_info2['username'];
+						$data['user_group'] = 'Pos User';
+						if (is_file(DIR_IMAGE . $user_info2['image'])) {
+							$data['image'] = $this->model_tool_image->resize($user_info2['image'], 45, 45);
+						} else {
+							$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
+						}
+					}else{
+					$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
+
+					}
+				}
+			]]></add>
+		</operation>		
+	</file>
+	<file path="admin/controller/common/logout.php">
+		<operation error="log">
+			<search><![CDATA[$this->session->data['user_token']]]></search>
+			<add position="after"><![CDATA[
+
+				////sharma for pos
+				unset($this->session->data['posapp_id']);
+				////sharma for POS
+				if(isset($this->session->data['posuser'])){
+					$this->response->redirect($this->url->link('pos/login', '', true));
+				}
+			]]></add>
+		</operation>		
+	</file>
+	<file path="system/library/cart/user.php">
+		<operation error="log">
+			<search ><![CDATA[$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$this->session->data['user_id'] . "' AND status = '1'");]]></search>
+			<add position="replace"><![CDATA[
+			if(!empty($this->session->data['posuser']))
+			{
+				$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "pos_user WHERE user_id = '" . (int)$this->session->data['user_id'] . "' AND status = '1'");
+			}
+			else
+			{
+				$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$this->session->data['user_id'] . "' AND status = '1'");
+			}
+			]]></add>
+		</operation>
+		<operation error="log">
+			<search ><![CDATA[$this->user_group_id = $user_query->row['user_group_id'];]]></search>
+			<add position="replace"><![CDATA[
+			if(isset($user_query->row['user_group_id']))
+				{
+					$this->user_group_id = $user_query->row['user_group_id'];
+				}
+				if(isset($user_query->row['store_id']))
+				{
+				$this->session->data['store_id'] = $user_query->row['store_id'];
+				}
+				if(isset($user_query->row['user_store_id']))
+				{
+				unset($this->session->data['store_id']);
+				$this->session->data['store_id'] = $user_query->row['user_store_id'];
+				}
+			]]></add>
+		</operation> 
+		<operation error="log">
+			<search ><![CDATA[$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");]]></search>
+			<add position="replace" offset="2"><![CDATA[
+			if(!empty($this->session->data['posuser']))
+				{
+					$permissions = array(); 
+					$listfile[] ='pos/allcategory';
+					$listfile[] ='pos/cart';
+					$listfile[] ='pos/categorysearch';
+					$listfile[] ='pos/customerform';
+					$listfile[] ='pos/customerlist';
+					$listfile[] ='pos/customerproduct';
+					$listfile[] ='pos/orderlist';
+					$listfile[] ='pos/paynow';
+					$listfile[] ='pos/pos';
+					$listfile[] ='pos/posproduct';
+					$listfile[] ='pos/posproductlist';
+					$listfile[] ='pos/printinvoice';
+					$listfile[] ='pos/product';
+					$listfile[] ='pos/productinfo';
+					$listfile[] ='pos/subcategory';
+					$listfile[] ='pos/dashboardload';
+					$listfile[] ='pos/paynowcustomer';
+					$listfile_access[] ='possetting/setting';
+					$listfile_access[] ='pos/due';
+					$listfile[] ='pos/totalcash';
+					$listfile[] ='pos/totalsale';
+					$listfile[] ='common/header';
+					$listfile[] ='common/footer';
+					$listfile[] ='common/column_left';
+					$listfile[] ='event/theme';
+					$listfile[] ='event/compatibility';					
+					$listfile[] ='pos/selectcustomer';					
+					$listfile[] ='pos/holdon';
+					$listfile[] ='pos/holdonreport';					
+					$listfile[] ='pos/partialpayment';
+					$listfile[] ='pos/paynow';					
+					$listfile[] ='pos/posorder';
+					$listfile[] ='pos/readqr';	
+					$listfile[] ='pos/returnorder';					
+					$listfile[] ='possetting/barcode';
+					$listfile[] ='possetting/commission_report';
+					$listfile[] ='possetting/cost';
+					$listfile[] ='possetting/cost_report';
+					$listfile[] ='possetting/forecastreport';					
+					$listfile[] ='possetting/productsale_report';
+					$listfile[] ='possetting/return_report';
+					$listfile[] ='possetting/sale_report';					
+					$listfile[] ='possetting/splitpayment_report';
+					$listfile[] ='possetting/stockin';
+					$listfile[] ='possetting/stockout';	
+					$listfile[] ='possetting/product';	
+					$listfile[] ='possetting/confirm';	
+					$listfile_access[] ='extension/adminpay/cheque';
+						
+
+					$listfile[] ='common/filemanager';
+					$listfile[] ='sale/order';
+					$listfile[] ='sale/recurring';
+					$listfile[] ='sale/return';					
+					$listfile[] ='catalog/product';
+ 
+ 
+					$listfile_access[] ='localisation/country';					
+					$listfile_access[] ='localisation/zone';
+					$listfile_access[] ='catalog/download';
+					$listfile_access[] ='catalog/category';
+					$listfile_access[] ='catalog/filter';
+					$listfile_access[] ='catalog/manufacturer';
+					$listfile_access[] ='catalog/option';
+					$listfile_access[] ='catalog/recurring';
+					$listfile_access[] ='catalog/review';
+					$listfile_access[] ='customer/customer';
+					$listfile_access[] ='customer/customer_group';
+					$listfile_access[] ='common/dashboard';					
+					$listfile_access[] ='extension/dashboard/chart';
+					$listfile_access[] ='extension/dashboard/map';
+					$listfile_access[] ='extension/dashboard/order';
+					$listfile_access[] ='extension/dashboard/recent';
+					$listfile_access[] ='extension/dashboard/sale';
+					$listfile_access[] ='extension/dashboard/activity';
+					$listfile_access[] ='extension/dashboard/customer';
+					$listfile_access[] ='extension/dashboard/online';
+
+					
+
+
+					
+					$permissions['access']=array_merge($listfile, $listfile_access);
+					$permissions['modify']=$listfile;				
+					
+
+
+				  
+
+				}
+				else
+				{
+				$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+
+				$permissions = json_decode($user_group_query->row['permission'], true);
+				}
+			]]></add>
+		</operation><operation error="log">
+			<search ><![CDATA[$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE username = '" . $this->db->escape($username) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1'");]]></search>
+			<add position="replace"><![CDATA[
+			if(isset($this->session->data['posuser']))
+		{
+		$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "pos_user WHERE username = '" . $this->db->escape($username) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape(htmlspecialchars($password, ENT_QUOTES)) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1'");
+		}
+		else
+		{
+		$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE username = '" . $this->db->escape($username) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape(htmlspecialchars($password, ENT_QUOTES)) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1'");
+		}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/language/*/common/column_left.php">
+		<operation error="skip">
+			<search ><![CDATA[// Text]]></search>
+			<add position="after"><![CDATA[
+			//tmd
+				$_['text_splitpayment_report']             = 'Split Payment Report';
+				$_['text_costmanage']               = 'Manage Cost';
+				$_['text_costreport']               = 'Cost Report';
+				$_['text_returnreport']               = 'Pos Return Report';
+				$_['text_pos']               = 'Pos';
+				$_['text_posproduct']        = 'Pos Product';
+				$_['text_posstore']          = 'Retail Store';
+				$_['text_posuser']           = 'Pos User';
+				$_['text_salereport']        = 'Sale Report';
+				$_['text_orderreport']       = 'Order Report';
+				$_['text_barcode']           = 'Inventory Barcode';
+				$_['text_possetting']        = 'Pos Setting';
+				$_['text_sale_report']        = 'Sale Report';
+				$_['text_productsale_report']= 'Product Sale Report';
+				$_['text_commission_report'] = 'Commission Report';
+				$_['text_pos_report'] = 'Pos Report';
+				$_['text_stockin'] = 'Stock In';
+				$_['text_stockout'] = 'Stock Out';
+				$_['text_forecastreport'] = 'Forecast Report';
+				////sharma for POS 
+				$_['text_posapp'] = 'POS Applications <span class="ena">(%s)</span><span class="dis">(%s)</span><span class="hold">(%s)</span>';
+				
+				////sharma for POS 
+			//tmd	
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/controller/common/column_left.php">
+		<operation error="skip">
+			<search><![CDATA[// Catalog]]></search>
+			<add position="before"><![CDATA[$pos = array();
+			
+			if ($this->user->hasPermission('access', 'pos/pos')) {
+				$pos[] = array(
+					'name'	   => $this->language->get('text_pos'),
+					'href'     => $this->url->link('pos/pos', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			////sharma for POS 
+			$this->load->model('pos/posapp');			
+			if ($this->user->hasPermission('access', 'pos/posapp')) {
+				$pos[] = array(
+					'name'	   => sprintf($this->language->get('text_posapp'),$this->model_pos_posapp->getApproved(), $this->model_pos_posapp->getNotApproved(), $this->model_pos_posapp->getHold()) ,
+					'href'     => $this->url->link('pos/posapp', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}			
+			
+			////Sharma for POS 	
+
+			if ($this->user->hasPermission('modify', 'possetting/setting')) {
+				$pos[] = array(
+					'name'	   => $this->language->get('text_possetting'),
+					'href'     => $this->url->link('possetting/setting', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'possetting/stockin')) {
+				$pos[] = array(
+					'name'	   => $this->language->get('text_stockin'),
+					'href'     => $this->url->link('possetting/stockin', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'possetting/stockout')) {
+				$pos[] = array(
+					'name'	   => $this->language->get('text_stockout'),
+					'href'     => $this->url->link('possetting/stockout', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+				
+			if ($this->user->hasPermission('access', 'possetting/user')) {
+				$pos[] = array(
+					'name'	   => $this->language->get('text_posuser'),
+					'href'     => $this->url->link('possetting/user', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			
+		
+			 if ($this->user->hasPermission('access', 'possetting/product')) {
+				$pos[] = array(
+					'name'	   => $this->language->get('text_posproduct'),
+					'href'     => $this->url->link('possetting/product', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			
+			
+			if ($this->user->hasPermission('access', 'possetting/barcode')) {
+				$pos[] = array(
+					'name'	   => $this->language->get('text_barcode'),
+					'href'     => $this->url->link('possetting/barcode', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			if ($this->user->hasPermission('access', 'possetting/cost')) {
+				$pos[] = array(
+					'name'	   => $this->language->get('text_costmanage'),
+					'href'     => $this->url->link('possetting/cost', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			$posreport=array();
+			if ($this->user->hasPermission('access', 'possetting/sale_report')) {
+				$posreport[] = array(
+					'name'	   => $this->language->get('text_sale_report'),
+					'href'     => $this->url->link('possetting/sale_report', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+						
+			if ($this->user->hasPermission('access', 'possetting/productsale_report')) {
+				$posreport[] = array(
+					'name'	   => $this->language->get('text_productsale_report'),
+					'href'     => $this->url->link('possetting/productsale_report', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			if ($this->user->hasPermission('access', 'possetting/splitpayment_report')) {
+				$posreport[] = array(
+					'name'	   => $this->language->get('text_splitpayment_report'),
+					'href'     => $this->url->link('possetting/splitpayment_report', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'possetting/commission_report')) {
+				$posreport[] = array(
+					'name'	   => $this->language->get('text_commission_report'),
+					'href'     => $this->url->link('possetting/commission_report', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+
+			if ($this->user->hasPermission('access', 'possetting/forecastreport')) {
+				$posreport[] = array(
+					'name'	   => $this->language->get('text_forecastreport'),
+					'href'     => $this->url->link('possetting/forecastreport', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+
+			if ($this->user->hasPermission('access', 'possetting/cost_report')) {
+				$posreport[] = array(
+					'name'	   => $this->language->get('text_costreport'),
+					'href'     => $this->url->link('possetting/cost_report', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+
+			if ($this->user->hasPermission('access', 'possetting/return_report')) {
+				$posreport[] = array(
+					'name'	   => $this->language->get('text_returnreport'),
+					'href'     => $this->url->link('possetting/return_report', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()		
+				);
+			}
+
+			$pos[] = array(
+				'name'	   => $this->language->get('text_pos_report'),
+				'href'     =>'',
+				'children' => $posreport	
+			);
+			
+			
+			if ($this->user->hasPermission('access', 'pos/pos')) {
+				$data['menus'][] = array(
+					'id'       => 'menu-pos',
+					'icon'	   => 'fa-shopping-cart', 
+					'name'	   => $this->language->get('text_pos'),
+					'href'     => '',
+					'children' => $pos
+				);		
+			}]]></add>
+		</operation>			
+	</file>	
+	<file path="admin/language/*/common/menu.php">
+		<operation error="skip">
+			<search ><![CDATA[// Text]]></search>
+			<add position="after"><![CDATA[
+			//tmd
+				$_['text_pos']               = 'Pos';
+			//tmd	
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/controller/common/menu.php">
+		<operation error="skip">
+			<search><![CDATA[$data['zone'] = $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'], true);]]></search>
+			<add position="after"><![CDATA[
+			$data['text_pos'] = $this->language->get('text_pos');
+			$data['pos'] = $this->url->link('pos/pos', 'user_token=' . $this->session->data['user_token'], true);
+			]]></add>
+		</operation>			
+	</file>	
+	<file path="admin/view/template/common/menu.tpl">
+		<operation error="log">
+			<search><![CDATA[<li id="extension"><a class="parent"><i class="fa fa-puzzle-piece fa-fw"></i> <span><?php echo $text_extension; ?></span></a>]]></search>
+			<add position="before"><![CDATA[<li id="pos"><a class="parent" href="<?php echo $pos; ?>"><i class="fa fa-shopping-cart fa-fw"></i> <span><?php echo $text_pos; ?></span></a></li>]]></add>
+		</operation>			
+	</file>
+	<file path="admin/controller/startup/startup.php">
+		<operation error="log">
+			<search><![CDATA[// Cart]]></search>
+			<add position="before"><![CDATA[// Pos
+		$this->registry->set('pos', new Cart\Pos($this->registry));]]></add>
+		</operation>			
+	</file>	
+	<file path="admin/model/customer/customer.php">
+		<operation error="log">
+			<search><![CDATA[public function deleteLoginAttempts($email) {]]></search>
+			<add position="before"><![CDATA[
+			public function getAllAddress($customer_id) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "address WHERE customer_id = '" . $customer_id . "'");
+			return $query->row;
+			}
+	]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[if (!empty($data['filter_email'])) {]]></search>
+			<add position="before"><![CDATA[
+			if (!empty($data['filter_telephone'])) {
+				$implode[] = "telephone LIKE '" . $this->db->escape($data['filter_telephone']) . "%'";
+			}
+		]]></add>
+		</operation>			
+	</file>
+	<file path="admin/language/*/customer/customer.php">
+		<operation error="skip">
+			<search ><![CDATA[// Entry]]></search>
+			<add position="after"><![CDATA[
+			//tmd
+				$_['column_telephone']      = 'Telephone';
+				$_['column_address']        = 'Address';
+			//tmd	
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/model/checkout/order.php">
+		<operation error="skip">
+			<search ><![CDATA[public function editOrder(]]></search>
+			<add position="before"><![CDATA[
+			public function getProductCost($product_id,$product_option_value_id=false){		
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_cost WHERE product_id='".$product_id."'");
+				if ($product_option_value_id) {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_cost_option WHERE product_option_value_id='".$product_option_value_id."'");
+				}
+				return $query->row;
+			}	
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search ><![CDATA[$order_product_id = $this->db->getLastId();]]></search>
+			<add position="after"><![CDATA[
+
+				////edited by sharma
+			$cost_info= $this->getProductCost($order_product_id,false);
+			if($cost_info){
+				$cost = $cost_info['cost'];
+			}else{
+				$cost = 0;
+
+			}
+				$this->db->query("INSERT INTO " . DB_PREFIX . "order_product_cost SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$product['product_id'] . "',order_product_id = '" . (int)$order_product_id. "', name = '" . $this->db->escape($product['name']) . "', model = '" . $this->db->escape($product['model']) . "', quantity = '" . (int)$product['quantity'] . "', price = '" . (float)$product['price'] . "',cost = '" . (float)$cost . "'");		
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/controller/catalog/product.php">
+		<operation error="skip">
+			<search ><![CDATA[$data['products'][] = array(]]></search>
+			<add position="before"><![CDATA[
+			if ($result['status']=='1') {
+				$result['status']=$this->language->get('text_enabled');
+			}else if ($result['status']=='2') {
+				$result['status']=$this->language->get('text_posonly');
+			}else{
+				$result['status']=$this->language->get('text_disabled');
+			}	
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search ><![CDATA['edit'       => $this->url]]></search>
+			<add position="before"><![CDATA[
+			'status'     => $result['status'],	
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search ><![CDATA[if (isset($this->error['warning'])) {]]></search>
+			<add position="before"><![CDATA[
+			$data['text_posonly'] = $this->language->get('text_posonly');	
+			]]></add>
+		</operation>
+		///sharma for pos
+		<operation error="skip">
+			<search ><![CDATA[if (isset($this->request->post['weight'])) {]]></search>
+			<add position="before"><![CDATA[
+			$data['posapp_id'] = $this->session->data['posapp_id'];
+			]]></add>
+		</operation>
+		////sharma for pos
+		<operation error="skip">
+			<search ><![CDATA[$data['status'] = true;]]></search>
+			<add position="replace"><![CDATA[
+			$data['status'] = 0;
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/language/*/catalog/product.php">
+		<operation error="skip">
+			<search ><![CDATA[$_['text_amount']]]></search>
+			<add position="before"><![CDATA[
+			$_['text_posonly']            	= 'Pos Only';	
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/view/template/catalog/product_form.twig">
+		<operation error="skip">
+			<search ><![CDATA[entry_status]]></search>
+			<add position="before"><![CDATA[
+				 {% if posapp_id == 0 %}
+                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="status" id="input-status" class="form-control">
+                    {% if status=='1' %}
+                    <option value="2" >{{ text_posonly }}</option>
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% elseif status=='2' %}
+                    <option value="2" selected="selected" >{{ text_posonly }}</option>
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                    <option value="2" >{{ text_posonly }}</option>
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+
+
+
+                
+                {% else %}
+
+                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="status" id="input-status" class="form-control">
+                    {% if status == 1  %}                   
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="2">{{ text_posonly }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% elseif status == 2 %}
+                    <option value="2" selected="selected" >{{ text_posonly }}</option>                   
+                    <option value="0">{{ text_disabled }}</option>
+                    {% else %}                    
+                    <option value="2" selected="selected" >{{ text_posonly }}</option>
+                    <option value="0" >{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+
+				
+            {% endif %}
+
+              </div>
+              <!--		
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search ><![CDATA[for="input-sort-order"]]></search>
+			<add position="before"><![CDATA[
+			-->
+			<div class="form-group">
+			]]></add>
+		</operation>
+	</file>
+	<!-- sharma for pos -->
+
+	<file path="system/library/cart/cart.php">
+		<operation error="skip">
+			<search><![CDATA[
+				public function getProducts() {
+			]]></search>
+			<add position="before"><![CDATA[
+
+				public function posData($posapp_id){
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "pos_application` WHERE `posapp_id` = '". (int)$posapp_id ."' ");
+		return $query->row;
+
+	}
+
+
+				public function getAgentOfProduct($product_id){
+		$query = $this->db->query("SELECT `agent_code` FROM `" . DB_PREFIX . "pos_application` WHERE `posapp_id` IN (SELECT `posapp_id` FROM `" . DB_PREFIX . "product` WHERE product_id = '". (int)$product_id ."')");
+		if($query->num_rows){
+			return $query->row['agent_code'];
+		}else{
+			return false ;
+		}
+	}
+
+	public function getApprovedAgentCode(){
+		$query = $this->db->query("SELECT CONCAT(code_prefix ,'', service_agent_id) AS agent_code FROM `" . DB_PREFIX . "service_agent` WHERE `customer_id` = '". (int)$this->customer->getId() ."' AND status = 1 ");
+		if($query->num_rows){
+			return $query->row['agent_code'];
+		}else{
+			return false ;
+		}
+	}
+
+	public function getTargetComplete($customer_id){
+		$query = $this->db->query("SELECT DISTINCT description FROM `" . DB_PREFIX . "customer_transaction` WHERE customer_id = '". (int)$customer_id ."' AND description = 'TargetComplete' ");
+		if($query->num_rows){
+			return $query->row['description'];
+		}else{
+			return false ;
+		}
+	}
+
+
+	public function getEntryProductByAgent($agent_code){
+		$query = $this->db->query("SELECT COUNT(p.product_id) as total FROM `" . DB_PREFIX . "service_agent` sa LEFT JOIN `" . DB_PREFIX . "pos_application` pa ON(CONCAT(sa.code_prefix,'',sa.service_agent_id) = pa.agent_code ) LEFT JOIN `" . DB_PREFIX . "product` p ON (pa.posapp_id = p.posapp_id) LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.product_id = pd.product_id) WHERE pa.agent_code = '". (string)$agent_code ."' AND p.status = 1 ");
+		if($query->num_rows){
+			return $query->row['total'];
+		}else{
+			return false ;
+		}
+	}
+
+	public function getCustomerIdOfAgent($agent_code){
+		$query = $this->db->query("SELECT `customer_id` FROM `" . DB_PREFIX . "service_agent` WHERE CONCAT(code_prefix,'',service_agent_id) = '". (string)$agent_code ."' ");
+		if($query->num_rows){
+			return $query->row['customer_id'];
+		}else{
+			return false ;
+		}
+
+	}
+
+				public function getReturnIdOfProduct($product_id, $order_id){
+		$return_query = $this->db->query("SELECT `return_id` FROM `" . DB_PREFIX . "return` WHERE product_id = '". (int)$product_id ."' AND order_id = '". (int)$order_id ."' ");
+		if($return_query->num_rows){
+			return $return_query->row['return_id'];
+		}else{
+			return false ;
+		}
+	}
+
+				public function getPoappByCustomer(){
+		$posapp_query = $this->db->query("SELECT count(`posapp_id`) as postotal FROM `" . DB_PREFIX . "pos_application` WHERE customer_id = '". (int)$this->customer->getId() ."' ");
+		if($posapp_query->num_rows){
+			return $posapp_query->row['postotal'];
+		}else{
+			return false ;
+		}
+	}
+
+public function getAlloweddistance($posapp_id){
+		$posapp_query = $this->db->query("SELECT `alloweddistance` FROM `" . DB_PREFIX . "pos_application` WHERE posapp_id = '". (int)$posapp_id ."' ");
+		if($posapp_query->num_rows){
+			return $posapp_query->row['alloweddistance'];
+		}else{
+			return false ;
+		}
+	} 
+
+public function getPosCost($posapp_id){
+		$posapp_query = $this->db->query("SELECT `cost` FROM `" . DB_PREFIX . "pos_application` WHERE posapp_id = '". (int)$posapp_id ."' ");
+		if($posapp_query->num_rows){
+			return $posapp_query->row['cost'];
+		}else{
+			return false;
+		}
+
+	}
+
+	public function getPosname($posapp_id){
+		$posapp_query = $this->db->query("SELECT `posname` FROM `" . DB_PREFIX . "pos_application` WHERE posapp_id = '". (int)$posapp_id ."' ");
+		if($posapp_query->num_rows){
+			return $posapp_query->row['posname'];
+		}else{
+			return false;
+		}
+
+	}
+
+				public function getPosappIdFromCart(){
+		$posapp_query = $this->db->query("SELECT DISTINCT `posapp_id` FROM `" . DB_PREFIX . "cart` WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+		if($posapp_query->num_rows){     
+			return $posapp_query->rows;
+		}else{
+			return false;
+
+		}	
+
+	}
+
+
+	public function getTotalCart(){
+		$posapp_query = $this->db->query("SELECT count(DISTINCT posapp_id ) as total_cart FROM `" . DB_PREFIX . "cart` WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+		if($posapp_query->num_rows){     
+			return $posapp_query->row['total_cart'];
+		}else{
+			return false;
+
+		}	
+
+	}
+				public function getProductPosapp($product_id){
+                   $posapp_query = $this->db->query("SELECT posapp_id FROM " . DB_PREFIX . "product  WHERE product_id = '" . (int)$product_id . "'");
+                   if($posapp_query->num_rows){
+			return $posapp_query->row['posapp_id'];
+		}else{
+			return false;
+		}
+
+                }
+                public function getProductPosPosapp($product_id){
+                   $posapp_query = $this->db->query("SELECT posapp_id FROM " . DB_PREFIX . "pos_product  WHERE product_id = '" . (int)$product_id . "'");
+                   if($posapp_query->num_rows){
+			return $posapp_query->row['posapp_id'];
+		}else{
+			return false;
+		}
+
+                }
+			]]></add>
+		</operation>		
+		<operation error="skip">
+			<search><![CDATA[
+				$this->db->query("INSERT INTO " . DB_PREFIX . "cart SET api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "', customer_id = '" . (int)$this->customer->getId() . "', session_id = '" . $this->db->escape($this->session->getId()) . "', product_id = '" . (int)$product_id . "', recurring_id = '" . (int)$recurring_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', quantity = '" . (int)$quantity . "', date_added = NOW()");
+			]]></search>
+			<add position="replace"><![CDATA[
+				////sharma for pos
+			$this->db->query("INSERT INTO " . DB_PREFIX . "cart SET posapp_id = '".(int)$this->getProductPosapp($product_id)."', api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "', customer_id = '" . (int)$this->customer->getId() . "', session_id = '" . $this->db->escape($this->session->getId()) . "', product_id = '" . (int)$product_id . "', recurring_id = '" . (int)$recurring_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', quantity = '" . (int)$quantity . "', date_added = NOW()");
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+			]]></search>
+			<add position="replace"><![CDATA[
+				////sharma for pos
+
+				if(isset($this->request->get['posapp_id'])) {
+				$checkout_posapp_id = $this->request->get['posapp_id'];
+			} elseif(isset($this->session->data['checkout_posapp_id'])){
+				$checkout_posapp_id = $this->session->data['checkout_posapp_id'];
+			} else{
+				$checkout_posapp_id = 0; 
+			}	
+
+
+			$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE posapp_id = '". $checkout_posapp_id ."' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				
+			]]></search>
+			<add position="replace"><![CDATA[
+				
+				
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+
+				
+				
+			]]></search>
+			<add position="replace"><![CDATA[
+
+				
+				
+				
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				public function add($product_id, $quantity = 1, $option = array(), $recurring_id = 0) {
+			]]></search>
+			<add position="before"><![CDATA[
+			////sharma for pos modification
+	public function getProducts2($cart_posapp_id) {
+       
+ 
+		$product_data = array();
+
+		$cart_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "cart WHERE posapp_id = '". (int)$cart_posapp_id ."' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+
+		foreach ($cart_query->rows as $cart) {
+			$stock = true;
+
+			$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_store p2s LEFT JOIN " . DB_PREFIX . "product p ON (p2s.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND p2s.product_id = '" . (int)$cart['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.date_available <= NOW() AND p.status = '1'");
+
+			if ($product_query->num_rows && ($cart['quantity'] > 0)) {
+				$option_price = 0;
+				$option_points = 0;
+				$option_weight = 0;
+
+				$option_data = array();
+
+				foreach (json_decode($cart['option']) as $product_option_id => $value) {
+					$option_query = $this->db->query("SELECT po.product_option_id, po.option_id, od.name, o.type FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.product_option_id = '" . (int)$product_option_id . "' AND po.product_id = '" . (int)$cart['product_id'] . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+					if ($option_query->num_rows) {
+						if ($option_query->row['type'] == 'select' || $option_query->row['type'] == 'radio') {
+							$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+							if ($option_value_query->num_rows) {
+								if ($option_value_query->row['price_prefix'] == '+') {
+									$option_price += $option_value_query->row['price'];
+								} elseif ($option_value_query->row['price_prefix'] == '-') {
+									$option_price -= $option_value_query->row['price'];
+								}
+
+								if ($option_value_query->row['points_prefix'] == '+') {
+									$option_points += $option_value_query->row['points'];
+								} elseif ($option_value_query->row['points_prefix'] == '-') {
+									$option_points -= $option_value_query->row['points'];
+								}
+
+								if ($option_value_query->row['weight_prefix'] == '+') {
+									$option_weight += $option_value_query->row['weight'];
+								} elseif ($option_value_query->row['weight_prefix'] == '-') {
+									$option_weight -= $option_value_query->row['weight'];
+								}
+
+								if ($option_value_query->row['subtract'] && (!$option_value_query->row['quantity'] || ($option_value_query->row['quantity'] < $cart['quantity']))) {
+									$stock = false;
+								}
+
+								$option_data[] = array(
+									'product_option_id'       => $product_option_id,
+									'product_option_value_id' => $value,
+									'option_id'               => $option_query->row['option_id'],
+									'option_value_id'         => $option_value_query->row['option_value_id'],
+									'name'                    => $option_query->row['name'],
+									'value'                   => $option_value_query->row['name'],
+									'type'                    => $option_query->row['type'],
+									'quantity'                => $option_value_query->row['quantity'],
+									'subtract'                => $option_value_query->row['subtract'],
+									'price'                   => $option_value_query->row['price'],
+									'price_prefix'            => $option_value_query->row['price_prefix'],
+									'points'                  => $option_value_query->row['points'],
+									'points_prefix'           => $option_value_query->row['points_prefix'],
+									'weight'                  => $option_value_query->row['weight'],
+									'weight_prefix'           => $option_value_query->row['weight_prefix']
+								);
+							}
+						} elseif ($option_query->row['type'] == 'checkbox' && is_array($value)) {
+							foreach ($value as $product_option_value_id) {
+								$option_value_query = $this->db->query("SELECT pov.option_value_id, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix, ovd.name FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (pov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+								if ($option_value_query->num_rows) {
+									if ($option_value_query->row['price_prefix'] == '+') {
+										$option_price += $option_value_query->row['price'];
+									} elseif ($option_value_query->row['price_prefix'] == '-') {
+										$option_price -= $option_value_query->row['price'];
+									}
+
+									if ($option_value_query->row['points_prefix'] == '+') {
+										$option_points += $option_value_query->row['points'];
+									} elseif ($option_value_query->row['points_prefix'] == '-') {
+										$option_points -= $option_value_query->row['points'];
+									}
+
+									if ($option_value_query->row['weight_prefix'] == '+') {
+										$option_weight += $option_value_query->row['weight'];
+									} elseif ($option_value_query->row['weight_prefix'] == '-') {
+										$option_weight -= $option_value_query->row['weight'];
+									}
+
+									if ($option_value_query->row['subtract'] && (!$option_value_query->row['quantity'] || ($option_value_query->row['quantity'] < $cart['quantity']))) {
+										$stock = false;
+									}
+
+									$option_data[] = array(
+										'product_option_id'       => $product_option_id,
+										'product_option_value_id' => $product_option_value_id,
+										'option_id'               => $option_query->row['option_id'],
+										'option_value_id'         => $option_value_query->row['option_value_id'],
+										'name'                    => $option_query->row['name'],
+										'value'                   => $option_value_query->row['name'],
+										'type'                    => $option_query->row['type'],
+										'quantity'                => $option_value_query->row['quantity'],
+										'subtract'                => $option_value_query->row['subtract'],
+										'price'                   => $option_value_query->row['price'],
+										'price_prefix'            => $option_value_query->row['price_prefix'],
+										'points'                  => $option_value_query->row['points'],
+										'points_prefix'           => $option_value_query->row['points_prefix'],
+										'weight'                  => $option_value_query->row['weight'],
+										'weight_prefix'           => $option_value_query->row['weight_prefix']
+									);
+								}
+							}
+						} elseif ($option_query->row['type'] == 'text' || $option_query->row['type'] == 'textarea' || $option_query->row['type'] == 'file' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
+							$option_data[] = array(
+								'product_option_id'       => $product_option_id,
+								'product_option_value_id' => '',
+								'option_id'               => $option_query->row['option_id'],
+								'option_value_id'         => '',
+								'name'                    => $option_query->row['name'],
+								'value'                   => $value,
+								'type'                    => $option_query->row['type'],
+								'quantity'                => '',
+								'subtract'                => '',
+								'price'                   => '',
+								'price_prefix'            => '',
+								'points'                  => '',
+								'points_prefix'           => '',
+								'weight'                  => '',
+								'weight_prefix'           => ''
+							);
+						}
+					}
+				}
+
+				$price = $product_query->row['price'];
+
+				// Product Discounts
+				$discount_quantity = 0;
+
+				foreach ($cart_query->rows as $cart_2) {
+					if ($cart_2['product_id'] == $cart['product_id']) {
+						$discount_quantity += $cart_2['quantity'];
+					}
+				}
+
+				$product_discount_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_discount WHERE product_id = '" . (int)$cart['product_id'] . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND quantity <= '" . (int)$discount_quantity . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY quantity DESC, priority ASC, price ASC LIMIT 1");
+
+				if ($product_discount_query->num_rows) {
+					$price = $product_discount_query->row['price'];
+				}
+
+				// Product Specials
+				$product_special_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_special WHERE product_id = '" . (int)$cart['product_id'] . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY priority ASC, price ASC LIMIT 1");
+
+				if ($product_special_query->num_rows) {
+					$price = $product_special_query->row['price'];
+				}
+
+				// Reward Points
+				$product_reward_query = $this->db->query("SELECT points FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$cart['product_id'] . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "'");
+
+				if ($product_reward_query->num_rows) {
+					$reward = $product_reward_query->row['points'];
+				} else {
+					$reward = 0;
+				}
+
+				// Downloads
+				$download_data = array();
+
+				$download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_download p2d LEFT JOIN " . DB_PREFIX . "download d ON (p2d.download_id = d.download_id) LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE p2d.product_id = '" . (int)$cart['product_id'] . "' AND dd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+				foreach ($download_query->rows as $download) {
+					$download_data[] = array(
+						'download_id' => $download['download_id'],
+						'name'        => $download['name'],
+						'filename'    => $download['filename'],
+						'mask'        => $download['mask']
+					);
+				}
+
+				// Stock
+				if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $cart['quantity'])) {
+					$stock = false;
+				}
+
+				$recurring_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "recurring r LEFT JOIN " . DB_PREFIX . "product_recurring pr ON (r.recurring_id = pr.recurring_id) LEFT JOIN " . DB_PREFIX . "recurring_description rd ON (r.recurring_id = rd.recurring_id) WHERE r.recurring_id = '" . (int)$cart['recurring_id'] . "' AND pr.product_id = '" . (int)$cart['product_id'] . "' AND rd.language_id = " . (int)$this->config->get('config_language_id') . " AND r.status = 1 AND pr.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "'");
+
+				if ($recurring_query->num_rows) {
+					$recurring = array(
+						'recurring_id'    => $cart['recurring_id'],
+						'name'            => $recurring_query->row['name'],
+						'frequency'       => $recurring_query->row['frequency'],
+						'price'           => $recurring_query->row['price'],
+						'cycle'           => $recurring_query->row['cycle'],
+						'duration'        => $recurring_query->row['duration'],
+						'trial'           => $recurring_query->row['trial_status'],
+						'trial_frequency' => $recurring_query->row['trial_frequency'],
+						'trial_price'     => $recurring_query->row['trial_price'],
+						'trial_cycle'     => $recurring_query->row['trial_cycle'],
+						'trial_duration'  => $recurring_query->row['trial_duration']
+					);
+				} else {
+					$recurring = false;
+				}
+
+				$product_data[] = array(
+					'cart_id'         => $cart['cart_id'],
+					'product_id'      => $product_query->row['product_id'],
+					////sharma for pos
+					'posapp_id'      => $this->getProductPosapp($product_query->row['product_id']),
+					'name'            => $product_query->row['name'],
+					'model'           => $product_query->row['model'],
+					'shipping'        => $product_query->row['shipping'],
+					'image'           => $product_query->row['image'],
+					'option'          => $option_data,
+					'download'        => $download_data,
+					'quantity'        => $cart['quantity'],
+					'minimum'         => $product_query->row['minimum'],
+					'subtract'        => $product_query->row['subtract'],
+					'stock'           => $stock,
+					'price'           => ($price + $option_price),
+					'total'           => ($price + $option_price) * $cart['quantity'],
+					'reward'          => $reward * $cart['quantity'],
+					'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
+					'tax_class_id'    => $product_query->row['tax_class_id'],
+					'weight'          => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],
+					'weight_class_id' => $product_query->row['weight_class_id'],
+					'length'          => $product_query->row['length'],
+					'width'           => $product_query->row['width'],
+					'height'          => $product_query->row['height'],
+					'length_class_id' => $product_query->row['length_class_id'],
+					'recurring'       => $recurring
+				);
+			} else {
+				$this->remove($cart['cart_id']);
+			}
+		}
+
+		return $product_data;
+	}
+	////sharma for pos modification
+			]]></add>
+		</operation>
+</file>
+
+
+<file path="admin/controller/pos/cart.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
+			]]></search>
+			<add position="replace"><![CDATA[
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp($this->request->post['product_id']) . '&product_id=' . $this->request->post['product_id']));
+			]]></add>
+		</operation>
+</file>
+<file path="admin/controller/pos/product.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$this->url->link('product/product', '&product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+				$this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp($result['posapp_id']) . '&product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/account/order.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+			]]></search>
+			<add position="replace"><![CDATA[
+				$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'posapp_id=' . $product_info['posapp_id'] . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+			]]></add>
+		</operation>
+</file>
+<file path="catalog\controller\account\recurring.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$data['product'] = $this->url->link('product/product', 'product_id=' . $recurring_info['product_id'], true);
+			]]></search>
+			<add position="replace"><![CDATA[
+				$data['product'] = $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp($recurring_info['product_id']) . '&product_id=' . $recurring_info['product_id'], true);
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/account/tracking.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $result['product_id'] . '&tracking=' . $tracking))
+			]]></search>
+			<add position="replace"><![CDATA[
+				'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'posapp_id=' . $result['posapp_id'] . '&product_id=' . $result['product_id'] . '&tracking=' . $tracking))
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/account/wishlist.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'       => $this->url->link('product/product', 'posapp_id=' . $product_info['posapp_id'] . '&product_id=' . $product_info['product_id']),
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/account/wishlist.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+			]]></search>
+			<add position="replace"><![CDATA[
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp((int)$this->request->post['product_id']) . '&product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/account/wishlist.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', true), $this->url->link('account/register', '', true), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+			]]></search>
+			<add position="replace"><![CDATA[
+				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', true), $this->url->link('account/register', '', true), $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp((int)$this->request->post['product_id']) . '&product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+			]]></add>
+		</operation>
+</file>
+
+<file path="catalog/controller/checkout/cart.php">
+	<operation error="skip">
+			<search><![CDATA[
+				public function index() {
+			]]></search>
+			<add position="after"><![CDATA[
+
+				unset($this->session->data['checkout_posapp_id']);
+				
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'      => $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp((int)$product['product_id']) . '&product_id=' . $product['product_id'])
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$data['products'] = array();
+			]]></search>
+			<add position="before"><![CDATA[
+				////modifications
+			$data['cart_posapp_ids'] = array();
+			$posapp_ids = $this->cart->getPosappIdFromCart();
+			$data['total_cart'] = sprintf( $this->language->get('text_cart_total'), $this->cart->getTotalCart());
+			foreach ($posapp_ids as $cart_posapp_id){
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$products = $this->cart->getProducts();
+			]]></search>
+			<add position="replace"><![CDATA[
+				$products = $this->cart->getProducts2($cart_posapp_id['posapp_id']);
+				$posapp_total = 0;
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$data['products'][] = array(
+			]]></search>
+			<add position="before"><![CDATA[
+
+				$t = $product['total'];				
+				$posapp_total = $posapp_total + $t ;   
+				
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				// Gift Voucher
+			]]></search>
+			<add position="before"><![CDATA[
+				////modification
+   
+                $data['cart_posapp_ids'][] = array(
+					'posapp_id' => $cart_posapp_id['posapp_id'],
+					'products' => $data['products'],
+					'total' =>  $this->currency->format($posapp_total, $this->session->data['currency']),
+					'cart_heading' => $cart_posapp_id['posapp_id']?$this->cart->getPosname($cart_posapp_id['posapp_id']):$this->config->get('config_name'),
+					'checkout' => $this->url->link('checkout/checkout', 'posapp_id='.$cart_posapp_id['posapp_id'], true),
+					'text_total_of' => sprintf($this->language->get('text_total_of'), $cart_posapp_id['posapp_id']?$this->cart->getPosname($cart_posapp_id['posapp_id']):$this->language->get('heading_title'))
+					
+				); 
+		}
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/checkout/cart.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+			]]></search>
+			<add position="replace"><![CDATA[
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp((int)$this->request->post['product_id']) . '&product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/checkout/cart.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
+			]]></search>
+			<add position="replace"><![CDATA[
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp((int)$this->request->post['product_id']) . '&product_id=' . (int)$this->request->post['product_id']));
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/checkout/confirm.php">
+
+	    <operation error="skip">
+			<search><![CDATA[
+
+				$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+				
+			]]></search>
+			<add position="before"><![CDATA[
+
+				////sharma for pos
+
+			if(isset($this->request->get['posapp_id'])) {
+				$order_data['checkout_posapp_id'] = $this->request->get['posapp_id'];
+			} elseif(isset($this->session->data['checkout_posapp_id'])){
+				$order_data['checkout_posapp_id'] = $this->session->data['checkout_posapp_id'];
+			} else{
+				$order_data['checkout_posapp_id'] = 0; 
+			}
+
+       ////sharma for pos
+				
+			]]></add>
+		</operation>
+
+		<operation error="skip">
+			<search><![CDATA[
+				'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'       => $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp((int)$product['product_id']) . '&product_id=' . $product['product_id'])
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$products = $this->cart->getProducts();
+			]]></search>
+			<add position="replace"><![CDATA[
+				if(isset($this->session->data['checkout_posapp_id'])) {
+		$checkout_posapp_id = $this->session->data['checkout_posapp_id'];
+		$products = $this->cart->getProducts2($checkout_posapp_id);
+	   }else{
+	   	$products = $this->cart->getProducts();
+
+	   }
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				foreach ($this->cart->getProducts() as $product) {
+			]]></search>
+			<add position="replace"><![CDATA[
+	foreach (isset($this->session->data['checkout_posapp_id'])?$this->cart->getProducts2($checkout_posapp_id):$this->cart->getProducts() as $product) {
+			]]></add>
+		</operation>
+		
+</file>
+<file path="catalog/controller/common/cart.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'      => $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp((int)$product['product_id']) . '&product_id=' . $product['product_id'])
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/extension/feed/google_base.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$output .= '<link>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</link>';
+			]]></search>
+			<add position="replace"><![CDATA[
+				$output .= '<link>' . $this->url->link('product/product', 'posapp_id=' . (int)$this->cart->getProductPosapp((int)$product['product_id']) . '&product_id=' . $product['product_id']) . '</link>';
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/extension/feed/google_sitemap.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$this->load->model('catalog/information');
+			]]></search>
+			<add position="before"><![CDATA[
+				$this->load->model('catalog/allpos');
+
+			$allposs = $this->model_catalog_allpos->getAllposs();
+
+			foreach ($allposs as $allpos) {
+				$output .= '<url>';
+				$output .= '  <loc>' . $this->url->link('product/allpos/info', 'posapp_id=' . $allpos['posapp_id']) . '</loc>';
+				$output .= '  <changefreq>weekly</changefreq>';
+				$output .= '  <priority>0.7</priority>';
+				$output .= '</url>';
+
+				$products = $this->model_catalog_product->getProducts(array('filter_posapp_id' => $allpos['posapp_id']));
+
+				foreach ($products as $product) {
+					$output .= '<url>';
+					$output .= '  <loc>' . $this->url->link('product/product', 'posapp_id=' . $allpos['posapp_id'] . '&product_id=' . $product['product_id']) . '</loc>';
+					$output .= '  <changefreq>weekly</changefreq>';
+					$output .= '  <priority>1.0</priority>';
+					$output .= '</url>';
+				}
+			}
+			]]></add>
+		</operation>
+		
+		<operation error="skip">
+			<search><![CDATA[
+				$output .= '  <loc>' . $this->url->link('product/product', 'manufacturer_id=' . $manufacturer['manufacturer_id'] . '&product_id=' . $product['product_id']) . '</loc>';
+			]]></search>
+			<add position="replace"><![CDATA[
+				$output .= '  <loc>' . $this->url->link('product/product', 'manufacturer_id=' . $manufacturer['manufacturer_id'] . '&posapp_id=' . $this->cart->getProductPosapp($product['product_id']) . '&product_id=' . $product['product_id']) . '</loc>';
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$output .= '  <loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>';
+			]]></search>
+			<add position="replace"><![CDATA[
+				$output .= '  <loc>' . $this->url->link('product/product', 'posapp_id=' . $product['posapp_id'] . '&product_id=' . $product['product_id']) . '</loc>';
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$output .= '  <loc>' . $this->url->link('product/product', 'path=' . $new_path . '&product_id=' . $product['product_id']) . '</loc>';
+			]]></search>
+			<add position="replace"><![CDATA[
+				$output .= '  <loc>' . $this->url->link('product/product', 'posapp_id=' . $product['posapp_id'] . '&path=' . $new_path . '&product_id=' . $product['product_id']) . '</loc>';
+			]]></add>
+		</operation>
+		
+</file>
+<file path="catalog/controller/extension/module/bestseller.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($result['product_id']) . '&product_id=' . $result['product_id'])
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/extension/module/featured.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($product_info['product_id']) . '&product_id=' . $product_info['product_id'])
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/extension/module/latest.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($result['product_id']) . '&product_id=' . $result['product_id'])
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/extension/module/paypal_smart_button.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'url' => $this->url->link('product/product', 'product_id=' . $product['product_id'], true),
+			]]></search>
+			<add position="replace"><![CDATA[
+				'url' => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($product['product_id']) . '&product_id=' . $product['product_id'], true),
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id'], true)
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'                  => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($product['product_id']) . '&product_id=' . $product['product_id'], true)
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/extension/module/special.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($result['product_id']) . '&product_id=' . $result['product_id'])
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/extension/payment/*.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$this->url->link('product/product', 'product_id=' . $product['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				$this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($product['product_id']) .'&product_id=' . $product['product_id'])
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$this->url->link('product/product', 'product_id=' . $product['product_id'], true)
+			]]></search>
+			<add position="replace"><![CDATA[
+				$this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($product['product_id']) .'&product_id=' . $product['product_id'], true)
+			]]></add>
+		</operation>
+	</file>
+<file path="catalog/controller/product/category.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($result['product_id']) . '&path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/product/compare.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'         => $this->url->link('product/product', 'product_id=' . $product_id),
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'         => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($product_id) . '&product_id=' . $product_id),
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/product/manufacturer.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'manufacturer_id=' . $result['manufacturer_id'] . '&posapp_id=' . $this->cart->getProductPosapp($result['product_id']) . '&product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/product/product.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href' => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href' => $this->url->link('product/product', $url . '&posapp_id=' . $this->cart->getProductPosapp($this->request->get['product_id']) . '&product_id=' . $this->request->get['product_id'])
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
+			]]></search>
+			<add position="replace"><![CDATA[
+				$this->document->addLink($this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($this->request->get['product_id']) . '&product_id=' . $this->request->get['product_id']), 'canonical');
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
+			]]></search>
+			<add position="replace"><![CDATA[
+				$data['share'] = $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($this->request->get['product_id']) . '&product_id=' . (int)$this->request->get['product_id']);
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($result['product_id']) . '&product_id=' . $result['product_id'])
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+				'href' => $this->url->link('product/product', $url . '&product_id=' . $product_id)
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href' => $this->url->link('product/product', $url . '&posapp_id=' . $this->cart->getProductPosapp($product_id) . '&product_id=' . $product_id)
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/product/search.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($result['product_id']) . '&product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/controller/product/special.php">
+		<operation error="skip">
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
+			]]></search>
+			<add position="replace"><![CDATA[
+				'href'        => $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($result['product_id']) . '&product_id=' . $result['product_id'] . $url)
+			]]></add>
+		</operation>
+</file>
+<file path="catalog/model/extension/payment/pp_express.php">
+		<operation error="skip">
+			<search><![CDATA[
+				$data['L_PAYMENTREQUEST_0_ITEMURL' . $i] = $this->url->link('product/product', 'product_id=' . $item['product_id']);
+			]]></search>
+			<add position="replace"><![CDATA[
+				$data['L_PAYMENTREQUEST_0_ITEMURL' . $i] = $this->url->link('product/product', 'posapp_id=' . $this->cart->getProductPosapp($item['product_id']) . '&product_id=' . $item['product_id']);
+			]]></add>
+		</operation>
+</file>
+
+
+	<!-- sharma for pos -->
+</modification>

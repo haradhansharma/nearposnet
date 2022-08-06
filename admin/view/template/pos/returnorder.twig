@@ -1,0 +1,151 @@
+{% if filter_data is empty %}
+<div class="modal-content returnfinal">
+ <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button></div>	  
+   <div class="modal-body">
+    <div class="well" style="margin-bottom: 0px;padding: 10px;">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group" style="margin-bottom: 0px;padding: 0px;">
+	        <label class="control-label" for="input-filter_customer">{{ entry_order_id }}</label>
+          	<div class="input-group">
+	            <input type="text" name="tmd_order_id" value="" onKeyDown="if(event.keyCode==13) $('.searchorder').trigger('click');" placeholder="{{ entry_order_id }}" id="input-filter_customer" class="form-control" />
+	            <a href="javascript:void(0)" class="input-group-addon searchorder" style="background: #00d8f6;"><i class="fa fa-search"></i> {{ button_search }}</a>
+          	</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="tmdreturncontent">
+{% endif %}
+    {% if filter_data and products is empty %}
+    	<div class="conttainer">
+			<div class="row text-center"><h2>{{ text_order_not_found }}</h2></div>
+		</div>
+	{% elseif filter_data and products %}
+    <div class="conttainer">
+
+<div class="row">                
+	<div id="content" class="col-sm-12">      
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<td class="text-left" colspan="2">{{ text_order_detail }}</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+		          <td class="text-left" style="width: 50%;">
+		          	{% if payment_method %}
+	              		<b>{{ text_payment_method }}</b>
+	              		 {{ payment_method }}<br />
+	              	{% endif %}
+	              	{% if payment_address %}
+	              		<b>{{ text_payment_address }}</b>
+	              		 {{ payment_address }}<br />
+	              	{% endif %}
+	              </td>
+	          	</tr>
+			</tbody>
+		</table>
+	<form action="{{ action }}" method="post">
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+		              <td class="text-left">{{ column_image }}</td>
+		              <td class="text-left">{{ column_name }}</td>
+		              <td class="text-left">{{ column_quantity }}</td>
+		              <td class="text-left">{{ column_reason }}</td>
+		              <td class="text-right">{{ column_price }}</td>
+		              <td class="text-right">{{ column_total }}</td>
+		            </tr>
+				</thead>
+				<tbody>
+            		{% for product in products %}
+					<tr>
+		              <td class="text-left">
+		              	{% if product.image %}
+	                    <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" />
+	                    {% else %}
+	                    <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
+	                    {% endif %}</td>
+		              <td class="text-left">{{ product.name }}
+            			{% for option in product.option %}
+		                <br />
+		                &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
+		                {% endfor %}</td>
+		              <td class="text-left">
+		              	<div class="col-sm-2">
+		              		{{ product.quantity }}
+		              	</div> 
+		              	<div class="col-sm-10">
+		              		<input type="text" name="product_return[{{ product.order_product_id }}][quantity]" class="form-control chkQuantity" rel2="{{ product.order_product_id }}" rel="{{ product.quantity }}">
+		              		<input type="hidden" name="product_return[{{ product.order_product_id }}][order_id]" value="{{ product.order_id }}" >
+				            <input type="hidden" name="product_return[{{ product.order_product_id }}][product_id]" value="{{ product.product_id }}" >
+				            <div class="tmderror{{ product.order_product_id }} text-danger"></div>
+		              	</div> 
+		              </td>
+		              <td class="text-left">
+		              	{#sharma for pos
+		              		<select name="product_return[{{ product.order_product_id }}][reason]" class="form-control">
+		              	}
+            				{% for reason in settingreturns %}
+		              			<option value="{{ reason.reason }}">{{ reason.reason }}</option>
+		              		{% endfor %}
+		              		</select>
+		              		sharma for pos #}
+
+
+
+		             
+                  <select name="product_return[{{ product.order_product_id }}][reason]"  class="form-control">
+                    {% for return_reason in return_reasons %}                    
+                    <option value="{{ return_reason.name }}">{{ return_reason.name }}</option>                    
+                    {% endfor %}
+                  </select>
+                
+
+
+
+
+
+
+
+		              </td>
+		              <td class="text-right">{{ product.price }}</td>
+		              <td class="text-right">{{ product.total }}</td>
+		            </tr>
+		            {% endfor %} 
+				</tbody>
+			</table>
+			<div class="form-group">
+              <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+              <div class="col-sm-5">
+                <select name="order_status_id" id="input-order-status" class="form-control">
+   	        	  {% for order_status in order_statuses %}
+                  	{% if order_status.order_status_id == order_status_id %}
+                  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  {% else %}
+                  <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+					{% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+				<div class="buttons clearfix">
+			        <div class="pull-right">
+			        	<button type="button" class="btn btn-primary returnnow">{{ button_update }}</button>
+			        </div>
+			    </div>
+		</div>
+	</form>
+	</div>
+</div>
+	</div>
+{% endif %}
+{% if filter_data is empty %}
+    </section>
+
+  </div>
+</div>
+{% endif %}

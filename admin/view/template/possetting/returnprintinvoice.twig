@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>{{ text_return }}</title>
+<link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="all" />
+<script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="all" />
+</head>
+<body>
+<div class="container">
+  {% if products %}
+  <div style="page-break-after: always;">
+   
+   <div class="col-sm-12"> 
+    {% if storelogo %}
+	 <img src="{{ storelogo }}" title="{{ config_name }}" alt="{{ config_name }}" class="img-responsive" style="margin-bottom:20px; padding-top:10px"/>
+   {% endif %}
+    <table class="table table-bordered">
+
+      <tbody>
+        <tr>
+          <td style="width: 50%;"><address>
+            {% if config_name %}
+            <strong>{{ config_name }}</strong>{% endif %}<br />
+             {% if config_address %}
+            {{ config_address }}
+            {% endif %}
+            </address>
+            {% if config_telephone %}
+            <b>{{ text_telephone }}:</b> {{ config_telephone }}<br />
+            {% endif %}
+            {% if config_email %}
+            <b>{{ text_email }}:</b> {{ config_email }}<br />
+            {% endif %}
+          
+          <td style="width: 50%;">
+            <b>{{ entry_order_date }}:</b> {{ date_added }}<br />
+            <b>{{ entry_order_id }}:</b> #{{ order_id }}<br />
+             {% if invoice_no %}
+            <b>{{ column_invoice }}:</b> {{ invoice_no }}<br />
+            {% endif %}
+            <b>{{ column_customer }}:</b> {{ customername }}<br />
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>{{ entry_name }}</th>
+          <th>{{ entry_model }}</th>
+          <th>{{ entry_reason }}</th>
+          <th>{{ entry_price }}</th>
+          <th>{{ entry_quantity }}</th>
+          <th>{{ entry_date_added }}</th>
+          <th class="text-center">{{ column_total }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <td>{{ product.name }}
+            {% for option in product.option %}
+            <br />
+            &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
+            {% endfor %}</td>
+          <td>{{ product.model }}</td>
+          <td>{{ product.reason }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.quantity }}</td>
+          <td >{{ product.date_added }}</td>
+          <td class="text-center">{{ product.total }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5"></td>
+          <td>{{ text_grand_total }}</td>
+          <td class="text-center">{{ grand_total }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+</div>
+  {% endif %}
+</body>
+</html><!-- 
+<script type="text/javascript">
+ window.print();
+</script> -->

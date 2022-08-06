@@ -1,0 +1,48 @@
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<td class="text-left">{{ column_shipping }}</td>
+			<td class="text-left">{{ column_payment }}</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="text-left">
+				{{shipping_firstname}}
+				{{shipping_lastname}}
+				{{shipping_company}},
+				{{shipping_address_1}},
+				{{shipping_address_2}},
+				{{shipping_postcode}}
+				{{shipping_city}},
+				{{shipping_zone}},
+				{{shipping_country}}
+			</td>
+			<td class="text-left">
+				{{payment_firstname}}
+				{{payment_lastname}}
+				{{payment_company}},
+				{{payment_address_1}},
+				{{payment_address_2}},
+				{{payment_postcode}}
+				{{payment_city}},
+				{{payment_zone}},
+				{{payment_country}}
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="2" class="text-center"><strong>{{column_shipping_method}}</strong></td>			
+		</tr>
+		<tr>			
+			<td colspan="2" class="text-center">{{shipping_method}}</td>			
+		</tr>
+		<tr>			
+			<td colspan="2" class="text-center"><strong>{{column_payment_method}}</strong></td>			
+		</tr>
+		<tr>			
+			<td colspan="2" class="text-center">{{payment_method}}</td>
+		</tr>
+	</tfoot>
+</table>

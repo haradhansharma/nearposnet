@@ -1,0 +1,334 @@
+<div class="pos-design2">
+{{ header }}
+<script type='text/javascript' src="view/javascript/jquery/escroll.js"></script>
+<link type="text/css" href="view/stylesheet/pos1.css" rel="stylesheet" media="screen" />
+{{ column_left }}
+<div id="content">
+	<div id="dash">
+			<div class="col-md-12 col-sm-12 col-xs-12 padd0 dashbox">
+				{{ dashboard }}
+				<ul class="list-inline box">
+					<li class="clickexpend" rel="1"><a href="javascript:;"  ><i class="fa fa-expand" aria-hidden="true"></i></a></li>
+				</ul>
+		</div>
+  </div>
+
+  <div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-5 col-md-4 col-lg-4 col-xs-12 paddright">
+				<div class="col-sm-12 col-xs-12 leftbox">
+					<div class="row">
+						<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+							<!--static-->
+							 <div class="input-group search">
+								 <input name="filter_customer" value="" placeholder="Customer search" type="text" class="form-control"/>
+								 <input name="filter_customer_id" value="" type="hidden" />
+								 <span class="input-group-btn">
+									 <button type="button" class="btn btn-srch addfiltercustomer"><i class="fa fa-search" aria-hidden="true"></i></button>
+								 </span>
+							 </div>
+							 <!--static-->
+						 </div>
+						 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+							 {{ categorysearch }}
+						 </div>
+					</div>
+					<div class="row userbox">
+							<div class="col-sm-12 col-xs-12">
+								<!--static-->
+									<img src="{{ image }}" alt="John Doe" title="admin" id="user-profile" class="img-user">
+								<!--static-->
+									<div class="detail">
+										{% if customer_name %}
+											<h3>{{ customer_name }}</h3>
+										{% endif %}
+									</div>
+							</div>
+
+					</div>
+
+						<div class="tablebox">
+							<table>
+								<tr>
+									<th width="40%">{{ text_name }}</th>
+									<th width="20%">{{ text_price }}</th>
+									<th width="20%">{{ text_qty }}</th>
+									<th width="20%">{{ text_total }}</th>
+								</tr>
+							</table>
+							<div class="scrollbox4" tabindex="0">
+								<div class="loadcartclass"></div>
+						  </div>
+							<div class="value col-sm-12 sub-totals">
+								<button type="button" class="btn-coupon btn" data-toggle="modal" data-target="#couponModal">{{ button_appcoupon }}</button>
+								<button type="button" class="btn-coupon btn" data-toggle="modal" data-target="#discountModal">{{ button_appdiscount }}</button>
+								<table class="table table1 totalload">
+									<tbody>
+									</tbody>
+								</table>
+				     </div>
+				   </div>
+				</div>
+		  </div>
+
+			<div class="col-sm-7 col-md-8 col-lg-8 col-xs-12">
+				<div class="col-sm-12 col-xs-12 boxbg2">
+					<div class="row">
+						<div class="col-md-20 col-lg-2 col-sm-3 col-xs-6">
+							 <div class="iconbox">
+								  <a rel="{{ noncatalog }}" class="btn posproduct btn-primary" data-toggle="tooltip" title="{{ button_product }}" data-original-title="{{ button_product }}"><i class="fa fa-plus"></i></a>
+							 </div>
+						</div>
+						<div class="col-md-20 col-lg-2 col-sm-3 col-xs-6">
+							 <div class="iconbox">
+									<a rel="{{ qrcode }}" class="btn btn-primary readqr" data-toggle="tooltip" title="{{ entry_qrcode }}" data-original-title="{{ entry_qrcode }}"><i class="fa fa-qrcode"></i></a>
+							 </div>
+					 </div>
+					 <div class="col-md-20 col-lg-2 col-sm-3 col-xs-6">
+							<div class="iconbox">
+								 <a rel="{{ productlist }}" class="btn btn-primary listproduct" data-toggle="tooltip" title="{{ button_addproduct }}" data-original-title="{{ button_addproduct }}"><i class="fa fa-th-list"></i></a>
+							</div>
+					 </div>
+					 <span class="categories">
+						 {{ allcategory }}
+					 </span>
+				 </div>
+				 <div class="row">
+					<div class="scrollbox3" tabindex="0">
+						<div id="wait" class="loader hide">
+							<img src="view/image/loader.gif" 	alt="loading" title="loading"/>
+						</div>
+						<div class="row subcategories"></div>
+						<div class="row">
+							<div class="col-md-12 products"></div>
+						</div>
+					 </div>
+			  </div>
+
+				<div class="row btnbox">
+					{% set i =1 %}
+					{% for sidebar in sidebars %}
+						<div class="col-md-40 col-lg-2 col-sm-3 col-xs-6">
+								<a href="{{ sidebar.href }}" rel="{{ sidebar.href }}" class="btn btn-block btn-hold tmdload" data-toggle="modal" data-target="#sidebarmodal"><i class="{{ sidebar.fa }}"></i> {{  sidebar.name }}</a>
+						</div>
+						{% set i=i+1 %}
+						{% endfor %}
+					 <div class="col-md-40 col-lg-2 col-sm-3 col-xs-6">
+						 <button type="button" class="btn btn-block btn-hold clearcart"><i class="fa fa-eraser" aria-hidden="true"></i> {{ button_clearcart }}</button>
+					 </div>
+					 <div class="col-md-40 col-lg-2 col-sm-3 col-xs-6">
+							 <button rel="{{ holdon }}" type="button" class="btn btn-block btn-hold emptyholdon"><i class="fa fa-pause" aria-hidden="true"></i> {{ button_hold }}</button>
+					 </div>
+					 <div class="col-md-40 col-lg-2 col-sm-3 col-xs-6">
+						 <div class="paynowbox">
+							 <a rel="{{ paypopup }}" class="btn btn-primary paynow btn-block btn-paynow">  <i class="fa fa-money" aria-hidden="true"></i> {{ button_paynow }}</a>
+						</div>
+					</div>
+			</div>
+
+				<ul class="list-inline pull-right btnbox">
+
+				</ul>
+			</div>
+
+
+
+		</div>
+	  </div>
+  </div>
+</div>
+
+<input type="hidden" value="2" id="page" />
+
+<!--Pos Read QR Popup Start 24 09 2019-->
+<div class="modal fade" id="qrmodal" role="dialog">
+	<div class="readqr-body modal-dialog modal-sm">
+	</div>
+</div>
+<!--Pos Read QR Popup End 24 09 2019-->
+
+<!--Pos Product List Popup Start 24 09 2019-->
+<div class="modal fade" id="productlist" role="dialog">
+	<div class="posproductlist-body modal-dialog modal-lg">
+	</div>
+</div>
+<!--Pos Product List Popup End 24 09 2019-->
+
+<!--Pos non catalog Popup Start-->
+<div class="modal fade" id="noncatalogmodal" role="dialog">
+	<div class="posproduct-body modal-dialog modal-sm"> </div>
+</div>
+<!--Pos non catalog Popup End-->
+
+<!--Pos sidebar Popup End-->
+<div class="modal fade" id="sidebarmodal" role="dialog">
+	<div class="orderlist-body modal-dialog modal-lg"> </div>
+</div>
+<!--Pos sidebar Popup End-->
+
+<!--pos holon report Start-->
+<div class="modal fade" id="holdmodal" role="dialog">
+	<div class="holdon-body modal-dialog modal-lg"> </div>
+</div>
+<!--pos holon report Start-->
+
+<!--PayNow Popup-->
+<div class="modal fade" id="paymodal" role="dialog">
+	<div class="paynow-body modal-dialog"> </div>
+</div>
+<!--PayNow Popup-->
+
+<!--ProductInfo Popup-->
+<div class="modal fade" id="infomodal" role="dialog">
+	<div class="productinfodata-body modal-dialog"> </div>
+</div>
+
+<!--ProductInfo Popup-->
+
+<div class="modal fade" id="partialmodal" role="dialog">
+	<div class="partialform-body modal-dialog modal-lg"> </div>
+</div>
+
+
+<!--Customer Form Popup Start-->
+<div class="modal fade" id="customermodal" role="dialog">
+	<div class="customerform-body modal-dialog modal-lg">
+	</div>
+</div>
+<!--Customer List Popup-->
+
+<div id="couponModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+		<div class="modal-content">
+		  <div class="modal-header">
+				 <h2 class="modal-title"><b>{{ entry_coupon }}</b></h2>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		  </div>
+		  <div class="modal-body">
+				<div class="input-group" id="coupondiscount">
+					<input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control" />
+					<span class="input-group-btn">
+					<input type="button" value="{{ button_coupon }}"   data-loading-text="{{ text_loading }}"  class="btn cartcoupon  coupondiscount1" />
+					</span>
+				</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="discountModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+		<div class="modal-content">
+		  <div class="modal-header">
+				<h2 class="modal-title"><b>{{ entry_discount }}</b></h2>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		  </div>
+		  <div class="modal-body">
+				<div class="input-group extraoptions padd col-sm-12" id="manualdiscount">
+					<input placeholder="{{ entry_discount }}" name="discount" id="discount" type="text" class="form-control">
+					<select name="discount_type" id="discount-type" class="form-control">
+						<option value="F">{{ text_fixed }}</option>
+						<option value="P">{{ text_percent }}</option>
+					</select>
+					<input type="button" value="{{ button_discount }}" data-loading-text="{{ text_loading }}"  class="btn cartcoupon manualdiscount1" />
+				</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--PrintOrder Popup End-->
+<div id="printModal" class="modalCart modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		  </div>
+		  <div class="modal-body">
+			  <div class="row">
+				<form action="" method="post" enctype="multipart/form-data" id="form-print">
+					<div class="form-group">
+						 <label class="col-sm-12 control-label" for="input-orderid">{{ entry_orderid }}</label>
+						 <div class="col-sm-12">
+							 <input type="text" name="orderid" value="" class="orderid form-control" placeholder="" id="input-orderid"/>
+							 <button type="button" class="btn btn-primary order-id">{{ button_print }}</button>
+						 </div>
+					</div>
+				 </form>
+			  </div>
+		  </div>
+		</div>
+	</div>
+</div>
+<!--PrintOrder Popup-->
+<!--Product Popup start-->
+<div id="productModal" class="modalCart modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		  </div>
+		  <div class="modal-body">
+			  <div class="row">
+				<form action="" method="post" enctype="multipart/form-data" id="form-product">
+					<div class="form-group row">
+						<label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="name" value="" class="form-control" placeholder="" id="input-name"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 control-label" for="input-price">{{ entry_price }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="price" value="" class="form-control" placeholder="" id="input-price"/>
+						</div>
+					</div>
+					<div class="text-center">
+						<button type="button" class="btn btn-primary">{{ button_submit }}</button>
+					</div>
+				 </form>
+			  </div>
+		  </div>
+		</div>
+	</div>
+</div>
+<!--Product Popup end-->
+<div id="addModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		  </div>
+		  <div class="modal-body">
+				{{ customerform }}
+      </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+var utoken = '{{ user_token }}';
+$(document).on('click','.addsplitpayment',function() {
+	$('#splitpayment').toggle('show',function(){
+		$val = $('#splitpayment').attr('class');
+		if ($val == 'hide') {
+			$('#splitpayment').attr('class','show');
+			html1 = '<option value="split" selected="selected">{{ text_split }}</option>';
+			$('#selectcard').html(html1);
+			$('#selectcard').trigger('change')
+		}else{
+			$('#splitpayment').attr('class','hide');
+			html2 = '';
+			{% for result in setting_paymentmethods %}
+			html2 += '<option value="{{ result.name }}">{{ result.name }}</option>';
+			{% endfor %}
+			$('#selectcard').html(html2);
+			$('#selectcard').trigger('change')
+		}
+	});
+});
+</script>
+<link href="index.php?route=pos/poscss&user_token={{ user_token }}" rel="stylesheet"/>
+<script type='text/javascript' src="view/javascript/pos/pos.js"></script>
+{{ footer }}

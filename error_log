@@ -1,0 +1,586 @@
+[09-Sep-2021 03:47:16 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '20' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[09-Sep-2021 03:47:16 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '18' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[09-Sep-2021 03:47:17 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '25' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[09-Sep-2021 03:47:17 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '57' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[09-Sep-2021 03:47:17 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '24' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[09-Sep-2021 03:47:18 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '33' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[05-Oct-2021 17:29:21 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[05-Oct-2021 17:29:23 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[05-Oct-2021 17:29:39 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[05-Oct-2021 17:29:45 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[11-Oct-2021 08:19:21 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:00:35 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:00:37 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:01:45 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:01:50 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:01:54 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:01:58 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:02:02 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:02:05 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 11:02:08 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:30 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:33 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:35 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:35 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:37 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:38 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:39 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:39 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:40 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:44 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:45 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:46 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:47 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:48 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:49 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:49 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[17-Oct-2021 20:54:50 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Oct-2021 03:02:12 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[28-Oct-2021 13:14:17 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[28-Oct-2021 13:14:17 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[06-Dec-2021 01:33:09 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:33:34 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:33:41 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:33:43 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:33:46 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:33:56 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:33:59 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:02 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:06 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '18' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:09 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:24 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:36 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '25' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:54 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:55 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:57 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:34:59 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:35:12 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:35:23 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:36:26 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '57' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:38:27 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:38:28 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:45:01 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:46:38 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:46:44 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:46:48 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:46:52 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:47:42 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[06-Dec-2021 01:47:43 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_pos_application pa WHERE  pa.status = '1'  AND pa.store_id = '0' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,4 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loader.php(248): ModelCatalogAllpos->getPoss(Array)
+#3 /home/sincehence/nearpos.net/system/engine/proxy in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[19-Dec-2021 12:15:46 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[23-Dec-2021 01:04:50 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[23-Dec-2021 23:25:28 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '18' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[24-Dec-2021 14:15:41 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Dec-2021 14:15:52 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Dec-2021 14:16:07 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Dec-2021 14:21:45 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Dec-2021 14:23:08 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Dec-2021 14:27:22 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Dec-2021 14:28:04 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Dec-2021 14:28:15 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[24-Dec-2021 14:28:44 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[25-Dec-2021 06:13:33 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '33' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41
+[26-Dec-2021 06:33:41 UTC] PHP Fatal error:  Uncaught Exception: Error: MySQL server has gone away<br />Error No: 2006 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[26-Dec-2021 07:53:10 UTC] PHP Fatal error:  Uncaught Exception: Error: Too many connections<br />Error No: 1040 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(31): DB\MySQLi->__construct('localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#1 /home/sincehence/nearpos.net/system/framework.php(80): DB->__construct('mysqli', 'localhost', 'sincehence_near...', 'Sharma@270815', 'sincehence_near...', '3306')
+#2 /home/sincehence/nearpos.net/system/startup.php(104): require_once('/home/sincehenc...')
+#3 /home/sincehence/nearpos.net/index.php(22): start('catalog')
+#4 {main}
+  thrown in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 10
+[01-Jan-2022 09:21:26 Asia/Dhaka] PHP Fatal error:  Uncaught Exception: Error: Incorrect parameter count in the call to native function 'RADIANS'<br />Error No: 1582<br />SELECT *, (SELECT name FROM vp_country c WHERE c.country_id = pa.country_id) AS country, (SELECT name FROM vp_zone z WHERE z.zone_id = pa.zone_id) AS zone, (3959 * ACOS(COS(RADIANS()) * COS(RADIANS(pa.latitude)) * COS(RADIANS(pa.longitude) - RADIANS()) + SIN(RADIANS()) * SIN(RADIANS(pa.latitude)))) AS distance  FROM vp_posapp_to_category p2c LEFT JOIN `vp_pos_application` pa ON (pa.posapp_id = p2c.posapp_id) WHERE  pa.status = '1'  AND pa.store_id = '0' AND p2c.category_id = '57' GROUP BY pa.posapp_id ORDER BY distance  ASC, LCASE(pa.posname) ASC LIMIT 0,15 in /home/sincehence/nearpos.net/system/library/db/mysqli.php:41
+Stack trace:
+#0 /home/sincehence/nearpos.net/system/library/db.php(45): DB\MySQLi->query('SELECT *, (SELE...')
+#1 /home/sincehence/nearpos.net/catalog/model/catalog/allpos.php(206): DB->query('SELECT *, (SELE...')
+#2 /home/sincehence/nearpos_data/modification/system/engine/loa in /home/sincehence/nearpos.net/system/library/db/mysqli.php on line 41

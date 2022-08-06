@@ -1,0 +1,12 @@
+.gitattributes
+build.xml
+CHANGELOG.md
+CHANGELOG_AUTO.md
+composer.json
+composer.lock
+install.txt
+nearpos.net.zip
+upgrade.txt
+cgi-bin
+nearpos_data.zip
+sincehence_nearpos_sql.zip

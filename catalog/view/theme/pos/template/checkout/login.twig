@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="panel-body">
+    <ul class="nav nav-pills nav-fill">
+      <li class="active"><a href="#tab-guest" data-toggle="tab">{{ tab_guest }}</a></li>
+      <li><a href="#tab-login" data-toggle="tab">{{ tab_login }}</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab-guest">
+<div class="col-sm-12">
+    <h2>{{ text_new_customer }}</h2>
+    <p>{{ text_checkout }}</p>
+    <div class="radio">
+      <label> {% if account == 'register' %}
+        <input type="radio" name="account" value="register" checked="checked" />
+        {% else %}
+        <input type="radio" name="account" value="register" />
+        {% endif %}
+      {{ text_register }}</label>
+    </div>
+    {% if checkout_guest %}
+    <div class="radio">
+      <label> {% if account == 'guest' %}
+        <input type="radio" name="account" value="guest" checked="checked" />
+        {% else %}
+        <input type="radio" name="account" value="guest" />
+        {% endif %}
+      {{ text_guest }}</label>
+    </div>
+    {% endif %}
+    <p>{{ text_register_account }}</p>
+    <input type="button" value="{{ button_continue }}" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+
+      </div>
+      <div class="tab-pane" id="tab-login"> 
+        <div class="col-sm-12">
+    <h2>{{ text_returning_customer }}</h2>
+    <p>{{ text_i_am_returning_customer }}</p>
+    <div class="form-group">
+      <label class="control-label" for="input-email">{{ entry_email }}</label>
+      <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="input-password">{{ entry_password }}</label>
+      <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+      <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
+      <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+    </div>
+
+
+      </div>
+    </div>
+  </div>
+  </div>

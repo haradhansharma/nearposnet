@@ -1,0 +1,10 @@
+<div class="{% if (poslayout=='layout3' or poslayout=='layout4') %}input-group{% endif %} search">
+	<input name="filter_product" value="{{ filter_product }}" onKeyDown="if(event.keyCode==13) $('.serchproduct').trigger('click');" placeholder="search products" type="text" class="form-control"/>
+	{% if (poslayout=='layout3' or poslayout=='layout4') %}
+	<span class="input-group-btn">
+	{% endif %}
+	 <button type="button" id="button-filter" class="btn btn-srch {% if (poslayout=='layout3') %} serchproduct1 {% else %} serchproduct {% endif %}"><i class="fa fa-search" aria-hidden="true"></i></button>
+	 {% if (poslayout=='layout3') %}
+   </span>
+ 	 {% endif %}
+</div>

@@ -1,0 +1,112 @@
+{{ header }}
+<div id="account-account" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if success %}
+  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <!-- ////sharma for POS -->
+      <div class="row">   
+
+
+        {% set id = 0 %}
+        {% for dash in acount_dash %}
+        {% set id = id + 1 %}
+
+        {% if id == 1 %}
+        {% set resultclass = 'red' %}
+        {% elseif id == 2  %}
+        {% set resultclass = 'green' %}
+        {% elseif id == 3 %}
+        {% set resultclass = 'yellow' %}
+        {% elseif id == 4 %}
+        {% set resultclass = 'blue' %}
+        {% elseif id == 5 %}
+        {% set resultclass = 'sky' %}
+        {% elseif id == 6 %}
+        {% set resultclass = 'brown' %}
+        {% elseif id == 7 %}
+        {% set resultclass = 'pink' %}
+        {% elseif id == 8 %}
+        {% set resultclass = 'black' %}
+        {% elseif id == 9  %}
+        {% set resultclass = 'purple' %}
+        {% elseif id == 10 %}
+        {% set resultclass = 'orange' %}
+        {% endif %}
+
+        <div class="dash_inline">
+          <div class="product-thumb ac_dash">
+            <div class="hidden">{{id}}</div>
+            <div class="dash_result {{resultclass}}">{{dash.result}}</div> 
+            <div class="dash_title"> {{dash.title}}</div>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {#<h2>{{ text_pos_status }}</h2>
+      <ul class="list-unstyled">
+        {% if pos_status %}
+        <li><a href="{{ pos_status }}">{{ text_pos_status }}</a></li>
+        {% endif %}
+        <li><a href="{{ new_pos_application }}">{{ text_pos_application }}</a></li>
+        
+      </ul>
+      <!-- ////sharma for pos -->
+      <h2>{{ text_my_account }}</h2>
+      <ul class="list-unstyled">
+        <li><a href="{{ edit }}">{{ text_edit }}</a></li>
+        <li><a href="{{ password }}">{{ text_password }}</a></li>
+        <li><a href="{{ address }}">{{ text_address }}</a></li>
+        <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+      </ul>
+      {% if credit_cards %}
+      <h2>{{ text_credit_card }}</h2>
+      <ul class="list-unstyled">
+        {% for credit_card in credit_cards %}
+        <li><a href="{{ credit_card.href }}">{{ credit_card.name }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <h2>{{ text_my_orders }}</h2>
+      <ul class="list-unstyled">
+        <li><a href="{{ order }}">{{ text_order }}</a></li>
+        <li><a href="{{ download }}">{{ text_download }}</a></li>
+        {% if reward %}
+        <li><a href="{{ reward }}">{{ text_reward }}</a></li>
+        {% endif %}
+        <li><a href="{{ return }}">{{ text_return }}</a></li>
+        <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+        <li><a href="{{ recurring }}">{{ text_recurring }}</a></li>
+      </ul>
+      {#<!-- <h2>{{ text_my_affiliate }}</h2>
+      <ul class="list-unstyled">
+        {% if not tracking %}
+        <li><a href="{{ affiliate }}">{{ text_affiliate_add }}</a></li>
+        {% else %}
+        <li><a href="{{ affiliate }}">{{ text_affiliate_edit }}</a></li>
+        <li><a href="{{ tracking }}">{{ text_tracking }}</a></li>
+        {% endif %}
+      </ul> -->#}
+      <h2>{{ text_my_newsletter }}</h2>
+      <ul class="list-unstyled">
+        <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+      </ul>
+    {{ content_bottom }}</div>
+  {{ column_right }}</div>
+</div>
+{{ footer }}

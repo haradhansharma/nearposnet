@@ -1,0 +1,73 @@
+<div class="">
+	<div class="loader1 hide">
+		<img src="view/image/loader.gif" alt="loading" title="loading"/>
+	</div>
+		<table>
+		{% set i=0 %}
+    {% if products %}
+			{% for product in products %}
+		<tr>
+			<td class="imagepading" {% if(poslay=='layout2') %}width="44%"{% elseif(poslay=='layout4') %}width="40%"{% endif %}>
+				{% if(poslay=='layout2') %}
+				<button type="button" data-toggle="tooltip" title="Remove" class="btn refresh remove myButton2"  rel="{{ product.key }}"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				{% endif %}
+
+				{% if product.thumb %}
+          <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="{% if(poslay=='layout2') %} img-right {% elseif(poslay=='layout4') %} hide {% else %} img-left {% endif %}" />
+        {% endif %}
+				<div class="name">{{ product.name }}</div>
+				 {% if product.option %}
+	          {% for option in product.option %}
+	           <br />
+	           <small>{{ option.name }}: {{ option.value }}</small>
+	          {% endfor %}
+	       {% endif %}
+			</td>
+			<td {% if(poslay=='layout3') %}class="text-center" {% elseif(poslay=='layout4') %}width="20%" {% else %}width="18%"{% endif %}>
+				<div id="priceedit{{ i }}"><i  class="pprices" rel="{{ i }}" rel1="{{ product.prices }}"> <span class="productprice quickspan">{{ product.price }}</span></i></div>
+			</td>
+			<td {% if(poslay=='layout3') %}class="text-center" {% else %}width="20%"{% endif %}>
+				<div class="qty">
+					<button type="button" data-toggle="tooltip" title="Update" class="refresh update qtyminus" rel="{{ product.key }}" rel1="{{ i }}" ><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+					<input type="text" name="quantity[{{ product.key }}]" value="{{ product.quantity }}" size="1" class="form-control qtybox quantity{{ i }}" />
+					<button type="button" data-toggle="tooltip" title="Update" class="refresh update qtyplus"  rel="{{ product.key }}" rel1="{{ i }}" ><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+				</div>
+			</td>
+			<td {% if(poslay=='layout3') %}class="text-center" {% elseif(poslay=='layout4') %}width="20%" {% else %} width="18%"{% endif %}>{{ product.total }}</td>
+			{% if(poslay=='layout3') %}<td class="text-center">
+			<button type="button" data-toggle="tooltip" title="Remove" class="btn refresh remove myButton2"  rel="{{ product.key }}"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+			</td>{% endif %}
+		 </tr>
+
+		{% set i = i+1 %}
+        {% endfor %}
+        {% endif %}
+		</table>
+	</div>
+
+</div>
+<script type="text/javascript">
+
+</script>
+<script>
+$(document).on('click','.pprices',function() {
+    rel=$(this).attr('rel');
+    rel1=$(this).attr('rel1');
+  	 html ='<input type="text" name="price" class="form-control price'+rel+'" value="'+rel1+'" />';
+    $('#priceedit'+rel).html(html);
+  });
+
+
+	$(function () {
+		$('.qtyplus').on('click',function(){
+			var $qty=$(this).closest('.qty').find('.qtybox');
+			var currentVal = parseInt($qty.val());
+				$qty.val(currentVal + 1);
+		});
+		$('.qtyminus').on('click',function(){
+			var $qty=$(this).closest('.qty').find('.qtybox');
+			var currentVal = parseInt($qty.val());
+			$qty.val(currentVal - 1);
+		});
+	});
+</script>

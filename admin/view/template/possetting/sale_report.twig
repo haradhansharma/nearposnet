@@ -1,0 +1,223 @@
+{{ header }}{{ column_left }}
+<div id="content">
+<div class="page-header">
+<div class="container-fluid">
+  <div class="pull-right">
+  <button type="submit" id="form-report" form="form-order" data-toggle="tooltip" title="{{ text_print }}" class="btn btn-primary"><i class="fa fa-print"></i></button>
+</div>
+<h1>{{ heading_title }}</h1>
+<ul class="breadcrumb">
+{% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+</ul>
+</div>
+</div>
+<div class="container-fluid"> 
+{% if error_warning %}
+<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{% endif %}
+{% if success %}
+<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{% endif %}
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+</div>
+<div class="panel-body">
+  <div class="well">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label" for="input-order_id">{{ column_order_id }}</label>
+            <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ column_order_id }}" id="input-order_id" class="form-control" />
+          </div>
+        </div>
+        <!-- Payment Method -->
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label" for="input-filter_payment_method">{{ column_payment_method }}</label>
+            <select name="filter_payment_method" class="form-control" id="selectcard">
+              <option value="*">{{ text_select }}</option>
+              {% for result in setting_paymentmethods %}
+              {% if result.name == filter_payment_method %}
+              <option value="{{ result.name }}" selected="selected">{{ result.name }}</option> 
+              {% else %}
+              <option value="{{ result.name }}">{{ result.name }}</option> 
+             {% endif %}
+             {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="control-label">{{ column_date }}</label>
+            <div class="input-group">
+              <span class="input-group-addon">
+                {{ column_form }}
+              </span>
+              <input type="text" name="filter_date_form" value="{{ filter_date_form }}" class="form-control datefrom" data-date-format="YYYY-MM-DD" id="input-filter_date_added_form"/>
+              <span class="input-group-addon ">
+                {{ column_to }}
+              </span>
+              <input type="text" name="filter_date_to" value="{{ filter_date_to }}" class="form-control dateto" data-date-format="YYYY-MM-DD" id="input-filter_date_added_to"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2 text-center">
+          <button type="button" style="margin-top:30px;" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        </div>
+      </div>
+   </div>
+  <form action="{{ salereports }}" target="_blank" method="post" enctype="multipart/form-data" id="form-order">
+    <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-left">{% if sort == 'date' %}
+            <a href="{{ sort_date }}" class="{{ order|lower }}">{{ column_date }}</a>
+            {% else %}
+            <a href="{{ sort_date }}">{{ column_date }}</a>
+            {% endif %}
+          </td>
+
+          <td class="text-left">{% if sort == 'order_id' %}
+            <a href="{{ sort_order_id }}" class="{{ order|lower }}">{{ column_order_id }}</a>
+            {% else %}
+            <a href="{{ sort_order_id }}">{{ column_order_id }}</a>
+            {% endif %}
+          </td>
+
+          <td class="text-left">{% if sort == 'product' %}
+            <a href="{{ sort_product }}" class="{{ order|lower }}">{{ column_product }}</a>
+            {% else %}
+            <a href="{{ sort_product }}">{{ column_product }}</a>
+            {% endif %}
+          </td>
+
+          <td class="text-left">{% if sort == 'payment_method' %}
+            <a href="{{ sort_payment_method }}" class="{{ order|lower }}">{{ column_payment_method }}</a>
+            {% else %}
+            <a href="{{ sort_payment_method }}">{{ column_payment_method }}</a>
+            {% endif %}
+          </td>
+
+          {% for tax in saletaxs %}
+          <td class="text-left">
+            {{ tax.name }}
+          </td>
+          {% endfor %}
+
+          <td class="text-left">{% if sort == 'total' %}
+            <a href="{{ sort_total }}" class="{{ order|lower }}">{{ column_total }}</a>
+            {% else %}
+            <a href="{{ sort_total }}">{{ column_total }}</a>
+            {% endif %}
+          </td>
+
+           <td class="text-left">{{ column_partial_paid }}</td>
+
+          <td class="text-left">{{ column_partial_due }}</td>
+                    
+        </tr>
+      </thead>
+      <tbody>
+        {% if sellreports %}
+        {% for sellreport in sellreports %}
+        <tr>
+          <td class="text-left">{{ sellreport.date_added }}</td>
+          <td class="text-left">{{ sellreport.order_id }}</td>
+          <td class="text-left">
+            {% for product in sellreport.product %}
+            <br />
+            <a href="{{ product.proview }}" target="_new">{{ product.name }}</a>
+            {% endfor %}
+          </td>
+          <td class="text-left">{{ sellreport.payment_method }}</td>
+
+          {% for tax in sellreport.tax %}
+          <td class="text-left">
+            {{ tax.value }}
+          </td>
+          {% endfor %}
+          <td class="text-left">{{ sellreport.total }}</td>
+          <td class="text-left">{{ sellreport.partial_paid }}</td>
+          <td class="text-left">{{ sellreport.due_partial }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td class="text-center" colspan="4"><strong>{{ column_grand }}</strong></td> 
+         {% for tax in texttotals %}
+          <td class="text-left">
+            {{ tax.value }}
+          </td>
+          {% endfor %}
+          
+          <td class="text-left"><strong>{{ grandtotale }}</strong></td> 
+          <td class="text-left"><strong>{{ grandpaid }}</strong></td> 
+          <td class="text-left"><strong>{{ granddue }}</strong></td> 
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+$('#button-filter').on('click', function() {
+  var url = 'index.php?route=possetting/sale_report&user_token={{ user_token }}';
+  
+  var filter_order_id = $('input[name=\'filter_order_id\']').val();
+
+  if (filter_order_id) {
+    url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+  }
+
+  var filter_payment_method = $('select[name=\'filter_payment_method\']').val();
+
+  if (filter_payment_method !='*') {
+    url += '&filter_payment_method=' + encodeURIComponent(filter_payment_method);
+  }
+
+  var filter_date_form = $('input[name=\'filter_date_form\']').val();
+
+  if (filter_date_form) {
+    url += '&filter_date_form=' + encodeURIComponent(filter_date_form);
+  }
+
+  var filter_date_to = $('input[name=\'filter_date_to\']').val();
+
+  if (filter_date_to) {
+    url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
+  }
+
+  location = url;
+});
+</script>
+
+ <script type="text/javascript"><!--
+$('.datefrom').datetimepicker({
+  pickTime: false
+});
+$('.dateto').datetimepicker({
+  pickTime: false
+}); 
+//--></script>
+
+{{ footer }}

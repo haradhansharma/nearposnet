@@ -1,0 +1,55 @@
+{% if warning %}
+<div id="content" class="col-sm-12 bg alert text-danger">
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ warning }}<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+</div>
+{% else %}
+<div class="modal-dialog" >
+    <div class="modal-content">
+        <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+        <div class="modal-body">
+        <div class="holdonsuccess"></div>
+        <form name="certform">
+             <div class="input-group" id="holdon">
+                <input type="text" name="holdon_no" value="" placeholder="{{ text_value }}" id="input-coupon" class="form-control" />
+                <span class="input-group-btn">
+                <input type="button" value="{{ button_submit }}" id="hold"  data-loading-text="{{ text_loading }}"class="btn btn-primary submitholdon" />
+                </span>
+            </div>
+        </div>
+     </div>
+   </form>
+</div>
+
+<script>
+$('.submitholdon').on('click', function() {
+  $.ajax({
+  url: 'index.php?route=pos/holdon/submitholdon&user_token={{ user_token }}',
+  data: $('#holdon input[type=\'text\']'),
+  type:'post',
+  dataType:'json',
+  beforeSend: function() {
+     
+  },
+  success: function(json) {
+    $('.alert, .text-danger').remove();
+   
+    if (json['error']) {
+      $('.holdonsuccess').append('<div class="alert alert-danger">'+json['error']+'</div>');
+    }
+
+    if (json['success']) {
+      $('#help-modal21').modal('hide');
+      $('.close').trigger('click');
+      $('.loadcartclass div table').remove();
+       $('.holdonsuccess').append('<div class="alert alert-success">'+json['success']+'</div>');
+       loadtotal();
+    }
+    
+
+  }
+});
+});
+
+</script>
+{% endif %}
+

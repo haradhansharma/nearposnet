@@ -1,0 +1,58 @@
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<link href="view/stylesheet/bootstrap.css" type="text/css" rel="stylesheet" />
+<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+      </div>
+      <h1>{{ heading_title }}</h1>
+      
+    </div>
+  </div>
+  <div class="container-fluid">
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      </div>
+      <div class="panel-body">    
+    <form action="" method="post" enctype="multipart/form-data" id="form-order">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            
+            <td class="text-left">{{ column_order_id }}</td>
+            <td class="text-left">{{ column_order_status }}</td>
+            <td class="text-left">{{ column_spit_method }}</td>
+            <td class="text-left">{{ column_totalamount }}</td>
+            <td class="text-left">{{ column_date_added }}</td>
+              
+          </tr>
+        </thead>
+          {% if reports %}
+          {% for result in reports %}
+          <tr>
+            <td class="text-left">#{{ result.order_id }}</td>
+            <td class="text-left">{{ result.order_status_name }}</td>
+            <td class="text-left">
+              {% for result2 in result.payments %}
+                {{ result2.method }} : {{ result2.amount }}<br/>
+              {% endfor %} 
+            </td>
+            <td class="text-left">{{ result.totalamount }}</td>
+            <td class="text-left">{{ result.date_added }}</td>
+          </tr>
+          {% endfor %} 
+          {% endif %}
+            </table>
+        </div>
+    </form>
+       
+    </div>
+    </div>
+  </div>
+</div>
+

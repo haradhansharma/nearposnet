@@ -1,0 +1,93 @@
+{% if not tmdurl %}
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Hold On Product</h3>
+      </div>
+    </div>
+  </div>
+  {% endif %}	  
+  <div class="modal-body tmdholdreport">
+    <form method="post" action="" enctype="multipart/form-data" id="form-holdonreport" class="posholdon">
+      <div class="table-responsive">
+        
+        <table class="table table-bordered table-hover">
+          <thead class="sortorder">
+            <tr>
+              <td class="text-center bgc1">{{ column_holdonid }}</td>
+              <td class="text-center bgc1">{{ column_customer }}</td>
+              <td class="text-center bgc1">{{ column_holdon }}</td>
+              <td class="text-center bgc1">{{ column_dateadded }}</td>
+              <td class="text-center bgc1">{{ column_action }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% if holdreports %}
+            {% for result in holdreports %}
+              <tr class="hold{{ result.holdon_id }}">
+              <td class="text-center">{{ result.holdon_id }}</td>
+              <td class="text-center">{{ result.customername }}</td>
+              <td class="text-center">{{ result.holdon_no }}</td>
+              <td class="text-center">{{ result.date_added }}</td>
+              <div class="holdon"><input type="hidden" name="holdon_id" value="{{ result.holdon_id }}"></div>
+              <td class="text-center">
+                <a href="{{ result.print }}" target="_blank" data-toggle="tooltip" title="{{ button_print }}" class="btn btn-success"><i class="fa fa-print"></i></a>
+                <button type="button" rel="{{ result.holdon_id }}" class="btn btn-primary holdoncart"><i class="fa fa-shopping-cart"></i></button>
+                <button type="button" onclick="tmdDelete('{{ result.delete }}')" class="btn btn-danger tmdDelete"><i class="fa fa-trash-o"></i></button>
+              </td>
+            </tr>
+            {% endfor %}
+    				<tr>
+    				<td colspan="7">
+    					<div class="col-sm-6 text-left">{{ pagination }}</div>
+    				  <div class="col-sm-6 text-right">{{ results }}</div>
+    				</td>
+    				</tr>
+            {% else %}
+            <tr>
+              <td class="text-center" colspan="8">{{ text_no_results }}</td>
+            </tr>
+            {% endif %}
+          </tbody>
+       </table>
+      </div>
+    </form>
+  </div>
+  {% if not tmdurl %}
+</div>
+<style>
+.padd0{padding: 0px;}
+.bgc1{background: #00d8f6;color: #fff;padding: 12px;}
+</style>
+
+<script>
+$(document).on('click', '.tmdholdreport .pagination li a',function(e){
+  e.preventDefault();
+  $val = $(this).attr('href');
+  $url = $val+'&filter_data=true';
+  $('.tmdholdreport').empty('');
+  $('.tmdholdreport').load($url);
+});
+
+  function tmdDelete(url){
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      beforeSend: function() {
+       $('.tmdholdreport').html('<div class="loadingpoup"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div>');
+       $('.tmdDelete').button('loading');
+      },
+      complete: function() {
+       $('.loadingpoup').remove();
+       $('.tmdDelete').button('reset');
+      },
+      success: function(json) {
+        $('.tmdholdreport').html(' ');
+        $('.tmdholdreport').load(json['tmdurl']);
+      },
+    });
+  }
+</script>
+{% endif %}

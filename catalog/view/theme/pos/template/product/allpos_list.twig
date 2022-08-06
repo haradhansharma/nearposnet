@@ -1,0 +1,255 @@
+{{ header }}
+<script type="text/javascript">
+// sharma for pos
+function initAutocomplete() {
+  var input = document.getElementById('pac-input');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  google.maps.event.addListener(autocomplete, 'place_changed', function () {
+    var place = autocomplete.getPlace();
+    var address = place.formatted_address;
+    var latitude = place.geometry.location.lat();
+    var longitude = place.geometry.location.lng();
+    
+
+    $.ajax({
+      url: 'index.php?route=product/allpos/findlocation',
+      type: 'post',
+      data: { address:address, lat:latitude, lng:longitude },
+      // dataType: 'json',
+      beforeSend: function() {
+        
+      },
+      complete: function() {
+        
+      },
+      success: function() {
+        location.reload();
+
+        
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+
+
+  });
+}
+google.maps.event.addDomListener(window, 'load', initAutocomplete);
+// sharma for pos
+</script>
+<div id="product-allpos" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+
+    
+
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <div class="row searchlocation">
+      <div class="col-sm-6">
+      <h3>{{ heading_title }}</h3>
+    </div>
+    <div class="col-sm-6">
+      <form class="form-horizontal">
+        <input id="pac-input" data-toggle="tooltip" title="Enter location where delivery is required!" class="form-control" name="pacinput" type="text" placeholder="You are Searching for -- {{ formated_address }}" />      
+      </form>
+      </div>
+    </div>
+
+      {% if categories %}          
+      <div class="col-xs-12 scr">
+        {% if categories %}           
+        <div class="carousel swiper-viewport">
+          <div id="carousel{{ rss }}" class="swiper-container">
+            <div class="swiper-wrapper">
+              {% for category in categories %}
+              <div class="swiper-slide text-center">
+                <span class="btn"><a href="{{ category.href }}">{{ category.name }}</a></span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>            
+          <div class="swiper-pager">
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
+        </div>              
+        {% else %}              
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if posapps %}      
+      <div class="row">
+        {% for category in posapps %}  
+        <a class="product-layout product-grid col-lg-3 col-md-4 col-sm-6 col-xs-12" href="{{ category.href }}">        
+          <div class="product-thumb">
+            <div class="inner-p">
+              <div class="pos-head">
+                <div class="col-xs-3 pos-id">
+                  <img src="{{ category.site_logo }}" alt="{{ category.posname }}" title="{{ category.posname }}"  />
+        <div class="p_id" style="width: {{ thumb_number_width }}px; height: {{ thumb_number_height }}px; margin-left: auto; margin-right: auto; margin-top: 5px;"> {{category.posapp_id}}</div>
+                </div>
+              
+             
+                <div class="col-xs-9 pos-name">{{ category.posname }}</div>
+              </div>
+              <div class="pos-middle">
+                <div class="col-xs-3 pos-catagories"> 
+                  <div class="result">
+                   {% for pos_category in category.pos_categories %}
+                   {{ pos_category.name }}
+                   {% for child in pos_category.children %}
+                   {{ child.name }}
+                   {% endfor %}             
+                   {% endfor %} 
+                 </div>                        
+               </div>
+               <div class="pic"><img src="{{ category.frontimage }}"  alt="{{ category.posname }}" title="{{ category.posname }}" class="img-responsive" /></div>
+               <div class="col-xs-3 dis-and-ser">
+                <div class="result">
+                  <div class="col-xs-12 pos-distance">{{ category.distance }}</div>
+                  <div class="col-xs-12 pos-service-area">{{ category.alloweddistance }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="pos-foot">
+              {% if category.latitude and category.longitude %}
+              <div class="col-xs-6 googlemaps" id="googlemaps_{{ category.posapp_id }}"></div>
+              {% endif %}              
+              <div class="col-xs-6 pos-adds">
+                {{ category.address }}, {{ category.city }}
+                {{ category.zone }}
+                {{ category.country }}
+              </div>
+            </div> 
+          </div>            
+        </div>      
+      </a> 
+      <script type="text/javascript"><!--
+      function getMap() {
+        var latitude = {{ category.latitude }};
+        var longitude = {{ category.longitude }};
+        var latlng = new google.maps.LatLng(latitude, longitude);
+        var myOptions = {
+          zoom: 9,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          streetViewControl: false
+        };
+        var map = new google.maps.Map(document.getElementById('googlemaps_{{ category.posapp_id }}'), myOptions);
+        if (latitude && longitude) {
+          map.setZoom(12);
+          map.setCenter(latlng);
+          var marker = new google.maps.Marker({map: map, position: latlng});
+        } else {
+          map.setZoom(3);
+        }
+      }
+      getMap('{{ category.latitude }}', '{{ category.longitude }}');
+      //--></script>
+      {% endfor %} 
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">{{ pagination }}</div>
+      <div class="col-sm-6 text-right">{{ results }}</div>
+    </div>
+    {% endif %}
+    {% if not categories and not posapps %}
+    <p>{{ text_empty }}</p>
+    <div class="buttons">
+      <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+    </div>
+    {% endif %}
+  {{ content_bottom }}</div>
+{{ column_right }}</div>
+</div>
+<style>
+/*.googlemaps { margin-top:10px; position:relative; width:100%; max-width:100%; height:200px; }*/
+.posname {text-transform: uppercase;text-align: left; width: 50%; display: inline-block;padding-left: 5px;}
+.pos-thumb-head {
+  display: inline-block;
+  width: 100%;
+  float: left;
+  height: auto;
+  margin-bottom: 15px;
+  position: relative;
+}
+.pos-thumb-head .image {
+  padding: 0!important;
+}
+
+</style>
+<script type="text/javascript"><!--
+$('#carousel{{ rss }}').swiper({
+  mode: 'horizontal',
+  slidesPerView: 4, 
+  breakpoints: {
+    // when window width is >= 320px
+    320: {
+      slidesPerView: 1,
+      
+    },
+    // when window width is >= 480px
+    480: {
+      slidesPerView: 2,
+      
+    },
+    // when window width is >= 640px
+    660: {
+      slidesPerView: 3,
+      
+    },
+    991: {
+      slidesPerView: 4,
+      
+    },
+    1199: {
+      slidesPerView: 6,
+      
+    },
+    1400: {
+      slidesPerView: 8,
+      
+    },
+    1700: {
+      slidesPerView: 10,
+      
+    }
+  } ,  
+  pagination: '.carousel{{ rss }}',
+  paginationClickable: false,
+  nextButton: '.carousel .swiper-button-next',
+  prevButton: '.carousel .swiper-button-prev',
+  autoplay: 0,
+  loop: false
+});
+//--></script>
+<script type="text/javascript">
+
+$(document).delegate('#button-pos-search', 'click', function() {
+  $('#content').load(' #content');
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+{{ footer }} 
+

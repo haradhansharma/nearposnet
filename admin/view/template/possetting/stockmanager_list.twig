@@ -1,0 +1,186 @@
+{{ header }}{{ column_left }}
+<div id="content">
+<div class="page-header">
+<div class="container-fluid">
+<div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+<button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-information').submit() : false;"><i class="fa fa-trash-o"></i></button>
+</div>
+<h1>{{ heading_title }}</h1>
+<ul class="breadcrumb">
+{% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+</ul>
+</div>
+</div>
+<div class="container-fluid">
+{% if error_warning %}
+<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{% endif %}
+{% if success %}
+<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{% endif %}
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+</div>
+<div class="panel-body">
+	<div class="well">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="input-package-title">{{ entry_product }} </label>
+					<input type="text" name="filter_product" value="" placeholder="{{ entry_product }}" id="input-name" class="form-control" />
+					<input type="hidden" name="product_id" value="">
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="input-package-title">{{ entry_store }} </label>
+					<input type="text" name="filter_store" value="" placeholder="{{ entry_store }}" id="input-name" class="form-control" />
+					<input type="hidden" name="store_id" value="">
+				</div>
+			</div>
+			<div class="col-sm-2 text-center">
+				<button style="margin-top:35%;" type="button" id="button-filter" class="btn btn-primary">
+				<i class="fa fa-filter"></i> {{ button_filter }}</button>
+			</div>
+		</div>
+	</div>
+	<form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-information">
+		<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+											
+						<td class="text-left">{% if sort == 'product' %}
+						<a href="{{ sort_product }}" class="{{ order|lower }}">{{ column_product }}</a>
+						{% else %}
+						<a href="{{ sort_product }}">{{ column_product }}</a>
+						{% endif %}</td>
+					
+						<td class="text-left">{% if sort == 'store' %}
+						<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>
+						{% else %}
+						<a href="{{ sort_store }}">{{ column_store }}</a>
+						{% endif %}</td>
+						
+						<td class="text-left">{% if sort == 'quantity' %}
+						<a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a>
+						{% else %}
+						<a href="{{ sort_quantity }}">{{ column_quantity }}</a>
+						{% endif %}</td>
+					
+					  	<td class="text-right">{{ column_action }}</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% if stockmanagers %}
+				{% for result in stockmanagers %}
+				<tr>
+				 <td class="text-center">
+			    	<input type="checkbox" name="selected[]" value="{{ result.stock_id }}"  />
+				</td>
+					<td class="text-left">{{ result.product }}</td>
+					<td class="text-left">{{ result.store }}</td>
+					<td class="text-left"><input type="text" value="{{ result.quantity }}"/></td>
+					<td class="text-right"><a href="{{ result.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+				</tr>
+				{% endfor %} 
+				{% else %}
+				<tr>
+					<td class="text-center" colspan="4">{{ text_no_results }}</td>
+				</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+</form>
+<div class="row">
+	<div class="col-sm-6 text-left">{{ pagination }}</div>
+	<div class="col-sm-6 text-right">{{ results }}</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$('#button-filter').on('click', function() {
+	var url = 'index.php?route=possetting/stockmanager&user_token={{ user_token }}';
+	
+	var filter_product = $('input[name=\'product_id\']').val();
+
+	if (filter_product) {
+		url += '&filter_product=' + encodeURIComponent(filter_product);
+	}
+	
+	var filter_store = $('input[name=\'store_id\']').val();
+
+	if (filter_store) {
+		url += '&filter_store=' + encodeURIComponent(filter_store);
+	}
+			
+  location = url;
+});
+</script>
+<script type="text/javascript">
+$('input[name=\'filter_store\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=possetting/store/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				json.unshift({
+					store_id: 0,
+					name:'{{ text_none }}'
+				});
+
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['store_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_store\']').val(item['label']);
+		$('input[name=\'store_id\']').val(item['value']);
+	}
+});
+</script>
+
+<script type="text/javascript">
+$('input[name=\'filter_product\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				json.unshift({
+					product_id: 0,
+					name:'{{ text_none }}'
+				});
+
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_product\']').val(item['label']);
+		$('input[name=\'product_id\']').val(item['value']);
+	}
+});
+</script>
+{{ footer }}

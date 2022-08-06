@@ -1,0 +1,113 @@
+
+<div class="modal-content tmdselectcustom">
+ <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+   <div class="modal-body">
+    <div class="well">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+	        <label class="control-label" for="input-filter_customer">{{ entry_customer }} </label>
+          	<div class="input-group">
+	            <input type="text" name="tmdcustomer_name" value="" placeholder="{{ entry_customer }}" id="input-filter_customer" class="form-control" />
+	            <a href="javascript:void(0)" class="input-group-addon addtmdcustomer" style="background: #00d8f6;"><i class="fa fa-save"></i> {{ button_save }}</a>
+	            <input type="hidden" name="tmdcustomer_id" value=""/>
+          	</div>
+          </div>
+        <a rel="{{ newadd }}" class="paynowcustomeradd" data-toggle="tooltip" title="Add Customer"><i class="fa fa-plus"></i> Add Customer </a>
+        </div>
+      </div>
+	  <div class="row">
+	  	<div class="col-sm-7">
+			<div class="loadcustomerfrom">
+				<div class="form-group hide">
+					<div class="col-sm-12">
+						<button type="button" data-toggle="tooltip" title="Save" class="btn btn-primary save-customer pull-right addcustomer"><i class="fa fa-save" style="color:#fff!important;"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	  </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$('input[name=\'tmdcustomer_name\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=pos/paynow/autocomplete&user_token={{ user_token }}&customer_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['display'],
+						value: item['customer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'tmdcustomer_name\']').val(item['label']);
+		$('input[name=\'tmdcustomer_id\']').val(item['value']);
+	}
+});
+
+$(document).on('click', '.addtmdcustomer',function(){
+	$.ajax({
+		url: 'index.php?route=pos/selectcustomer/edit&user_token={{ user_token }}',
+		type: 'post',
+		data: 'customer_id='+$('input[name=\'tmdcustomer_id\']').val(),
+		dataType: 'json',
+		success: function(json) {
+			$('.close').trigger('click');
+
+			if (json['products']) {
+				$('.loader').addClass('hide');
+				html='';
+				for (i in json['products']) {
+				html +='<div class="col-md-4 col-sm-4 col-xs-12">';
+				html +='<div class="box4">';
+				stockclass="off";
+				if(json['products'][i]['stock']<10)
+				{
+				stockclass='off1';
+				}
+				html +='<div class="'+stockclass+'">';
+				html +='<span>'+json['products'][i]['stock']+'</span>';
+				html +='</div>';
+				html +='<div class="image">';
+				html +='<img src="'+json['products'][i]['thumb']+'" alt="'+json['products'][i]['name']+'" title="'+json['products'][i]['name']+'" class="img-responsive" /></a>';
+				html +='</div>';
+				html +='<div class="buttons">';
+				html +='<a name="modal_trigger" class="productinfodata"  rel="'+json['products'][i]['product_id']+'">';
+				html +='<i class="fa fa-info-circle" aria-hidden="true"></i>Info</a>';
+				html +='<a class="addtocartquick addtocartquick'+json['products'][i]['product_id']+'" rel="'+json['products'][i]['product_id']+'"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Cart</a>';
+				html +='</div>';
+
+				html +='<div class="caption"><h1>'+json['products'][i]['name']+'</h1>';
+				if(json['products'][i]['price'])
+				{
+
+					html +='<p class="price">';
+					if(json['products'][i]['special'])
+					{
+						html +=' <span class="price-new">'+json['products'][i]['special']+'</span> <span class="price-old">'+json['products'][i]['price']+'</span>';
+
+					}else{
+					html +=json['products'][i]['price'];
+					}
+                  if(json['products'][i]['tax']!=false)
+					{
+						html +='<span class="price-tax">'+json['products'][i]['tax']+'</span>';
+					}
+					html +='</p>';
+                }
+				html +='</div></div></div>';
+				}
+				 $('.categories').html(' ');
+				 $('.products').html(html);
+			}
+		}
+	});
+});
+</script>

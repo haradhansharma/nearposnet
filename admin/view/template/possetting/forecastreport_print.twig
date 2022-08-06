@@ -1,0 +1,101 @@
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<link href="view/stylesheet/bootstrap.css" type="text/css" rel="stylesheet" />
+<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
+<div id="content">
+  <div class="page-header">
+    
+  </div>
+  <div class="container-fluid">
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list}}</h3>
+      </div>
+      <div class="panel-body">    
+    <form action="" method="post" enctype="multipart/form-data" id="form-order">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-center">{{ column_image}}</td>
+              <td class="text-center">{{ column_product}}</td>
+              <td class="text-center">{{ column_currentstock}}</td>
+              <td class="text-center">{{ column_salestock}}</td>
+              <td class="text-center">{{ column_futurestock}}</td>
+            </tr>
+          </thead>
+         <tbody>
+        {% if forecastreports %}
+        {% for result in forecastreports %}
+        <tr>
+          
+          <td class="text-center">
+
+            {% if result.product_id %}
+            {% if result.image %}
+            <img src="{{ result['image'] }}" alt="{{ result['proname'] }}" class="img-thumbnail" />
+            {% else %}
+            <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
+            {% endif %}
+            {% endif %}
+
+            {% if result.cproduct_id %}
+            {% if result.posimage %}
+            <img src="{{ result['posimage'] }}" alt="{{ result['proname'] }}" class="img-thumbnail" />
+            {% else %}
+            <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
+            {% endif %}
+            {% endif %}
+          </td>
+
+          <td class="text-center">{{ result['proname'] }}</td>
+
+          <td class="text-center">
+          {% if result.product_id %}
+            <b>{{ result.quantity }}</b>
+          {% endif %}
+          {% if result.cproduct_id %}
+            <b>{{ result.posquantity }}</b>
+          {% endif %}
+          </td>
+          <td class="text-center">
+            <b>{{ result.salestock }}</b>
+          </td>
+          <td class="text-center">
+             {% if result.product_id %}
+              {% if result.proquantity == '0' %}
+              <b>{{ text_instock }}</b>
+              {% else %}
+              <span class="label label-danger"><b>{{ result.proquantity }}</b></span>
+             {% endif %}
+             {% endif %}
+
+            {% if result.cproduct_id %}
+              {% if result.posproquantity == '0' %}
+              <b>{{ text_instock }}</b>
+              {% else %}
+              <span class="label label-danger"><b>{{ result.posproquantity }}</b></span>
+              {% endif %}
+              {% endif %}
+            </td>
+      
+      </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+        
+        {% endif %}
+        
+      </tbody>
+    </table>
+      </div>
+    </form>
+       
+    </div>
+    </div>
+  </div>
+</div>
+

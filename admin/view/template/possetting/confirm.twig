@@ -1,0 +1,176 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+      	{% for breadcrumb in breadcrumbs %}
+      	<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      	{% endfor %}
+      </ul>
+  </div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><i class="fa fa-shopping-cart"></i> {{ text_orderinfo }} </h3>
+				</div>
+				<table class="table">
+					<tbody>
+						<tr>
+							<td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_store }}" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+							<td><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></td>
+						</tr>
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_date_added }}" class="btn btn-info btn-xs"><i class="fa fa-calendar fa-fw"></i></button></td>
+							<td>{{ date_added }}</td>
+						</tr>
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_payment_method }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+							<td>{{ payment_method }}</td>
+						</tr>              
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_store_url }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+							<td>{{ store_url }}</td>
+						</tr>
+
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><i class="fa fa-shopping-cart"></i> {{ text_posinfo }} </h3>
+				</div>
+				<table class="table">
+					<tbody>
+						<tr>
+							<td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_posname }}" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+							<td><a href="{{ pos_url }}" target="_blank">{{ posname }}</a></td>
+						</tr>
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_payable }}" class="btn btn-info btn-xs"><i class="fa fa-calendar fa-fw"></i></button></td>
+							<td>{{ payable }} ({{ commission_value }} {{ commission }} of {{ total }})</td>
+						</tr>
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_order_status }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+							<td>{{ order_status }}</td>
+						</tr>
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_pos_url }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+							<td>{{ pos_url }} </td>
+						</tr>
+
+					</tbody>
+
+				</table> 
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><i class="fa fa-shopping-cart"></i> {{ text_payee_details }} </h3>
+				</div>
+				<table class="table">
+					<tbody>
+						<tr>
+							<td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_payee_name }}" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+							<td>{{ firstname }} {{ lastname }}</td>
+						</tr>
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_email }}" class="btn btn-info btn-xs"><i class="fa fa-calendar fa-fw"></i></button></td>
+							<td>{{ email }}</td>
+						</tr>
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_telephone }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+							<td>{{ telephone }}</td>
+						</tr>
+						<tr>
+							<td><button data-toggle="tooltip" title="{{ text_ip }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+							<td>{{ ip }} </td>
+						</tr>
+
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-info-circle"></i> {{ text_order }}{{commission_order_id}}</h3>
+		</div>
+		<div class="panel-body">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td style="width: 100%;" class="text-left">{{ text_payment_address }}</td>               
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-left">{{ payment_address }}</td>               
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td class="text-left">{{ column_order }}</td>
+						<td class="text-left">{{ column_posname }}</td>
+						<td class="text-right">{{ column_commission }}</td>
+						<td class="text-right">{{ column_total }}</td>
+						<td class="text-right">{{ column_payable }}</td>
+
+					</tr>
+				</thead>
+				<tbody>
+
+					{% for commission_order_detail in commission_order_details %}
+					<tr>
+						<td class="text-left">#{{ commission_order_detail.order_id }}</td>
+						<td class="text-right">{{ commission_order_detail.posname }}</td>
+						<td class="text-left">{{ commission_order_detail.commission_value }} {{ commission_order_detail.commission }}</td>
+						<td class="text-right">{{ commission_order_detail.total }}</td>
+						<td class="text-right">{{ commission_order_detail.payable }}</td>                
+
+					</tr>
+					{% endfor %}
+
+					{% for total in commission_order_total %}
+					<tr>
+						<td colspan="4" class="text-right">{{ total.title }}</td>
+						<td class="text-right">{{ total.value }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+
+			</table>
+			{% if comment %}
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>{{ text_comment }}</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ comment }}</td>
+					</tr>
+				</tbody>
+			</table>
+			{% endif %} 
+		</div>
+	</div>
+
+	
+	{{payment}}
+</div>
+
+</div>
+{{ footer }} 

@@ -1,0 +1,241 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" id="button-invoice" form="form-order" data-toggle="tooltip" title="{{ text_invoice }}" class="btn btn-info"><i class="fa fa-print"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      </div>
+      <div class="panel-body">
+    <div class="well">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="input-productid">{{ entry_productid }}</label>
+            <input type="text" name="filter_productid" value="{{ filter_productid }}" placeholder="{{ entry_productid }}" id="input-productid" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="input-name">{{ entry_name }}</label>
+            <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="input-model">{{ entry_model }}</label>
+            <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">{{ column_date }}</label>
+            <div class="input-group">
+              <span class="input-group-addon">
+                {{ column_form }}
+              </span>
+              <input type="text" name="filter_date_form" value="{{ filter_date_form }}" class="form-control datefrom" data-date-format="YYYY-MM-DD" id="input-filter_date_added_form"/>
+              <span class="input-group-addon ">
+                {{ column_to }}
+              </span>
+              <input type="text" name="filter_date_to" value="{{ filter_date_to }}" class="form-control dateto" data-date-format="YYYY-MM-DD" id="input-filter_date_added_to"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" style="margin-top:38px;" id="button-filter"  class="btn btn-primary col-sm-6"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        </div>
+
+      </div>
+    </div>    
+    <form action="{{ print }}" target="_blank" method="post" enctype="multipart/form-data" id="form-order">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            
+            <td class="text-left">{% if sort == 'productid' %}
+              <a href="{{ sort_productid }}" class="{{ order|lower }}">{{ column_productid }}</a>
+             {% else %}
+              <a href="{{ sort_productid }}">{{ column_productid }}</a>
+              {% endif %}
+            </td>
+            <td class="text-left">{% if sort == 'name' %}
+              <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+             {% else %}
+              <a href="{{ sort_name }}">{{ column_name }}</a>
+              {% endif %}
+            </td>
+            <td class="text-left">{% if sort == 'model' %}
+              <a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>
+             {% else %}
+              <a href="{{ sort_model }}">{{ column_model }}</a>
+              {% endif %}
+            </td>
+            
+            <td class="text-left">{% if sort == 'totalsell' %}
+              <a href="{{ sort_totalsell }}" class="{{ order|lower }}">{{ column_totalsell }}</a>
+             {% else %}
+              <a href="{{ sort_totalsell }}">{{ column_totalsell }}</a>
+              {% endif %}
+            </td>
+            
+            <td class="text-left hide">{% if sort == 'totalamount' %}
+              <a href="{{ sort_totalamount }}" class="{{ order|lower }}">{{ column_totalamount }}</a>
+             {% else %}
+              <a href="{{ sort_totalamount }}">{{ column_totalamount }}</a>
+              {% endif %}
+            </td>
+            
+            <td class="text-left hide">{% if sort == 'date_added' %}
+              <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date }}</a>
+             {% else %}
+              <a href="{{ sort_date_added }}">{{ column_date }}</a>
+              {% endif %}
+            </td>
+              
+          </tr>
+        </thead>
+          {% if productsells %}
+          {% for report in productsells %}
+          <tr>
+                        
+            <td class="text-left">{{ report.product_id }}</td>
+            <td class="text-left">{{ report.name }}</td>
+            <td class="text-left">{{ report.model }}</td>
+            <td class="text-left">{% if report.totalsale <=0 %}
+             {% else %}
+
+                {{ report.totalsale }}
+              {% endif %}
+            </td>
+            <td class="text-left hide">{{ report.price }}</td>
+            <td class="text-left hide">{{ report.date_added }}</td>
+        </tr>
+            {% endfor %} 
+           {% else %}
+          <tr>
+            <td class="text-center" colspan="9">{{ text_no_results }}</td>
+          </tr>
+          {% endif %}
+            </table>
+        </div>
+    </form>
+        <div class="row">
+      <div class="col-sm-6 text-left">{{ pagination }}</div>
+            <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$('#button-filter').on('click', function() {
+  var url = 'index.php?route=possetting/productsale_report&user_token={{ user_token }}';
+  
+  var filter_productid = $('input[name=\'filter_productid\']').val();
+
+  if (filter_productid) {
+    url += '&filter_productid=' + encodeURIComponent(filter_productid);
+  }
+  
+  var filter_name = $('input[name=\'filter_name\']').val();
+
+  if (filter_name) {
+    url += '&filter_name=' + encodeURIComponent(filter_name);
+  }
+
+  var filter_model = $('input[name=\'filter_model\']').val();
+
+  if (filter_model) {
+    url += '&filter_model=' + encodeURIComponent(filter_model);
+  }
+
+  var filter_date_form = $('input[name=\'filter_date_form\']').val();
+
+  if (filter_date_form) {
+    url += '&filter_date_form=' + encodeURIComponent(filter_date_form);
+  }
+
+  var filter_date_to = $('input[name=\'filter_date_to\']').val();
+
+  if (filter_date_to) {
+    url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
+  }
+  
+    
+  location = url;
+});
+</script>
+ <script type="text/javascript"><!--
+$('.datefrom').datetimepicker({
+  pickTime: false
+});
+$('.dateto').datetimepicker({
+  pickTime: false
+}); 
+//--></script>
+{{ footer }}
+
+<script type="text/javascript"><!--
+$('input[name=\'filter_name\']').autocomplete({
+  'source': function(request, response) {
+    $.ajax({
+      url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+        response($.map(json, function(item) {
+          return {
+            label: item['name'],
+            value: item['product_id']
+          }
+        }));
+      }
+    });
+  },
+  'select': function(item) {
+    $('input[name=\'filter_name\']').val(item['label']);
+  }
+});
+
+$('input[name=\'filter_model\']').autocomplete({
+  'source': function(request, response) {
+    $.ajax({
+      url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_model=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+        response($.map(json, function(item) {
+          return {
+            label: item['model'],
+            value: item['product_id']
+          }
+        }));
+      }
+    });
+  },
+  'select': function(item) {
+    $('input[name=\'filter_model\']').val(item['label']);
+  }
+});
+//--></script>

@@ -1,0 +1,116 @@
+
+	 <!-- Modal -->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {% if partial_sum and partial_sum != order_amount%}
+            <div class="well partl_payment">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="control-label" for="input-filter_order_id">{{ text_due_amount }}</label>
+                    <input type="number" name="partial_amount" value="{{ partial_pay }}" min="0" max="{{ partial_pay }}"  class="form-control partial_amnt">
+                    <input type="hidden" name="order_id" value="{{ order_id }}"  class="form-control">
+                    <input type="hidden" name="partial_pay" value="{{ partial_pay }}"  class="form-control">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="" style="margin-top: 10px;">
+                    <button type="button" class="btn btn-primary" id="button-pamount">{{ text_paynow }}</button>
+                  </div>
+               </div>
+              </div>
+           </div>
+          {% endif %}
+            <div class="row partl_succ">
+             <div class="col-sm-12">
+              <h4>{{ text_payhistory }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="" enctype="multipart/form-data" id="form-partial">
+          <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+              <thead class="sortorder">
+                <tr>
+               <td class="text-center bgc1">{{ text_amount }}</td>
+               <td class="text-center bgc1">{{ text_date_added }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                  {% if partial_payments %}
+                  {% for result in partial_payments %}
+                  <tr>
+                    <td class="text-center">{{ result.partial_amount }}</td>
+                    <td class="text-center">{{ result.date_added }}</td>
+                  </tr>
+                  {% endfor %}
+                  <tr>
+                    <td colspan="3">
+                      <div class="col-sm-6 text-left">{{ pagination }}</div>
+                      <div class="col-sm-6 text-right">{{ results }}</div>
+                    </td>
+                  </tr>
+                  {% else %}
+                  <tr>
+                    <td class="text-center" colspan="8">{{ text_no_results }}</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+           </table>
+         </div>
+     </form>
+      </div>
+
+      </div>
+    </div>
+
+    <script>
+// partial pagination
+$('#help-modal22').delegate('.pagination a, .sortorder a', 'click', function(e) {
+    e.preventDefault();
+  $('.partialform-body').html('<div class="loadingpoup"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div>');
+  $('.partialform-body').load(this.href);
+
+  return false;
+});
+
+//add partial payment
+$('#button-pamount').on('click', function() {
+  $.ajax({
+    url: 'index.php?route=pos/partialpayment/addPartial&user_token={{ user_token }}',
+    type: 'post',
+    data: $('.partl_payment input[type=\'number\'], .partl_payment input[type=\'text\'], .partl_payment input[type=\'hidden\']'),
+    dataType: 'json',
+    beforeSend: function() {
+      $('#button-pamount').button('loading');
+    },
+    complete: function() {
+      $('#button-pamount').button('reset');
+    },
+    success: function(json) {
+     $('.text-danger').remove();
+      if (json['error']) {
+         $('.partial_amnt').after('<div class="text-danger">' + json['error'] + '</div>');
+      }
+
+        if (json['success']) {
+            $('.partl_payment').prepend('<div class="alert alert-success">' + json['success'] + '</div>');
+            window.setTimeout(function(){
+               $("#help-modal22").modal("hide");
+            },2000)
+
+        }
+    },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+  });
+});
+
+
+
+</script>

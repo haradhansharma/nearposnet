@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+  <!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+    <!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+      <!--[if (gt IE 9)|!(IE)]><!-->
+        <html dir="{{ direction }}" lang="{{ lang }}">
+        <!--<![endif]-->
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <title>{{ title }}</title>
+            <base href="{{ base }}" />
+            {% if description %}
+            <meta name="description" content="{{ description }}" />
+            {% endif %}
+            {% if keywords %}
+            <meta name="keywords" content="{{ keywords }}" />
+            {% endif %}
+           {#}
+            <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+            <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+            <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+            <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+            <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
+            <link href="catalog/view/theme/pos/stylesheet/stylesheet.css" rel="stylesheet">
+            <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+            #}
+
+            <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+            <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+            <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+            <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+            <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
+            <link href="catalog/view/theme/pos/stylesheet/stylesheet.css" rel="stylesheet">
+            <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+                     
+            <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+            <link href="catalog/view/theme/default/stylesheet/stylesheet1.css" rel="stylesheet">           
+            <link href="catalog/view/theme/default/stylesheet/style.css" rel="stylesheet">
+
+            {% for style in styles %}
+            <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+            {% endfor %}
+            {% for script in scripts %}
+            <script src="{{ script }}" type="text/javascript"></script>
+            {% endfor %}
+            <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+            {% for link in links %}
+            <link href="{{ link.href }}" rel="{{ link.rel }}" />
+            {% endfor %}
+            {% for analytic in analytics %}
+            {{ analytic }}
+            {% endfor %}
+          </head>
+          <body>
+            <nav id="top">
+              <div class="container">
+               <div class="col-xs-6">
+                <div class="inline">
+                  <div class = "inline" id="logo">
+                    {% if logo %}
+                    <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
+                    {% else %}
+                    <h1><a href="{{ home }}">{{ name }}</a></h1>
+                    {% endif %}
+                  </div>
+                  <div class="inline">{{ currency }}</div> 
+                </div>
+                <div class="inline visible-md visible-lg">{{ menu }}</div>                
+              </div>             
+
+              <div class="col-xs-6">  
+                <div class="pull-right"> 
+                  <div class="dropdown inline2">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <span class="prelater">S</span> 
+                      <i class="fa fa-search"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">                  
+                     {{ search }}                           
+                   </ul>
+                 </div>
+                 <div  class="dropdown inline2">
+                  <a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"> 
+                    <span class="prelater">AC</span> 
+                    <i class="fa fa-user"></i><span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right pre-scrollable ">
+                    <h4>{{account_name}}</h4>
+                    {% if logged %}                  
+                    {{account_menu}}
+                    {% else %}                   
+                    {{account_menu}}
+                    {% endif %}
+                  </ul>
+                </div>
+
+                <div class="inline visible-md visible-lg"> 
+                 <div class="inline"> {{ language }}</div>                                
+                 
+                 <div class="inline">
+                  <a class="inline2" href="{{ new_app }}" title="{{ button_new_app }}">
+                   <span class="prelater">PosApp</span> 
+                   <i class="fa fa-universal-access"></i>                   
+                 </a>
+               </div>
+             </div>
+           </div>              
+         </div> 
+
+
+         <div class="col-sm-12 btm visible-xs visible-sm">
+          <div class="btm-sc">                
+            <div class="inline"> {{ language }}</div>                                
+            <div class="inline">{{ menu }}</div>
+            <div class="inline">
+              <a class="inline2" href="{{ new_app }}" title="{{ button_new_app }}">
+               <span class="prelater">PosApp</span> 
+               <i class="fa fa-universal-access"></i>              
+             </a>
+           </div>
+         </div>
+       </div>
+
+       
+     </div>
+   </nav>
+   <header>
+    <div class="container">
+      <div class="row">
+
+
+
+        <div id="nudge" class="col-xs-12">
+          <div class="middle">                     
+
+            <div class="btn btn-warning"><a href="{{ compare }}" id="compare-total" ><i class="fa fa-exchange"></i><sup><span class="topcount">( {{compare_total}} )</span></sup> <div class="">{{text_compare}}</div></a></div>
+            <div class="btn btn-danger"><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i><sup><span class="topcount">( {{wishlist_total}} )</span></sup> <div class="">{{text_wishlist}}</div></a></div>            
+            <div class="inline">{{ cart }}</div>
+
+          </div>
+
+          <div class="loc middle">
+
+            {% if livelat %}
+            <div id="nudge-refresh" class="btn" data-toggle="tooltip" title="Click to Refresh Your Current Location." onclick="getLocation()">{{formated_address}}</div>
+            {% endif %}
+          </div>
+
+        </div>
+
+        {# ////sharma for POS #}
+        <style>
+        .poscom { margin-bottom: 10px;font-size: 12px;line-height: 18px;}
+
+        .overlay {
+          position: fixed;
+          display: block;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0,0,0,0.5);
+          z-index: 11997;
+          cursor: pointer;
+        }
+        .refresh_info {
+          width: 200px;
+          /*display: block;*/
+          height: auto;
+          /* float: left; */
+          position: absolute;
+          z-index: 988;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+         /* background: #000000;*/
+          padding: 15px;
+          text-align: center;
+        }
+        </style>                  
+      </div>
+    </div>
+    {# ////sharma for POS #}
+
+
+    {% if not livelat %}
+    <div id="nudge-refresh" class="overlay" onclick="getLocation()">
+      <div class = "refresh_info">
+        <img src="image/splash.png">
+
+
+       <!--  <div class ="btn btn-primary">{{text_refresh}}</div>
+        <div class="info">{{text_re_info}}</div> -->
+
+
+      </div>
+    </div>
+    {% endif %}
+
+
+
+    <script>
+    function getLocation() {
+
+     var startPos;
+     var nudge = document.getElementById("nudge-refresh");
+
+     var showNudgeBanner = function() {
+      nudge.style.display = "block";   
+    };
+
+    var hideNudgeBanner = function() {
+      nudge.style.display = "none";
+    };
+
+    var nudgeTimeoutId = setTimeout(showNudgeBanner, 5000);
+
+    var geoSuccess = function(position) { 
+    // Do magic with location
+    startPos = position;
+
+
+    
+    var lat = startPos.coords.latitude;
+    var lng = startPos.coords.longitude;
+
+
+    var GEOCODING = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + '%2C' + lng + '&language=en' + '&key=' + '{{apikey}}' ;   
+
+    $.getJSON(GEOCODING).done(function(location) { 
+      var map_components = location.results[0].address_components;                
+      var formated_address = location.results[0].formatted_address;
+
+      $.ajax({
+        url: 'index.php?route=common/header/getLivelocation',
+        type: 'post',
+        data:{
+          'lat':lat, 
+          'lng':lng,
+          'map_components':map_components,      
+          'formated_address':formated_address
+        },       
+        beforeSend: function() {
+          $('#nudge-refresh').button('loading');          
+        },
+        complete: function() {
+          $('#nudge-refresh').button('reset');          
+          window.location.reload(true);
+        },
+
+        error: function(xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+
+    });
+
+    hideNudgeBanner();
+    // We have the location, don't display banner
+    clearTimeout(nudgeTimeoutId);  
+
+  };
+
+  var geoError = function(error) {
+    switch(error.code) {
+      case error.TIMEOUT:
+        // The user didn't accept the callout
+        showNudgeBanner();
+        break;
+      }
+    };   
+
+    hideNudgeBanner();
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+    
+  };
+
+  
+  
+
+  </script>
+  {# ////sharma for POS #}
+
+
+</header>
+

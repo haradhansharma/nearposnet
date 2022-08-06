@@ -1,0 +1,24 @@
+{% if(poslay=='layout3') %}
+	{% for category in categories %}
+		<li class="showsubcate1" rel="{{ category.category_id }}" path="{{ category.path }}">
+				<a href="javascript:void(0)">{{ category.name }}</a>
+		</li>
+	{% endfor %}
+{% elseif(poslay=='layout4') %}
+	{% for category in categories %}
+		<div class="col-md-20 col-lg-2 col-sm-3 col-xs-6 showsubcate1" rel="{{ category.category_id }}" path="{{ category.path }}">
+			<div class="iconbox">
+				<a href="javascript:void(0)" class="btn btn-primary cates">{{ category.name }}</a>
+			</div>
+		</div>
+	{% endfor %}
+{% else %}
+	{% for category in categories %}
+		<div class="col-md-20 col-lg-1 col-sm-3 col-xs-6 showsubcate1" rel="{{ category.category_id }}" path="{{ category.path }}">
+			<div class="catediv cate{{ category.path }}">
+				<img src="{{ category.thumb }}" class="img-responsive"/>
+				{{ category.name }}
+			</div>
+		</div>
+	{% endfor %}
+{% endif %}

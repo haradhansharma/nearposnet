@@ -1,0 +1,145 @@
+<div class="form-horizontal add-nowcustomer">
+			
+			<div class="form-group  {% if firstnamerequiredstatus %} required {% endif %} {% if not firstnamestatus %} hide {% endif %}" data-sort="{{ firstnamesort_order }}">
+				<label class="col-sm-4 control-label" for="input-firstname">{{ entry_firstname }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if lastnamerequiredstatus %}required {% endif %} {% if not lastnamestatus %}hide {% endif %}" data-sort="{{ lastnamesort_order }}">
+				<label class="col-sm-4 control-label" for="input-lastname">{{ entry_lastname }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if emailrequiredstatus %}required {% endif %} {% if not emailstatus %}hide {% endif %}" data-sort="{{ emailsort_order }}">
+				<label class="col-sm-4 control-label" for="input-email">{{ entry_email }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if phonerequiredstatus %}required {% endif %} {% if not phonestatus %}hide {% endif %}" data-sort="{{ phonesort_order }}">
+				<label class="col-sm-4 control-label" for="input-telephone">{{ entry_telephone }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if faxrequiredstatus %}required {% endif %}  {% if not faxstatus %}hide {% endif %}" data-sort="{{ faxsort_order }}">
+				<label class="col-sm-4 control-label" for="input-fax">{{ entry_fax }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="fax" value="{{ fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if companyrequiredstatus %}required {% endif %} {% if not companystatus %}hide {% endif %}">
+				<label class="col-sm-4 control-label" for="input-company" >{{ entry_company }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if add1requiredstatus %}required {% endif %} {% if not add1status %}hide {% endif %}" data-sort="{{ add1sort_order }}">
+				<label class="col-sm-4 control-label" for="input-address-1">{{ entry_address_1 }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if add2requiredstatus %}required {% endif %} {% if not add2status %}hide {% endif %}" data-sort="{{ add2sort_order }}">
+				<label class="col-sm-4 control-label" for="input-address-2">{{ entry_address_2 }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-2" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if cityrequiredstatus %}required {% endif %} {% if not citystatus %}hide {% endif %}" data-sort="{{ citysort_order }}">
+				<label class="col-sm-4 control-label" for="input-city">{{ entry_city }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group {% if postcoderequiredstatus %}required {% endif %} {% if not postcodestatus %}hide {% endif %}" data-sort="{{ postcodesort_order }}">
+				<label class="col-sm-4 control-label" for="input-postcode">{{ entry_postcode }}</label>
+				<div class="col-sm-8">
+					<input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if countryrequiredstatus %}required {% endif %} {% if not countrystatus %}hide {% endif %}" data-sort="{{ countrysort_order }}">
+				<label class="col-sm-4 control-label" for="input-country">{{ entry_country }}</label>
+				<div class="col-sm-8">
+					<select name="country_id" id="input-country" class="form-control">
+						<option value="">{{ text_select }}</option>
+						{% for country in countries %}}
+						{% if country.country_id == country_id %}
+						<option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+						{% else %}
+						<option value="{{ country.country_id }}">{{ country.name }}</option>
+						{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="form-group {% if zonerequiredstatus %}required {% endif %} {% if not zonestatus %}hide {% endif %}" data-sort="{{ zonesort_order }}">
+				<label class="col-sm-4 control-label" for="input-zone">{{ entry_zone }}</label>
+				<div class="col-sm-8">
+					<select name="zone_id" id="input-zone" class="form-control">
+					</select>
+				</div>
+			</div>
+			<div class="form-group {% if pwdrequiredstatus %}required {% endif %} {% if not pwdstatus %}hide {% endif %}" data-sort="{{ pwdsort_order }}">
+				<label class="col-sm-4 control-label" for="input-password">{{ entry_password }}</label>
+				<div class="col-sm-8">
+					<input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group {% if cpwdrequiredstatus %}required {% endif %} {% if not cpwdstatus %}hide {% endif %}" data-sort="{{ cpwdsort_order }}">
+				<label class="col-sm-4 control-label" for="input-confirm">{{ entry_confirm }}</label>
+				<div class="col-sm-8">
+					<input type="password" name="confirm" value="" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control" />
+				</div>
+			</div>
+			<div class="text-right">
+			<button type="button" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary addpaynowcustomer"><i class="fa fa-save" style="color:#fff!important;"></i></button>
+		</div>
+		</div>		
+<script type="text/javascript"><!--
+$('select[name=\'country_id\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=pos/customerform/country&user_token={{ user_token }}&country_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+		},
+		complete: function() {
+			$('.fa-spin').remove();
+		},
+		success: function(json) {
+			if (json['postcode_required'] == '1') {
+				$('input[name=\'postcode\']').parent().parent().addClass('required');
+			} else {
+				$('input[name=\'postcode\']').parent().parent().removeClass('required');
+			}
+
+			html = '<option value="">{{ text_select }}</option>';
+
+			if (json['zone'] && json['zone'] != '') {
+				for (i = 0; i < json['zone'].length; i++) {
+					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+					if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+						html += ' selected="selected"';
+					}
+
+					html += '>' + json['zone'][i]['name'] + '</option>';
+				}
+			} else {
+				html += '<option value="0" selected="selected">{{ text_none }}</option>';
+			}
+
+			$('select[name=\'zone_id\']').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'country_id\']').trigger('change');
+//--></script>

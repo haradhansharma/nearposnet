@@ -1,0 +1,384 @@
+{{ header }}{{ column_left }}
+<div id="content">
+<div class="page-header">
+<div class="container-fluid">
+  <div class="pull-right">
+  </div>
+<h1>{{ heading_title }}</h1>
+<ul class="breadcrumb">
+<?php foreach ($breadcrumbs as $breadcrumb) { ?>
+<li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb['text'] }}</a></li>
+<?php } ?>
+</ul>
+</div>
+</div>
+<div class="container-fluid">
+{% if error_warning %}
+<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{% endif %}
+{% if success %}
+<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{% endif %}
+<div class="panel panel-default">
+<div class="panel-heading">
+  <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+</div>
+<div class="panel-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-filter-name">{{ entry_name }}</label>
+                <input type="text" name="filter_product" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_product }}" placeholder="{{ entry_name }}" id="input-filter-name" class="form-control"/>
+                <input type="hidden" name="product_id" value="{{ filter_product }}"/>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-filter-upc">{{ entry_upc }}</label>
+                <input type="text" name="filter_upc" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_upc }}" placeholder="{{ entry_upc }}" id="input-filter-upc" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label">{{ entry_product_id }}</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    {{ entry_form }}
+                  </span>
+                  <input type="text" name="filter_product_id_form" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_product_id_form }}" class="form-control" id="input-filter_product_id_form"/>
+                  <span class="input-group-addon ">
+                    {{ entry_to }}
+                  </span>
+                  <input type="text" name="filter_product_id_to" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_product_id_to }}" class="form-control" data-product_id-format="YYYY-MM-DD" id="input-filter_product_id_to"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 hide">
+              <div class="form-group">
+                <label class="control-label">{{ entry_sale_quantity }}</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    {{ entry_form }}
+                  </span>
+                  <input type="text" name="filter_sell_quantity_form" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');"  value="{{ filter_sell_quantity_form }}" class="form-control" id="input-filter_sell_quantity_form"/>
+                  <span class="input-group-addon ">
+                    {{ entry_to }}
+                  </span>
+                  <input type="text" name="filter_sell_quantity_to" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_sell_quantity_to }}" class="form-control" id="input-filter_sell_quantity_to"/>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label">{{ entry_price }}</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    {{ entry_form }}
+                  </span>
+                  <input type="text" name="filter_price_form" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_price_form }}" class="form-control" id="input-filter_price_form"/>
+                  <span class="input-group-addon ">
+                    {{ entry_to }}
+                  </span>
+                  <input type="text" name="filter_price_to" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_price_to }}" class="form-control" id="input-filter_price_to"/>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label">{{ entry_quantity }}</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    {{ entry_form }}
+                  </span>
+                  <input type="text" name="filter_avi_quantity_form" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_avi_quantity_form }}" class="form-control" id="input-filter_avi_quantity_form"/>
+                  <span class="input-group-addon ">
+                    {{ entry_to }}
+                  </span>
+                  <input type="text" name="filter_avi_quantity_to" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_avi_quantity_to }}" class="form-control" id="input-filter_avi_quantity_to"/>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label">{{ entry_date }}</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    {{ entry_form }}
+                  </span>
+                  <input type="text" name="filter_date_form" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');"  value="{{ filter_date_form }}" data-date-format="YYYY-MM-DD" class="form-control datefrom" id="input-filter_date_form"/>
+                  <span class="input-group-addon ">
+                    {{ entry_to }}
+                  </span>
+                  <input type="text" name="filter_date_to" data-date-format="YYYY-MM-DD" onKeyDown="if(event.keyCode==13) $('#button-filter').trigger('click');" value="{{ filter_date_to }}" class="form-control dateto" id="input-filter_date_to"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 pull-right">
+              <div class="form-group">
+                <button type="button" id="button-filter" class="col-sm-5 btn btn-primary"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+                <a href="{{ reset }}" style="margin-left:2px;" id="button-reset" class="col-sm-5 btn btn-danger"><i class="fa fa-refresh"></i> {{ button_reset }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form action="{{ addnewcost }}" method="post" enctype="multipart/form-data" id="form-user" class="addtrack">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td class="text-center">{% if sort == 'product_id' %}
+                    <a href="{{ sort_product_id }}" class="{{ order|lower }}">{{ entry_product_id }}</a>
+                    {% else %}
+                    <a href="{{ sort_product_id }}">{{ entry_product_id }}</a>
+                    {% endif %}</td>
+                    <td class="text-center">{% if sort == 'image' %}
+                    <a href="{{ sort_image }}" class="{{ order|lower }}">{{ entry_image }}</a>
+                    {% else %}
+                    <a href="{{ sort_image }}">{{ entry_image }}</a>
+                    {% endif %}</td>
+                    <td class="text-left">{% if sort == 'name' %}
+                    <a href="{{ sort_name }}" class="{{ order|lower }}">{{ entry_name }}</a>
+                    {% else %}
+                    <a href="{{ sort_name }}">{{ entry_name }}</a>
+                    {% endif %}</td>
+                    <td class="text-left">{% if sort == 'upc' %}
+                    <a href="{{ sort_upc }}" class="{{ order|lower }}">{{ entry_upc }}</a>
+                    {% else %}
+                    <a href="{{ sort_upc }}">{{ entry_upc }}</a>
+                    {% endif %}</td>
+                    <td class="text-left">{% if sort == 'price' %}
+                    <a href="{{ sort_price }}" class="{{ order|lower }}">{{ entry_price }}</a>
+                    {% else %}
+                    <a href="{{ sort_price }}">{{ entry_price }}</a>
+                    {% endif %}</td>
+                    <td class="text-left">{% if sort == 'cost' %}
+                    <a href="{{ sort_cost }}" class="{{ order|lower }}">{{ entry_cost }}</a>
+                    {% else %}
+                    <a href="{{ sort_cost }}">{{ entry_cost }}</a>
+                    {% endif %}</td>
+                    <td class="text-left"><a href="javascript:void(0)">{{ entry_inventory }}</a></td>
+                    <td class="text-left">{% if sort == 'quantity' %}
+                    <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ entry_quantity }}</a>
+                    {% else %}
+                    <a href="{{ sort_quantity }}">{{ entry_quantity }}</a>
+                    {% endif %}</td>
+                    <td class="text-left"><a href="javascript:void(0)">{{ entry_sale_quantity }}</a></td>
+                    <td class="text-left"><a href="javascript:void(0)">{{ entry_inventory2 }}</a></td>
+                    <td class="text-left">{% if sort == 'profit' %}
+                    <a href="{{ sort_profit }}" class="{{ order|lower }}">{{ entry_profit }}</a>
+                    {% else %}
+                    <a href="{{ sort_profit }}">{{ entry_profit }}</a>
+                    {% endif %}</td>
+                    <td class="text-left"><a href="javascript:void(0)">{{ entry_actsalemade }}</a></td>
+                    <td class="text-left"><a href="javascript:void(0)">{{ entry_actprofitmade }}</a></td>
+
+                    <td class="text-left hide">{% if sort == 'date_added' %}
+                    <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ entry_date_added }}</a>
+                    {% else %}
+                    <a href="{{ sort_date_added }}">{{ entry_date_added }}</a>
+                    {% endif %}</td>
+                </tr>
+              </thead>
+              {% if cost_reports %}
+              {% for report in cost_reports %}
+                  <tr>
+                    <td class="text-center">{{ report.product_id }}</td>
+                    <td class="text-center">{% if report.image %}
+                      <img src="{{ report.image }}" alt="{{ report.image }}" class="img-thumbnail" />
+                      {% else %}
+                      <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
+                      {% endif %}</td>
+                    <td class="text-left">{{ report.name }}</td>
+                    <td class="text-left">{{ report.upc }}</td>
+                    <td class="text-left">{{ report.price }}</td>
+                    <td class="text-left">{{ report.cost }}</td>
+                    <td class="text-left">{{ report.inventory }}</td>
+                    <td class="text-left">{{ report.quantity }}</td>
+                    <td class="text-left">{{ report.sale_quantity }}</td>
+                    <td class="text-left">{{ report.est_total_sale }}</td>
+                    <td class="text-left">{{ report.profit }}</td>
+                    <td class="text-left">{{ report.actsalemade }}</td>
+                    <td class="text-left">{{ report.actprofitmade }}</td>
+                    <td class="text-left hide">{{ report.date_added }}</td>
+                  </tr>
+                  <input type="hidden" name="productdata[{{ report['product_id'] }}][product_id]" value="{{ report['product_id'] }}">
+                  <input type="hidden" name="productdata[{{ report['product_id'] }}][name]" value="{{ report['name'] }}">
+                  <input type="hidden" name="productdata[{{ report['product_id'] }}][image]" value="{{ report['image'] }}">
+                  <input type="hidden" name="productdata[{{ report['product_id'] }}][price]" value="{{ report['price'] }}">
+                  <input type="hidden" name="productdata[{{ report['product_id'] }}][profit]" value="{{ report['profit'] }}">
+                   {% endfor %}
+                  {% else %}
+                  <tr>
+                    <td class="text-center" colspan="13">{{ text_no_results }}</td>
+                  </tr>
+                  {% endif %}
+                <tfoot>
+                  <tr>
+                    <th colspan="5"></th>
+                    <th>{{ text_cost_total }}             = {{ totalcost }} </th>
+                    <th>{{ text_stock_totalinventory }}   = {{ totalitemscost }} </th>
+                    <th>{{ text_stock_total }}            = {{ totalstock }} </th>
+                    <th>{{ text_total_sell_qty }}         = {{ totalsale_quantity }} </th>
+                    <th>{{ text_stock_totalinventory2 }}  = {{ totalest_total_sale }} </th>
+                    <th>{{ text_profit_total }}           = {{ totalprofit }} </th>
+                    <th>{{ text_salemade_total }}         = {{ actsalemade }} </th>
+                    <th>{{ text_profitmade_total }}       = {{ actprofitmade }} </th>
+                  </tr>
+                </tfoot>
+            </table>
+          </div>
+        </form>
+        <div class="row">
+          <!-- <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script type="text/javascript"><!--
+$('.datefrom').datetimepicker({
+  pickTime: false
+});
+$('.dateto').datetimepicker({
+  pickTime: false
+}); 
+//--></script>
+ <script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+  var url = '';
+
+  var filter_product = $('input[name=\'product_id\']').val();
+  
+  if (filter_product) {
+    url += '&filter_product=' + encodeURIComponent(filter_product);
+  }
+
+  var filter_upc = $('input[name=\'filter_upc\']').val();
+
+  if (filter_upc) {
+    url += '&filter_upc=' + encodeURIComponent(filter_upc);
+  }
+
+  var filter_product_id_form = $('input[name=\'filter_product_id_form\']').val();
+
+  if (filter_product_id_form) {
+    url += '&filter_product_id_form=' + encodeURIComponent(filter_product_id_form);
+  }
+
+  var filter_product_id_to = $('input[name=\'filter_product_id_to\']').val();
+
+  if (filter_product_id_to) {
+    url += '&filter_product_id_to=' + encodeURIComponent(filter_product_id_to);
+  }
+
+
+
+
+  var filter_sell_quantity_form = $('input[name=\'filter_sell_quantity_form\']').val();
+
+  if (filter_sell_quantity_form) {
+    url += '&filter_sell_quantity_form=' + encodeURIComponent(filter_sell_quantity_form);
+  }
+
+  var filter_sell_quantity_to = $('input[name=\'filter_sell_quantity_to\']').val();
+
+  if (filter_sell_quantity_to) {
+    url += '&filter_sell_quantity_to=' + encodeURIComponent(filter_sell_quantity_to);
+  }
+
+
+
+
+
+
+  var filter_price_form = $('input[name=\'filter_price_form\']').val();
+
+  if (filter_price_form) {
+    url += '&filter_price_form=' + encodeURIComponent(filter_price_form);
+  }
+
+  var filter_price_to = $('input[name=\'filter_price_to\']').val();
+
+  if (filter_price_to) {
+    url += '&filter_price_to=' + encodeURIComponent(filter_price_to);
+  }
+
+
+
+
+
+
+  var filter_avi_quantity_form = $('input[name=\'filter_avi_quantity_form\']').val();
+
+  if (filter_avi_quantity_form) {
+    url += '&filter_avi_quantity_form=' + encodeURIComponent(filter_avi_quantity_form);
+  }
+
+  var filter_avi_quantity_to = $('input[name=\'filter_avi_quantity_to\']').val();
+
+  if (filter_avi_quantity_to) {
+    url += '&filter_avi_quantity_to=' + encodeURIComponent(filter_avi_quantity_to);
+  }
+
+
+
+
+
+
+  var filter_date_form = $('input[name=\'filter_date_form\']').val();
+
+  if (filter_date_form) {
+    url += '&filter_date_form=' + encodeURIComponent(filter_date_form);
+  }
+
+  var filter_date_to = $('input[name=\'filter_date_to\']').val();
+
+  if (filter_date_to) {
+    url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
+  }
+
+  location = 'index.php?route=possetting/cost_report&user_token={{ user_token }}' + url;
+});
+
+
+$('input[name=\'filter_product\']').autocomplete({
+  'source': function(request, response) {
+    $.ajax({
+      url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+         json.unshift({
+          product_id: 0,
+          name: '{{ text_none }}'
+        });
+        response($.map(json, function(item) {
+          return {
+            label: item['name'],
+            value: item['product_id']
+          }
+        }));
+      }
+    });
+  },
+  'select': function(item) {
+    $('input[name=\'filter_product\']').val(item['label']);
+    $('input[name=\'product_id\']').val(item['label']);
+  }
+});
+
+
+//--></script>
+{{ footer }} 

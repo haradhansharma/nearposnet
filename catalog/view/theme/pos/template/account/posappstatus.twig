@@ -1,0 +1,171 @@
+{{ header }}
+<style>
+.googlemaps { margin-top:10px; position:relative; width:100%; max-width:100%; height:200px; }
+.posname {text-transform: uppercase;text-align: left; width: 50%; display: inline-block;padding-left: 5px;}
+.poslabel {text-align: right; width: 50%; display: inline-block;padding-right: 5px;}
+.posdata {text-align: left; width: 50%; display: inline-block;padding-left: 5px;}
+.pos-thumb-head {
+  display: inline-block;
+  width: 100%;
+  float: left;
+  height: auto;
+  margin-bottom: 15px;
+  position: relative;
+}
+.pos-thumb-head .image {
+  padding: 0!important;
+}
+
+
+
+/*.posmbtn {
+    text-align: center;
+    position: absolute;
+    padding: 15px;
+    width: 100%;
+    top: 50%;
+    display: none;
+    vertical-align: middle;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;   
+    background-color: rgba(255, 0, 0, 0.2);
+    /*z-index: 1;*/
+    /*}*/
+    .pos-thumb-head .image:hover + .posmbtn {
+      padding: 0!important;
+      display: block;
+    }
+
+
+    .posbtns {
+      text-align: center;
+      position: absolute;
+      padding: 15px;
+      width: 100%;
+      top: 50%;
+      display: block;
+      vertical-align: middle;
+      left: 50%;
+      transform: translate(-50%, -50%);   
+      /*z-index: 2;*/
+      }*/
+      .pos-thumb-body {
+        display: inline-block;
+        float: left;
+        text-align: center;
+        width: 100%;
+        position: relative;
+      }
+      .pos-thumb {
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+        overflow: auto;
+        display: inline-block;
+      }
+      </style>
+      <div id="posappstatus" class="container">
+        <ul class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ul>
+        <div class="row">{{ column_left }}
+          {% if column_left and column_right %}
+          {% set class = 'col-sm-6' %}
+          {% elseif column_left or column_right %}
+          {% set class = 'col-sm-9' %}
+          {% else %}
+          {% set class = 'col-sm-12' %}
+          {% endif %}
+          <div id="content" class="{{ class }}">{{ content_top }}
+           
+              <h2>{{ heading_title_status }}</h2>
+
+            {% if posappstatus %}      
+            <div class="row"> 
+              {% for posapps in posappstatus %}
+              <div class="product-layout product-grid col-lg-3 col-md-4 col-sm-6 col-xs-12">          
+                <div class="product-thumb">
+                  <div class = "pos-thumb-head">
+                    <div class="image"><img src="{{ posapps.frontimage }}"  alt="{{ posapps.posname }}" title="{{ posapps.posname }}" class="img-responsive" /></div>
+                    <div class="posmbtn">
+                      <div class="posbtns">
+                        <a href="{{ posapps.edit }}" class="btn btn-primary">{{ text_pos_edit }}</a>
+                        {% if posapps.status_number == 1 %}
+                        <a href="{{ pos_login }}" class="btn btn-default">{{ text_pos_login }}</a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pos-thumb-body">
+                    
+                      <h4><span class = "poslabel">#{{posapps.posapp_id}}  || </span><span class = "posname">{{ posapps.posname }}</span></h4><hr>
+                      <div class="caption">
+
+                      <p><span class = "poslabel">{{text_address}}  || </span><span class ="posdata">{{ posapps.address }}</span></p>
+                      <p><span class = "poslabel">{{entry_city}}  || </span><span class ="posdata">{{ posapps.city }}</span></p>
+                      <p><span class = "poslabel">{{entry_zone}}  || </span><span class ="posdata">{{ posapps.zone }}</span></p>
+                      <p><span class = "poslabel">{{entry_country}}  || </span><span class ="posdata">{{ posapps.country }}</span></p>
+                      <p><span class = "poslabel">{{entry_telephone}}  || </span><span class ="posdata">{{ posapps.telephone }}</span></p>
+                      <p><span class = "poslabel">{{entry_licence_validaty}}  || </span><span class ="posdata">{{ posapps.licence_validaty }}</span></p>                
+                      <p><span class = "poslabel">{{entry_commission}}  || </span><span class ="posdata">{{ posapps.commission_value }} {{ posapps.commission }}</span></p>                
+                      {% if posapps.shipping_cost %}
+                      <p class="price"><span class = "poslabel">{{text_shipping}}  || </span><span class ="posdata">{{ posapps.shipping_cost }} </span></p>
+                      {% endif %}
+                      <p><span class = "poslabel">{{text_applied}}  || </span><span class ="posdata">{{ posapps.date_added }}</span></p>
+                      <p><span class = "poslabel">{{entry_status}}  || </span><span class ="posdata">{{ posapps.status }} </span></p>
+                    </div>
+
+                      
+                      {% if posapps.latitude and posapps.longitude %}
+                      <div class="googlemaps" id="googlemaps_{{ posapps.posapp_id }}"></div>
+                      {% endif %}
+                    </div> 
+
+                  </div>
+
+                </div>
+                <script type="text/javascript"><!--
+                function getMap() {
+                  var latitude = {{ posapps.latitude }};
+                  var longitude = {{ posapps.longitude }};
+                  var latlng = new google.maps.LatLng(latitude, longitude);
+                  var myOptions = {
+                    zoom: 9,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    streetViewControl: false
+                  };
+
+                  var map = new google.maps.Map(document.getElementById('googlemaps_{{ posapps.posapp_id }}'), myOptions);
+                  if (latitude && longitude) {
+                    map.setZoom(12);
+                    map.setCenter(latlng);
+                    var marker = new google.maps.Marker({map: map, position: latlng});
+                  } else {
+                    map.setZoom(3);
+                  }
+                }
+                getMap('{{ posapps.latitude }}', '{{ posapps.longitude }}');
+                //--></script>
+                {% endfor %} 
+              </div>
+              <div class="row">
+                <div class="col-sm-6 text-left">{{ pagination }}</div>
+                <div class="col-sm-6 text-right">{{ results }}</div>
+              </div>
+              {% endif %}
+              {% if not posappstatus %}
+              <p>{{ text_empty }}</p>
+              <div class="buttons">
+                <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+              </div>
+              {% endif %}
+            {{ content_bottom }}</div>
+          {{ column_right }}</div>
+        </div>
+
+
+        {{ footer }} 

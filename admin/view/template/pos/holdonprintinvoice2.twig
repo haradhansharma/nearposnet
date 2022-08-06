@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+<meta charset="UTF-8" />
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+<link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="all" />
+<script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="all" />
+</head>
+<body style="width:80mm;margin:auto">
+<div >
+  
+  <div style="page-break-after: always;">
+   <div class="col-sm-12">
+  <!--- new code start --->
+  <div style="width:100%;padding:1mm; margin:0 auto; font-family:inherit">
+    <center style="border-bottom: dotted 1px #333">
+      {% if storelogo %}
+        <img src="{{ storelogo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" style="margin: 0 auto 20px; padding-top:10px"/> 
+        {% endif %}
+   </center><!--End InvoiceTop-->
+    <div style="border-bottom: dotted 1px #212529">
+        <p style="text-align:left; line-height:17px; font-size:12px; color:#212529; margin: 5px 0px;"> 
+            {% if config_name %}
+          <strong>* {{ config_name }} *</strong>
+          {% endif %}
+          <br >
+          {% if config_address %}
+          {{ config_address }}
+          {% endif %}
+          <br />
+          {% if config_telephone %}
+          {{ config_telephone }}<br/>
+          {% endif %}
+          {% if config_email %}
+          {{ config_email }}
+          {% endif %}
+        </p>
+    </div><!--End Invoice Mid-->
+  <div style="border-bottom: dotted 1px #212529">
+    <div style="width:50%; text-align:left;float:left">
+        <b>{{ column_dateadded }} :</b> {{ date_added }}<br />
+        <h6>{{ column_holdonid }} : #{{ holdon_id }}</h6>
+    </div> 
+    <div style="width:50%; text-align:right;float:left">  
+        <b>{{ column_holdon }} :</b> {{ holdon_no }}<br />
+    </div>
+    <p style="text-align:left; line-height:17px; font-size:12px; color:#212529; margin: 10px 0px;clear:both">
+      <br />{{ column_customer }} : {{ customername }}
+  </p>    
+  </div>
+  <div style="border-bottom: dotted 1px #212529">
+     <table style="font-size:12px; color:#212529; margin: 5px 0px;width:100%">
+      <thead  style="border-bottom: dotted 1px #212529">
+        <tr>
+         <td style="text-align:left; color:#212529; width:35%;">
+           <b>{{ column_proname }}</b><br />
+         </td>
+          <td style="text-align:center; color:#212529;  width:35%;">
+          <b>{{ column_quantity }}</b>
+        </td>
+        <td style="text-align:right; color:#212529; width:30%;">
+          <b>{{ column_price }}</b>
+        </td>
+        </tr>
+      </thead>
+       {% for product in products %}
+          <tr>
+           <td style="text-align:left; width:35%; color:#212529; padding:2px 0px">
+        {{ product.name }}<br />
+        {% for option in product.option %}
+            &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
+            {% endfor %}
+            </td>
+       <td style="text-align:center; width:35%; color:#212529; padding:2px 0px">
+        {{ product.quantity }}
+      </td>
+             <td style="text-align:right; width:25%; color:#212529; padding:2px 0px">
+       {{ product.price }}
+       </td>
+          </tr>
+      {% endfor %}
+      <tr style="border-bottom: dotted 1px #212529">
+       <td colspan="3"></td>
+      </tr>
+        
+     </table>
+  </div>
+  <div style="text-align:left">
+  <p style="text-align:left; line-height:17px; font-size:12px; color:#212529; margin: 10px 0px;"> 
+    User's Signature ________________</p>
+  </div>
+    </div><!--End Invoice-->
+</div>
+  
+</div>
+
+</body>
+
+<style>
+.table tr td{
+  border-top:none !important;
+} 
+.table .des td{
+  border-top:1px dashed #ddd !important;
+}
+.table .des1 td{
+  border-bottom:1px dashed #ddd;
+}  
+.table thead  tr td:last-child, .table .des td:last-child{
+  vertical-align: bottom;
+}
+</style>
+</html>

@@ -1,0 +1,51 @@
+<div class="">
+	<div class="loader1 hide">
+		<img src="view/image/loader.gif" alt="loading" title="loading"/>
+	</div>
+		<table>
+		{% set i=0 %}
+         {% if products %}
+			{% for product in products %}
+		<tr>
+			<td class="text-center imagepading" width="15%">{% if product.thumb %}
+            <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" />
+             {% endif %}</td>
+			<td class="text-right" width="20%">{{ product.name }} {% if product.option %}
+              {% for option in product.option %}
+              <br />
+              <small>{{ option.name }}: {{ option.value }}</small>
+              {% endfor %}
+              {% endif %}
+            </td>
+			<td class="text-right" width="15%"><div id="priceedit{{ i }}"><i  class="pprices" rel="{{ i }}" rel1="{{ product.prices }}"> <span class="productprice quickspan">{{ product.price }}</span></i></div></td>
+			<td width="15%">
+			 <input type="text" name="quantity[{{ product.key }}]" value="{{ product.quantity }}" size="1" class="form-control quantity{{ i }}" />
+			</td>
+			<td class="text-right" width="15%">{{ product.total }}</td>
+			<td width="20%">
+			<button type="button" data-toggle="tooltip" title="Update" class="btn refresh update myButton1"  rel="{{ product.key }}" rel1="{{ i }}"><i class="fa fa-refresh"></i></button>
+
+			<button type="button" data-toggle="tooltip" title="Remove" class="btn refresh remove myButton2"  rel="{{ product.key }}"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+			</td>
+		 </tr>
+
+		{% set i = i+1 %}
+        {% endfor %}
+        {% endif %}
+		</table>
+		 </div>
+
+
+
+</div>
+<script type="text/javascript">
+
+</script>
+<script>
+$(document).on('click','.pprices',function() {
+    rel=$(this).attr('rel');
+    rel1=$(this).attr('rel1');
+  	 html ='<input type="text" name="price" class="form-control price'+rel+'" value="'+rel1+'" />';
+    $('#priceedit'+rel).html(html);
+  });
+</script>

@@ -1,0 +1,136 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-information" id="btnSubmit" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary">
+          <i class="fa fa-save">
+          </i>
+        </button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default">
+          <i class="fa fa-reply">
+          </i>
+        </a>
+      </div>
+      <h1>
+        {{ heading_title }}
+      </h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+      </div>
+    <div class="panel-body">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
+        <div class="form-group required">
+          <label class="col-sm-2 control-label" for="input-package-title">{{ entry_name }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="name" value="{{ name }}"    placeholder="{{ entry_name }}" id="input-package-titl" class="form-control"/>
+            {% if error_name %}
+              <div class="text-danger">{{ error_name }}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group required">
+          <label class="col-sm-2 control-label" for="input-model">{{ entry_model }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="model" value="{{ model }}"    placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+          </div>
+        </div>
+  			<div class="form-group">
+  				<label class="col-sm-2 control-label" for="input-user-group">{{ entry_store }}</label>
+  				<div class="col-sm-10">
+  				  <select name="store_id" id="input-store" class="form-control">
+  					<option value="">{{ text_select }}</option>
+  					 {% for store in stores %}
+  					{% if store.store_id == store_id %}
+  					<option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+  					{% else %}
+  					<option value="{{ store.store_id }}">{{ store.name }}</option>
+  					{% endif %}
+  					{% endfor %}
+  				  </select>
+  				</div>
+        </div>
+  			<div class="form-group">
+  				<label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
+  				<div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+  				  <input type="hidden" name="image" value="{{ image }}" id="input-image" />
+  				</div>
+        </div>
+		    <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-package-title">{{ entry_quantity }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="quantity" value="{{ quantity }}"    placeholder="{{ entry_quantity }}" id="input-package-titl" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-price">{{ entry_price }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="price" value="{{ price }}"    placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-shipping">{{ entry_shipping }}</label>
+          <div class="col-sm-10">
+            <select name="shipping" id="input-shipping" class="form-control">
+              {% if shipping %}
+              <option value="1" selected="selected">{{ text_yes }}</option>
+              <option value="0">{{ text_no }}</option>
+              {% else %}
+              <option value="1">{{ text_yes }}</option>
+              <option value="0" selected="selected">{{ text_no }}</option>
+              {% endif %}
+            </select>
+          </div>
+        </div>
+        <div class="form-group ">
+          <label class="col-sm-2 control-label" for="input-tax_class_id">{{ entry_taxclass }}</label>
+          <div class="col-sm-10">
+            <select name="tax_class_id" id="input-tax_class_id" class="form-control">
+            <option value="">{{ text_select }}</option>
+             {% for tax_class in tax_classes %}
+            {% if tax_class.tax_class_id == tax_class_id %}
+            <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+            {% else %}
+            <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+            {% endif %}
+            {% endfor %}
+            </select>
+          </div>
+        </div>
+  			<div class="form-group">
+  				<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+  				<div class="col-sm-10">
+  					<select name="status" id="input-status" class="form-control">
+  						{% if status %}
+  						<option value="1" selected="selected">{{ text_enable }}</option>
+  						<option value="0">{{ text_disable }}</option>
+  						{% else %}
+  						<option value="1">{{ text_enable }}</option>
+  						<option value="0" selected="selected">{{ text_disable }}</option>
+  						{% endif %}
+  					</select>
+  				</div>
+  			</div>
+		  </form>
+    </div>
+    </div>
+  </div>  
+  <script type="text/javascript"><!--
+$('#language a:first').tab('show');
+//--></script>
+ 
+{{ footer }}</div>

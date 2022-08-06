@@ -1,0 +1,11 @@
+<ul class="list-inline categories">
+	{% for category in categories %}
+	<li class="col-md-4 col-sm-4 col-xs-12 showsubcate" rel="{{ category.category_id }}" path="{{ category.path }}">
+	<i class="fa fa-folder-open" aria-hidden="true"></i>
+	<br>{{ category.name }}
+	</li>
+	{% endfor %}
+</ul>
+<div class="row">
+	<div class="col-md-12 products"></div>
+</div>

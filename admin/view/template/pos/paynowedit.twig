@@ -1,0 +1,341 @@
+{% if warning %}
+<div id="content" class="col-sm-12 bg alert text-danger">
+	<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ warning }}<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+</div>
+{% endif %}}
+
+<div id="content" class="col-sm-12 bg paynowfinal">
+ <div class="modal-header">
+	<h3>{{ text_editplace }}</h3>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	</div>
+	<div class="col-sm-12 form-horizontal">
+	<div class="order-editdata">
+		{% if guestcustomer %}
+		<div class="form-group">
+			<label class="col-sm-4 control-label">{{ text_customer }}</label>
+			<div class="col-sm-8">
+			  <div class="checkbox">
+				  <label class="guescust">
+                      <input type="checkbox" name="guestcustomer" value="1" checked="checked" id="input-guestcustomer" disabled="disabled" /> Guest
+                  </label>
+				</div>
+			</div>
+	    </div>
+		{% endif %}
+		<div class="loadcustomerfrom add-customer" {% if guestcustomer %} style="display:none" {% endif %}>
+			<input type="hidden" name="customer_id" value="{{ customer_id }}" class="form-control customer_id"/>
+			 <div class="form-group required">
+				<label class="col-sm-4 control-label" for="input-firstname">{{ entry_firstname }}</label>
+				<div class="col-sm-8">
+				  <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
+				 </div>
+			  </div>
+
+			  <div class="form-group required">
+				<label class="col-sm-4 control-label" for="input-lastname">{{ entry_lastname }}</label>
+				<div class="col-sm-8">
+				  <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
+				 </div>
+			  </div>
+
+			  <div class="form-group required">
+				<label class="col-sm-4 control-label" for="input-telephone">{{ entry_telephone }}</label>
+				<div class="col-sm-8">
+				  <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
+				  </div>
+			  </div>
+
+			   <div class="form-group required">
+				<label class="col-sm-4 control-label" for="input-address-1">{{ entry_address_1 }}</label>
+				<div class="col-sm-8">
+				  <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control" />
+				 </div>
+			  </div>
+		</div>
+
+		<!-- Payment Method -->
+		<div class="editorder_div">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">{{ text_pay_method }}</label>
+				<div class="col-sm-8">
+				  	<select name="payment_method" class="form-control" id="selectcard">
+					{% for result in setting_paymentmethods %}
+				     {% if result.name == payment_method %}
+						<option value="{{ result.name }}" selected="selected">{{ result.name }}</option>
+						{% else %}
+						<option value="{{ result.name }}">{{ result.name }}</option>
+						{% endif %}
+						{% endfor %}
+					</select>
+				{% if split_status == 1 %}
+				<a class="addsplitpayment" data-toggle="tooltip" title="{{ text_splitpayment }}" ><i class="fa fa-plus"></i> {{ text_splitpayment }} </a>
+				{% endif %}
+				</div>
+			</div>{% if split_status == 1 %}
+			<div id="splitpayment" class="hide">
+				<div class="form-group">
+					<div class="row qtybox">
+					<label class="col-sm-4 control-label"></label>
+				        <div class="col-sm-8">
+					        <div class="table-responsive" id="paymentbox">
+					          	<table class="table table-striped table-bordered table-hover">
+						           	<thead>
+							            <tr>
+							              <td class="text-left" style="font-weight:normal;">{{ entry_payable_amount }}</td>
+							              <td class="text-left" style="font-weight:normal;">{{ split_totals }}</td>
+							              <td class="text-left"></td>
+							            </tr>
+						           	</thead>
+						           	<tbody>
+						           		{% set payment_row = 0 %}
+							            <tr id="payment-row{{ payment_row }}">
+
+						               	<td class="text-left">
+						                 <select name="split_payment[{{ payment_row }}][method]" class="form-control" id="selectcard">
+											{% for result in setting_paymentmethods %}
+											{% if result.name == payment_method %}
+											<option value="{{ result.name }}" selected="selected">{{ result.name }}</option>
+											{% else %}
+											<option value="{{ result.name }}">{{ result.name }}</option>
+											{% endif %}
+											{% endfor %}
+										  </select>
+						                 </td>
+						                 <td class="text-left"><input type="text" name="split_payment[{{ payment_row }}][amount]" class="amount form-control" value=""/></td>
+						                 <td class="text-right"><button type="button" onclick="$('#payment-row{{ payment_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+					              		</tr>
+					              		{% set payment_row = payment_row + 1 %}
+						            </tbody>
+						           	<tfoot>
+						             <tr>
+						               <td class="text-right"><strong>{{ entry_total }}</strong></td>
+						               <td class="text-left"><div id="total"></div></td>
+						               <td class="text-right"><button type="button" onclick="addPayment()" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+						             </tr>
+						            </tfoot>
+					          	</table>
+					        </div>
+				        </div>
+			        </div>
+			    </div>
+			</div>
+			{% endif %}
+<!-- Payment Method -->
+			<div id="cashchange" style="display:none">
+			    <div class="form-group">
+				  <label class="col-sm-4 control-label" for="input-total">{{ entry_total }}</label>
+				  <div class="col-sm-8">
+				  	{% for result in totals %}
+					<input type="text" name="total" disabled value="{{ result.value }}" placeholder="{{ entry_total }}" id="total" class="form-control total"/>
+					{% endfor %}
+				  </div>
+				</div>
+				<div class="form-group">
+				  <label class="col-sm-4 control-label" for="input-change">{{ entry_paidamount }}</label>
+				  <div class="col-sm-8"><input type="number" name="paid_amount" id="paid_amount" value="" class="form-control"><div id="greater"></div></div>
+				</div>
+				<div class="form-group">
+				  <label class="col-sm-4 control-label" for="input-change">{{ entry_change }}</label>
+				  <div class="col-sm-8"><input disabled id="balance" value="" class="form-control"></div>
+				</div>
+			</div>
+
+			<div id="cardinput" style="display:none" class="colors">
+				<div class="form-group required">
+				  <label class="col-sm-4 control-label" for="input-cc-owner">{{ entry_cc_owner }}</label>
+				  <div class="col-sm-8">
+					<input type="text" name="cc_owner" value="" placeholder="{{ entry_cc_owner }}" id="input-cc-owner" class="form-control cc_owner" />
+				  </div>
+				</div>
+				<div class="form-group required">
+				  <label class="col-sm-4 control-label" for="input-cc-number">{{ entry_cc_number }}</label>
+				  <div class="col-sm-8">
+					<input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" class="form-control ccnumbercss"  autocomplete="off"/>
+				  </div>
+				</div>
+				<div class="form-group required">
+				  <label class="col-sm-4 control-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
+				  <div class="col-sm-4">
+					<select name="cc_expire_date_month" id="input-cc-expire-month" class="form-control">
+					  {% for month in months %}
+					  <option value="{{ month.value }}">{{ month.text }}</option>
+					  {% endfor %}
+					</select>
+				   </div>
+				   <div class="col-sm-4">
+					<select name="cc_expire_date_year" class="form-control" id="input-cc-expire-year">
+					  {% for year in year_expire %}
+					  <option value="{{ year.value }}">{{ year.text }}</option>
+					  {% endfor %}
+					</select>
+				  </div>
+				</div>
+				<div class="form-group required">
+				  <label class="col-sm-4 control-label" for="input-cc-cvv2">{{ entry_cc_cvv2 }}</label>
+				  <div class="col-sm-8">
+					<input type="text" name="cc_cvv2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control ccnumbercss" autocomplete="off" />
+				  </div>
+				</div>
+			</div>
+		</div>
+
+		<!--new end code-->
+
+		<div class="form-group colors1">
+		  <label class="col-sm-4 control-label" for="input-order-status">{{ entry_order_status }}</label>
+		  <div class="col-sm-8">
+			<select name="order_status_id" id="selectorder_status" class="form-control">
+				<option value="">{{ text_select }}</option>
+			  {% for order_status in order_statuses %}
+			  {% if order_status.order_status_id == order_status_id %}
+			  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+			  {% else %}
+			  <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+			  {% endif %}
+			  {% endfor %}
+			</select>
+			<input type="hidden" name="order_id" value="{{ order_id }}" />
+		  </div>
+		</div>
+		{% if partial_status %}
+		<div id="parchange" style="display:none">
+			 <div class="form-group">
+				  <label class="col-sm-4 control-label" for="input-total">{{ entry_total }}</label>
+				  <div class="col-sm-8">
+				  	{% for result in totals %}
+					<input type="text" name="total" disabled value="{{ result.value }}" placeholder="{{ entry_total }}" id="total" class="form-control total"/>
+					{% endfor %}
+				  </div>
+				</div>
+				<div class="form-group">
+				  	<label class="col-sm-4 control-label" for="input-partial_amount">{{ text_partial_amount }}</label>
+				  		{% if partialsum_stats %}
+				  		<div class="col-sm-8"><input type="number" disabled name="partial_amount" min="0" id="partial_amount" value="" class="form-control"></div>
+						{% else %}
+					 	<div class="col-sm-8"><input type="number" name="partial_amount" min="0" id="partial_amount" value="" class="form-control"></div>
+						{% endif %}
+				</div>
+			</div>
+		{% endif %}
+		<div class="form-group">
+			<label class="col-sm-4 control-label">{{ text_comment }}</label>
+			<div class="col-sm-8">
+			 <textarea name="comment" class="form-control">{{ comment }}</textarea>
+		    </div>
+	    </div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label"></label>
+			<div class="col-sm-8">
+			 <button class="btn btn-primary editorder">{{ text_clearcart }}</button>
+		    </div>
+	    </div>
+	 </div>
+	</div>
+</div>
+{% if split_status == 1 %}
+<script type="text/javascript">
+var payment_row = {{ payment_row }};
+function addPayment() {
+	html  = '';
+	html += '<tr id="payment-row' + payment_row + '">';
+	html += '  <td class="left">';
+	html += '    <select name="split_payment[' + payment_row + '][method]" class="form-control">>';
+	{% for result in setting_paymentmethods %}
+	html += '<option value="{{ result.name }}">{{ result.name }}</option>';
+	{% endfor %}
+	html += '    </select>';
+	html += '  </td>';
+	html += '  <td class="left">';
+	html += '    <input type="text" name="split_payment[' + payment_row + '][amount]" class="amount form-control amount' + payment_row + '" value=""/>';
+	html += '  </td>';
+	html += '  <td class="text-right">';
+	html += '    <a onclick="$(\'#payment-row' + payment_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
+	html += '  </td>';
+	html += '</tr>';
+	$('#paymentbox table tbody').append(html);
+	payment_row++;
+}
+$(document).on('keyup','.amount',function() {
+    var sum=0;
+    $(".amount").each(function(){
+        sum += +$(this).val();
+    });
+    $("#total").html(sum);
+});
+$('.split').on('click', function () {
+    $("#paymentbox").show();
+});
+//--></script>
+{% endif %}
+
+<script type="text/javascript">
+	$("#paid_amount").on("keyup", function() {
+		var totalamount = $('.total').val();
+		$(".text-danger").remove();
+		var val = +this.value || 0;
+		if(val >= totalamount){
+		totalvalue=val-$(".total").val();
+		$("#balance").val(totalvalue.toFixed(2));
+
+		} else {
+		$("#greater").after('<div class="text-danger"><b>{{ text_paidamount }}</b></div>');
+
+		}
+	});
+
+  $('#selectcard').on('change', function () {
+    if(this.value == "Cash"){
+        $("#cashchange").show();
+    } else {
+        $("#cashchange").hide();
+    }
+	if(this.value == "Partpayment"){
+	    $("#parchange").show();
+	} else {
+	    $("#parchange").hide();
+	}
+	if(this.value === "Card"){
+        $("#cardinput").show();
+    } else {
+        $("#cardinput").hide();
+    }
+});
+
+$('.cc_owner').change(function(){
+	var code=$(this).val();
+	var code1=code.split('^');
+	var cardnumber=code1[0].replace('%B','');
+	var name=code1[1].split('/');
+	var year=code1[2].substring(0,2);
+	var month=code1[2].substring(2,4);
+	$('#input-cc-owner').val(name[1]+' '+name[0]);
+	$('#input-cc-number').val(cardnumber);
+	$('#input-cc-expire-month').val(month);
+	$('#input-cc-expire-year').val(20+year);
+});
+</script>
+
+<script type="text/javascript"><!--
+$('select[name=\'payment_method\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=possetting/setting/method&user_token={{ user_token }}&payment_method=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name=\'payment_method\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+		},
+		complete: function() {
+			$('.fa-spin').remove();
+		},
+		success: function(json) {
+			$('.fa-spin').remove();
+			$('select[name=\'order_status_id\']').val(json['order_status_id']);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'payment_method\']').trigger('change');
+//--></script>

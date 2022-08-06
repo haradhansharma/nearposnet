@@ -1,0 +1,188 @@
+{{ header }}
+<div id="account-transaction" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+
+      {#sharma for pos#}
+      {% if notapplied %}
+      <button type="button" class="btn btn-primary" id="button-beagent" data-loading-text="{{ text_loading }}"></button>
+      <div class="term-agree">{{ text_agree }} <input type="checkbox" name="agree" id="agree_checkbox" value = 1 /></div>
+      {% endif %}
+      <div class="btn btn-warning" id="button-beagent_info" data-loading-text="{{ text_loading }}"></div>       
+      {#sharma for pos#}
+
+      <p>{{ text_total }} <b>{{ total }}</b>.</p>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-left">{{ column_date_added }}</td>
+              <td class="text-left">{{ column_description }}</td>
+              <td class="text-right">{{ column_amount }}</td>
+            </tr>
+          </thead>
+          <tbody> 
+
+            {% if transactions %}
+            {% for transaction in transactions %}
+            <tr>
+              <td class="text-left">{{ transaction.date_added }}</td>
+              <td class="text-left">{{ transaction.description }}</td>
+              <td class="text-right">{{ transaction.amount }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td class="text-center" colspan="5">{{ text_empty }}</td>
+            </tr>
+            {% endif %}
+          </tbody>
+          
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <div class="col-sm-6 text-right">{{ results }}</div>
+      </div>
+      <div class="buttons clearfix">
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      </div>
+    {{ content_bottom }}</div>
+  {{ column_right }}</div>
+</div> 
+{#sharma for pos#}
+<script type="text/javascript"><!--
+$(document).ready(function() {
+  $.ajax({
+    url: 'index.php?route=account/transaction/agentCheck',
+    dataType: 'json',
+    success: function(json) {          
+
+      if(json['notapplied']){
+        $('#button-beagent').html('<i class="fa fa-superpowers"></i>' + json['agent_code_info'] ); 
+        $('#button-beagent_info').hide();         
+      }else{
+        $('#button-beagent_info').html('<i class="fa fa-superpowers"></i>' + json['agent_code_info'] );
+        if(!json['status']){
+          $('#button-beagent_info').parent().find('.btn-warning').toggleClass('btn-danger');
+        }
+      }
+
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+  });
+});
+
+$('#button-beagent').on('click', function() {
+
+
+
+  if(!$("#agree_checkbox").prop("checked")) {
+    $('#content').parent().before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + '{{ error_agree }}' + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+    return false;
+
+  }else{  
+
+    $('.alert-dismissible, .text-danger').remove();
+
+    $.ajax({
+      url: 'index.php?route=account/transaction/beagent',
+      dataType: 'json',
+      beforeSend: function() {
+        $('#button-beagent').button('loading');
+      },
+      complete: function() {
+        $('#button-beagent').button('reset');
+      },
+      success: function(json) { 
+
+        if (json['error']) {
+          $('#content').parent().before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+          $('#button-beagent_info').hide(); 
+           
+        } else{
+
+          var agent_id = json['service_agent_id'];
+          var checked = 1;
+
+          $.ajax({
+            url: 'index.php?route=account/transaction/updatetearm',
+            type: 'post',
+            data: { agent_id:agent_id, checked:checked },
+            dataType: 'json',
+            beforeSend: function() {
+              $('#agree_checkbox').button('loading');
+            },
+            complete: function() {
+              $('#agree_checkbox').button('reset');
+            },
+            success: function(json) { 
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+
+          });
+          $('#button-beagent').remove(); 
+          $('#button-beagent_info').html('<i class="fa fa-superpowers"></i>' + json['agent_code_info'] );
+          $('#button-beagent_info').parent().find('.btn-warning').toggleClass('btn-danger'); 
+          $('#button-beagent_info').show();
+          $('.term-agree').remove();  
+          $('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' +   json['success']  + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }  
+});
+
+$(document).delegate('.agree', 'click', function(e) {
+  e.preventDefault();
+  $('#modal-agree').remove();
+  var element = this;
+  $.ajax({
+    url: $(element).attr('href'),
+    type: 'get',
+    dataType: 'html',
+    success: function(data) {
+      html  = '<div id="modal-agree" class="modal">';
+      html += '  <div class="modal-dialog">';
+      html += '    <div class="modal-content">';
+      html += '      <div class="modal-header">';
+      html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+      html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
+      html += '      </div>';
+      html += '      <div class="modal-body">' + data + '</div>';
+      html += '    </div>';
+      html += '  </div>';
+      html += '</div>';
+
+      $('body').append(html);
+
+      $('#modal-agree').modal('show');
+    }
+  });
+});
+//--></script> 
+{#sharma for pos#}
+
+
+{{ footer }}

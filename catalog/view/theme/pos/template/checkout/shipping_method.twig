@@ -1,0 +1,70 @@
+{% if error_warning %}
+<div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+
+
+{#sharma for pos sship#}
+{% for nearest_pos in nearest_poses %}
+<a href="{{nearest_pos.href}}" class="card">
+  <img src="{{nearest_pos.frontimage}}" alt="{{nearest_pos.name}}" style="width:100%">
+  <div class="inner">
+    <h4><b>{{nearest_pos.posname}}</b></h4> 
+    <p>{{nearest_pos.distance}}</p> 
+    <p>{{nearest_pos.alloweddistance}}</p> 
+  </div>
+</a>
+{% endfor %}
+{#sharma for pos sship#}
+
+{% endif %}
+{% if shipping_methods %}
+<p>{{ text_shipping_method }}</p>
+{% for shipping_method in shipping_methods %}
+<p><strong>{{ shipping_method.title }}</strong></p>
+{% if not shipping_method.error %}
+{% for quote in shipping_method.quote %}
+<div class="radio">
+  <label> {% if quote.code == code or not code %}
+    {% set code = quote.code %}
+    <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
+    {% else %}
+    <input type="radio" name="shipping_method" value="{{ quote.code }}" />
+    {% endif %}
+  {{ quote.title }} - {{ quote.text }}</label>
+</div>
+{% endfor %}
+{% else %}
+
+<div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+<p><strong>{{ text_comments }}</strong></p>
+<p>
+  <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
+</p>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_continue }}" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div>
+
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 150px;
+  display: inline-block;
+  margin: 10px;
+  padding: 5px;
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.inner {
+  padding: 2px 2px;
+  text-align: center;
+}
+</style>

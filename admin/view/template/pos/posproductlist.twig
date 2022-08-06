@@ -1,0 +1,156 @@
+<div class="productliss"></div>
+<div class="modal-content">
+	<div class="modal-header">
+		<button type="button" class="prolist close" data-dismiss="modal">&times;</button>
+		<div class="row">
+			<div class="col-sm-12">
+				<h3>{{ text_list }}</h3>
+				<div class="search">
+					<div class="input-group">
+						<input type="text" name="search" onKeyDown="if(event.keyCode==13) $('#button-search').trigger('click');" plceholder="{{ button_search }}" class="form-control"/>
+						<div class="input-group-addon" id="button-search"><i class="fa fa-search" aria-hidden="true"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-body">
+		{% if productlist %}
+		<div class="row">
+			{% for result in productlist %}
+			 <div class="item col-sm-6 col-md-4 col-lg-4 col-xs-12">
+					<div class="product-thumb">
+						<div class="image">
+							{% if result.image %}
+								<img src="{{ result.image }}" alt="{{ result.image }}" class="img-responsive" alt="{{ result.name }}"/>
+							{% else %}
+								<span class="img-responsive"><i class="fa fa-camera fa-2x"></i></span>
+							{% endif %}
+							<div class="onhover">
+								<button type="button" id="addcartlist" rel="{{ result.product_id }}" class="btn btn-primary">{{ button_addtocart }}</button>
+							</div>
+						</div>
+						<div class="caption">
+							<h4>{{ result.name }}</h4>
+							<p>{{ result.price }}</p>
+							{% if result.tax %}
+				          	<span class="price-tax">{{ text_tax }} {{ result.tax }}</span>
+				          	{% endif %}
+						</div>
+				 </div>
+			 </div>
+			{% endfor %}
+		</div>
+	{% else %}
+	<div class="row">
+		<div class="col-sm-12 text-center">{{ text_no_results }}</div>
+	</div>
+	{% endif %}
+	<div class="row">
+		<div class="text-center">
+			<div id="loadMore" class="text-center btn btn-primary">
+				{{ button_loadmore }}
+			</div>
+		</div>
+		<input type="hidden" name="more-botton-limits" value="{{ limits }}">
+	</div>
+	</div>
+	</div>
+	<script type="text/javascript">
+	var limits = $("input[name='more-botton-limits']").val();
+	size_li = $(".item").size();
+	x=parseInt(limits);
+	x1 = x + parseInt(limits);
+	$('.item:nth-of-type(-n+'+x+')').show();
+	$('#loadMore').click(function () {
+	x1 = x + parseInt(limits);
+	limits = 	x1;
+	$('.item:nth-of-type(-n+'+x1+')').show();
+	if(x1 == size_li){
+	$('#loadMore').hide();
+	}
+	});
+	if(x >= size_li){
+	$('#loadMore').hide();
+	}
+
+	$(document).on('click', '#button-search',function(){
+	 	var url = 'index.php?route=pos/posproductlist&user_token={{ user_token }}&ajax=true';
+
+	 	var search = $('input[name=\'search\']').val();
+
+	 	if (search) {
+	 		url += '&search=' + encodeURIComponent(search);
+	 	}
+	 	$('.productliss').load(url);
+	 	$('.modal-content').hide();
+ 	});
+
+	$('input[name=\'search\']').on('keydown', function(e) {
+		if (e.keyCode == 13) {
+			$('input[name=\'search\']').parent().find('button').trigger('click');
+		}
+	});
+
+	</script>
+	<style>
+	.product-thumb{
+	background: #fff;
+	border:1px solid #ddd;
+	margin-bottom:20px;
+	position: relative;
+	text-align: center;
+	padding-bottom: 15px;
+	}
+	.product-thumb img{
+	margin: 0 auto;
+	}
+	.product-thumb .onhover{
+	display: none;
+	}
+	.product-thumb:hover .onhover{
+	display: block;
+	top: 50%;
+	text-align: center;
+	bottom: auto;
+	position: absolute;
+	left: 0px;
+	right: 0;
+	}
+	.product-thumb .caption h4{
+	font-size: 16px;
+	font-weight: bold;
+	margin: 10px 0px;
+	}
+	#help-modal18 h3{
+	float: left;
+	margin: 0;
+	}
+	#help-modal18 .modal-header{
+	min-height: 60px;
+	}
+	#help-modal18 .search i{
+	font-size: 16px;
+	}
+	#help-modal18 .search .form-control{
+	width: auto;
+	display: inline-block;
+	border-radius: 0px;
+	}
+	#help-modal18 .search{
+	float: right;
+	}
+	#help-modal18 .search .btn-primary{
+	color: #fff;
+	background-color: #1e91cf;
+	border-color: #1978ab;
+	padding: 8.5px 13px;
+	vertical-align: middle;
+	margin-left: -3px;
+	border-radius: 0px;
+	vertical-align: top;
+	}
+	.item{
+	display: none;
+	}
+	</style>

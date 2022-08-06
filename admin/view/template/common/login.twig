@@ -1,0 +1,125 @@
+{{ header }}
+
+<style type="text/css">
+/*#love {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}*/
+.lbt{
+  padding: 20px;
+  margin: 10px;
+  display: inline-block;
+  float: left;
+  position: relative;
+}
+.sign {
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#container {
+  height: 100%;
+  margin: 0;
+  background: rgb(21,38,33);
+background: -moz-linear-gradient(61deg, rgba(21,38,33,1) 0%, rgba(69,89,78,1) 50%, rgba(21,38,33,1) 100%);
+background: -webkit-linear-gradient(61deg, rgba(21,38,33,1) 0%, rgba(69,89,78,1) 50%, rgba(21,38,33,1) 100%);
+background: linear-gradient(61deg, rgba(21,38,33,1) 0%, rgba(69,89,78,1) 50%, rgba(21,38,33,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#152621",endColorstr="#152621",GradientType=1);
+}
+#content {
+    padding-bottom: 40px;
+    min-height: 100%;
+}
+</style>
+<div id="content">
+  <div class="container-fluid"><br />
+    <div class="row">
+      <div class="sign">
+        <div id="poslogin" class="btn btn-success lbt">POS LOGIN</div>
+        <div id="love" class="btn btn-primary lbt"><i class="fa fa-volume-up"></i></div>
+      </div>
+    </div> 
+    <div class="row">
+      <div class="col-sm-offset-4 col-sm-4 enjoy">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+var loc = 'index.php?route=pos/login' ;
+$('#poslogin').on('click', function() {
+  location = loc;
+});
+
+var clicks = 0;
+$('#love').click(function(){
+ clicks++;
+ if(clicks == 3){
+  var html = '<div class="container-fluid"><br />';
+  html += '<br />';
+  html += '<div class="row">';
+  html += '<div class="col-sm-offset-4 col-sm-4">';
+  html += '<div class="panel panel-default">';
+  html += '<div class="panel-heading">';
+  html += '<h1 class="panel-title"><i class="fa fa-lock"></i> {{ text_login }}</h1>';
+  html += '</div>';
+  html += '<div class="panel-body">';
+  html += '{% if success %}';
+  html += '<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}';
+  html += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+  html += '</div>';
+  html += '{% endif %}';
+  html += '{% if error_warning %}';
+  html += '<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}';
+  html += ' <button type="button" class="close" data-dismiss="alert">&times;</button>';
+  html += '</div>';
+  html += ' {% endif %}';
+  html += '<form action="{{ action }}" method="post" enctype="multipart/form-data">';
+  html += '<div class="form-group">';
+  html += '<label for="input-username">{{ entry_username }}</label>';
+  html += '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>';
+  html += '<input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group">';
+  html += '<label for="input-password">{{ entry_password }}</label>';
+  html += '<div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span>';
+  html += '<input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />';
+  html += '</div>';
+  html += '{% if forgotten %}';
+  html += '<span class="help-block"><a href="{{ forgotten }}">{{ text_forgotten }}</a></span>';
+  html += '{% endif %}';
+  html += '</div>';
+  html += '<div class="text-right">';
+  html += '<button type="submit" class="btn btn-primary"><i class="fa fa-key"></i> {{ button_login }}</button>';
+  html += '</div>';
+  html += '{% if redirect %}';
+  html += '<input type="hidden" name="redirect" value="{{ redirect }}" />';
+  html += '{% endif %}';
+  html += '</form>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+  $('#content').html(html);
+  $('#poslogin').remove();
+}
+setTimeout(function(){ 
+  clicks=0; 
+}, 1000);
+
+if(clicks == 1){
+  $('.enjoy').html('<iframe width="560" height="315" src="https://www.youtube.com/embed/CYP4GYtwff8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
+}
+
+});
+</script>
+
+{{ footer }}
